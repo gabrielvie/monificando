@@ -1,0 +1,29 @@
+{
+  "name": "monificando",
+  "url": "http://www.monificando.com.br",
+  "copyright": "2015",
+  "version": "0.0.1",
+  "description": "Aplicação de controle financeiro pessoal",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "MongoDB",
+    "expressJS",
+    "AngularJS",
+    "NodeJS"
+  ],
+  "author": "Gabriel Santos, Jilsara Vasconcelos, Natalia Galdino, Thiago Syllos",
+  "repository": {
+    "type": "git",
+    "url": "git://"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-sass": "^0.9.2",
+    "grunt-contrib-uglify": "^0.9.1",
+    "grunt-contrib-watch": "^0.6.1"
+  }
+}
