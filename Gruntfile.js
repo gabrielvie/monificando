@@ -16,17 +16,31 @@ module.exports = function(grunt) {
      */
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        sass: {
-            dist: {
-                files: {
-                    'style/app.css' : 'sass/app.scss'
-                }
+        project: {
+            public: 'public',
+            assets: '<%= project.public %>/assets',
+            src: '<%= project.public %>/src',
+            scss: [
+                '<%= project.src %>/scss/app.scss'
+            ]
+        },
+
+        watch: {
+            sass: {
+                files: '<%= project.src %>/scss/**/*.scss',
+                tasks: ['sass']
             }
         },
-        watch: {
-            css: {
-                files: '**/*.scss',
-                tasks: ['sass']
+
+        sass: {
+            comp: {
+                options: {
+                    style: 'compressed',
+                    sourcemap: 'none'
+                },
+                files: {
+                    '<%= project.assets %>/css/app.min.css' : '<%= project.scss %>'
+                }
             }
         }
     });
@@ -34,6 +48,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-concat');
 
-    grunt.registerTask('default', ['sass', 'watch']);
+    grunt.registerTask('default', ['sass', 'concat','watch']);
 };
