@@ -4,31 +4,31 @@
  * @author Gabriel Santos
  */
 
-'use strict';
-
-/**
- * Grunt Module
- */
-module.exports = function(grunt) {
-
+/*global module */
+module.exports = function (grunt) {
+    'use strict';
     /**
      * Configuration
      */
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-        project: {
-            public: 'public',
-            assets: '<%= project.public %>/assets',
-            src: '<%= project.public %>/src',
-            scss: [
-                '<%= project.src %>/scss/app.scss'
-            ]
+        folders: {
+            pub: {
+                app: 'public/app',
+                assets: 'public/assets',
+                src: 'public/src',
+                lib: '<%= folders.pub.src %>/lib',
+                scss: '<%= folders.pub.src %>/scss'
+            }
         },
 
-        watch: {
-            sass: {
-                files: '<%= project.src %>/scss/**/*.scss',
-                tasks: ['sass']
+        jshint: {
+            files: ['Gruntfile.js', '<%= folders.pub.app %>/**/*.js'],
+            options: {
+                globals: {
+                    angular: true,
+                    module: true
+                }
             }
         },
 
@@ -39,16 +39,39 @@ module.exports = function(grunt) {
                     sourcemap: 'none'
                 },
                 files: {
-                    '<%= project.assets %>/css/app.min.css' : '<%= project.scss %>'
+                    '<%= folders.pub.assets %>/css/app.min.css' : '<%= folders.pub.scss %>/app.scss'
                 }
+            }
+        },
+
+        uglify: {
+            options: {
+                sourceMap: true
+            },
+            build: {
+                files: {
+                    //'<%= folders.pub.assets %>/js/app.min.js': ['<%= folders.pub.lib %>/angular/angular.min.js','<%= folders.pub.app %>/**/*.js']
+                    '<%= folders.pub.assets %>/js/app.min.js': ['<%= folders.pub.app %>/**/*.js']
+                }
+            }
+        },
+
+        watch: {
+            sass: {
+                files: '<%= folders.pub.scss %>/**/*.scss',
+                tasks: ['sass']
+            },
+            js: {
+                files: '<%= jshint.files %>',
+                tasks: ['jshint', 'uglify']
             }
         }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-sass');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-contrib-concat');
 
-    grunt.registerTask('default', ['sass', 'concat','watch']);
+    grunt.registerTask('default', ['jshint', 'sass', 'uglify', 'watch']);
 };
