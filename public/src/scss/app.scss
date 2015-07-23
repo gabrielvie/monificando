@@ -1,6 +1,17 @@
-body {
-  padding: 0;
-  margin: 0;
-  font-size: 12px;
-  background: crimson;
+@import "vendors/vendors";
+@import "helpers/helpers";
+@import "base/base";
+@import "components/components";
+@import "layout/layout";
+@import "pages/pages";
+
+html, body {
+    height: 100%;
+    width: 100%;
 }
+
+body {
+	position: relative;
+  	background: $clouds;
+}
+

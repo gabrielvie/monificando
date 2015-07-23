@@ -1,5 +1,16 @@
+/*global angular, console */
 (function () {
     'use strict';
+
+    function config($routeProvider, $locationProvider) {
+        $routeProvider
+            .when('/dashboard', {
+                templateUrl: 'app/dashboard/dashboard.view.html'
+            })
+            .otherwise('/dashboard');
+
+        //$locationProvider.html5Mode(true);
+    }
 
     angular
         .module('app', [
@@ -7,14 +18,6 @@
         ])
         .config(config);
 
-    config.$inject = ['$routeProvider'];
+    config.$inject = ['$routeProvider', '$locationProvider'];
 
-    function config($routeProvider) {
-        $routeProvider
-            .when('/', {
-                templateUrl: 'app/app/app.html',
-                controller: 'AppController',
-                controllerAs: 'app'
-            });
-    }
 }());
