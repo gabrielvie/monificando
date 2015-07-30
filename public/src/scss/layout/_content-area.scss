@@ -1,0 +1,5 @@
+#content-area {
+  @include shift(2);
+  @include span-columns(10);
+  @include padding(6% 4%);
+}

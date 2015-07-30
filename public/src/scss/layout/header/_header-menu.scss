@@ -1,0 +1,137 @@
+@include span-columns(8 of 12);
+
+&__menu {
+  $menu-height: $header-height;
+
+  @include position(relative);
+
+  float: right;
+  height: $menu-height;
+  list-style: none;
+
+  &__item {
+    $item-height: $menu-height;
+    $item-hover-bg: $midnight-blue;
+    $menu-icon-size: 20px;
+
+    float: left;
+    height: $item-height;
+    position: relative;
+
+    a {
+      display: block;
+      height: $item-height;
+      padding: 0 20px;
+    }
+
+    &--alert,
+    &--calendar,
+    &--user {
+      $menu-item-padd: 15px;
+
+      @extend %user-menu-item;
+
+      height: $item-height;
+      margin-top: $menu-item-padd;
+    }
+
+    &--calendar {
+      @include size($menu-icon-size);
+      background: url($calendar-icon-white) no-repeat;
+      background-size: $menu-icon-size;
+    }
+
+    &--alert {
+      @include size($menu-icon-size);
+      background: url($bell-icon-white) no-repeat;
+      background-size: $menu-icon-size;
+    }
+
+    &--user {
+      $username-color: $clouds;
+      margin-top: 0;
+
+      &-photo {
+        $user-photo-height: $item-height - 10px;
+
+        @extend %rounded-img;
+        @include size($user-photo-height);
+        display: inline-block;
+        margin-top: -5px;
+        vertical-align: middle;
+      }
+
+      &-name {
+        color: $username-color;
+        display: inline-block;
+        font-size: em(20px);
+        margin: 0 10px;
+      }
+    }
+
+    &:hover {
+      background: $item-hover-bg;
+
+      .arrow {
+        transform: rotate(-90deg);
+      }
+    }
+
+    &__submenu {
+      $bg-submenu: $clouds;
+      $bg-submenu-hover: $item-hover-bg;
+      $item-color: $wet-asphalt;
+      $item-color-hover: $clouds;
+      $shadow-color: $asbestos;
+
+      @include transition(opacity .2s ease-in-out);
+
+      background: $bg-submenu;
+      box-shadow: 1px 1px 2px 0 $shadow-color;
+      list-style: none;
+      opacity: 0;
+      padding: 0;
+
+      &-show {
+        opacity: 1;
+      }
+
+      &__item {
+        @include transition(background .2s ease-in-out);
+
+        a {
+          @include transition(color .2s ease-in-out);
+          color: $item-color;
+          padding-right: 40px;
+          vertical-align: middle;
+
+          .icon {
+            margin-bottom: -5px;
+          }
+
+        }
+
+        &:hover {
+          background: $bg-submenu-hover;
+
+          a {
+            color: $item-color-hover;
+
+            .icon-account-inverse {
+              @extend .icon-account;
+            }
+
+            .icon-help-inverse {
+              @extend .icon-help;
+            }
+
+            .icon-exit-inverse {
+              @extend .icon-exit;
+            }
+          }
+        }
+      }
+
+    }
+  }
+}

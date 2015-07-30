@@ -1,0 +1,11 @@
+#sidebar {
+  $sidebar-bg: $midnight-blue;
+
+  @include span-columns(2);
+  @include padding(6% 2%);
+  @include position(fixed, 0 null null 0);
+
+  background: $sidebar-bg;
+  height: 100%;
+  z-index: 98;
+}

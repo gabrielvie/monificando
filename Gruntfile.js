@@ -32,6 +32,16 @@ module.exports = function (grunt) {
             }
         },
 
+        scsslint: {
+            allFiles: ['<%= folders.pub.scss %>/**/*.scss'],
+            options: {
+                bundleExec: false,
+                config: '<%= folders.pub.scss %>/scsslint.yml',
+                colorizeOutput: true,
+                exclude: '<%= folders.pub.scss %>/vendors/**/*.scss'
+            }
+        },
+
         sass: {
             comp: {
                 options: {
@@ -60,7 +70,7 @@ module.exports = function (grunt) {
         watch: {
             sass: {
                 files: '<%= folders.pub.scss %>/**/*.scss',
-                tasks: ['sass']
+                tasks: ['scsslint', 'sass']
             },
             js: {
                 files: '<%= jshint.files %>',
@@ -73,6 +83,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-sass');
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-scss-lint');
 
-    grunt.registerTask('default', ['jshint', 'sass', 'uglify', 'watch']);
+    grunt.registerTask('default', ['jshint', 'scsslint', 'sass', 'uglify', 'watch']);
 };

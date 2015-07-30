@@ -10,52 +10,17 @@ $grid-columns: 12 !default;
 @import "pages/pages";
 
 html, body {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 body {
 	position: relative;
 }
 
-div#wrapper {
+#wrapper {
   @include fill-parent();
   @include row(table);
   background: $clouds;
   min-height: 100%;
-}
-
-header#header {
-  $header-bg: $wet-asphalt;
-  $header-height: 50px;
-  $header-line-height: $header-height;
-
-  @include padding(0 1.8%);
-  @include position(absolute, 0 null null null);
-
-  background: $header-bg;
-  height: 50px;
-  line-height: $header-line-height;
-  width: 100%;
-  z-index: 99;
-}
-
-div#sidebar {
-  $sidebar-bg: $midnight-blue;
-
-  @include span-columns(2);
-  @include padding(6% 2%);
-  @include position(fixed, 0 null null 0);
-
-  background: $sidebar-bg;
-  height: 100%;
-  z-index: 98;
-}
-
-div#content-area {
-  @include shift(2);
-  @include span-columns(10);
-  @include padding(6% 4%);
-
-  background: $sun-flower;
 }

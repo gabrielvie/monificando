@@ -4,6 +4,10 @@ body {
   font-weight: $font-weight-normal;
 }
 
+h1, h2, h3 {
+  font-family: $font-family-open-sans;
+}
+
 h1, h2 {
   font-weight: $font-weight-semibold;
 
@@ -29,6 +33,7 @@ a {
   text-decoration: none;
 
   &:hover {
+
     text-decoration: none;
   }
 }

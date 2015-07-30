@@ -1,0 +1,95 @@
+.arrow {
+  $size: 10px;
+  @include transition(transform .1s ease-in-out);
+  background: url($left-arrow-white) no-repeat;
+  background-size: $size;
+  content: ' ';
+  display: inline-block;
+  height: $size;
+  margin-left: 5px;
+  width: $size;
+}
+
+.badge {
+  $size: 18px;
+  $pos: -$size/2;
+
+  @include position(absolute, $pos null null $pos);
+  @include size($size);
+  border-radius: 50%;
+  display: block;
+  font-size: em(14px);
+  line-height: $size - 1;
+  padding: 0 5px;
+  text-align: center;
+
+  &-red {
+    $badge-color: $clouds;
+    $bg-color: $pomegranate;
+
+    background: $bg-color;
+    border: 1px solid shade($bg-color, 20%);
+    color: $badge-color;
+    text-shadow: 0 1px rgba(black, .25);
+  }
+}
+
+.icon {
+  $icon-size: 20px;
+  display: inline-block;
+  height: $icon-size;
+  margin: 0 $icon-size / 2;
+  width: $icon-size;
+
+  &-account {
+    background: url($user-accout-icon-white) no-repeat center;
+
+    &-inverse {
+      background: url($user-accout-icon-mid) no-repeat center;
+    }
+  }
+
+  &-help {
+    background: url($help-icon-white) no-repeat center;
+
+    &-inverse {
+      background: url($help-icon-mid) no-repeat center;
+    }
+  }
+
+  &-exit {
+    background: url($exit-icon-white) no-repeat center;
+
+    &-inverse {
+      background: url($exit-icon-mid) no-repeat center;
+    }
+  }
+
+  &-account,
+  &-help,
+  &-exit {
+    background-size: $icon-size;
+
+    &-inverse {
+      background-size: $icon-size;
+    }
+  }
+}
+
+.card {
+  &-red {
+    background: $alizarin;
+  }
+
+  &-blue {
+    background: $peter-river;
+  }
+
+  &-green {
+    background: $emerald;
+  }
+
+  &-yellow {
+    background: $sun-flower;
+  }
+}
