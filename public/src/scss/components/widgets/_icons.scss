@@ -1,0 +1,41 @@
+.icon {
+  $icon-size: 20px;
+  display: inline-block;
+  height: $icon-size;
+  margin: 0 $icon-size / 2;
+  width: $icon-size;
+
+  &-account {
+    background: url($user-accout-icon-white) no-repeat center;
+
+    &-inverse {
+      background: url($user-accout-icon-mid) no-repeat center;
+    }
+  }
+
+  &-help {
+    background: url($help-icon-white) no-repeat center;
+
+    &-inverse {
+      background: url($help-icon-mid) no-repeat center;
+    }
+  }
+
+  &-exit {
+    background: url($exit-icon-white) no-repeat center;
+
+    &-inverse {
+      background: url($exit-icon-mid) no-repeat center;
+    }
+  }
+
+  &-account,
+  &-help,
+  &-exit {
+    background-size: $icon-size;
+
+    &-inverse {
+      background-size: $icon-size;
+    }
+  }
+}

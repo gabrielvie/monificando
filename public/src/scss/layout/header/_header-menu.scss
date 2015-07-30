@@ -73,7 +73,7 @@
       background: $item-hover-bg;
 
       .arrow {
-        transform: rotate(-90deg);
+        @extend .arrow-down;
       }
     }
 

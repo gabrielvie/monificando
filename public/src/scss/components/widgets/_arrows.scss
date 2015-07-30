@@ -1,0 +1,16 @@
+.arrow {
+  $size: 10px;
+
+  @include transition(transform .1s ease-in-out);
+	background: url($left-arrow-white) no-repeat;
+	background-size: $size;
+  content: ' ';
+  display: inline-block;
+  height: $size;
+  margin-left: 5px;
+  width: $size;
+
+  &-down {
+  	transform: rotate(-90deg);
+  }
+}

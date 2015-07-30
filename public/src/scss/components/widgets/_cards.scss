@@ -1,0 +1,17 @@
+.card {
+  &-red {
+    background: $alizarin;
+  }
+
+  &-blue {
+    background: $peter-river;
+  }
+
+  &-green {
+    background: $emerald;
+  }
+
+  &-yellow {
+    background: $sun-flower;
+  }
+}
