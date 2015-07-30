@@ -1,5 +1,5 @@
 #content-area {
-  @include shift(2);
-  @include span-columns(10);
-  @include padding(6% 4%);
+	$content-area-pad-vertical: $app-header-height * 1.5;
+
+	@include pad($content-area-pad-vertical 2%);
 }

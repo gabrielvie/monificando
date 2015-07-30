@@ -92,10 +92,6 @@
       opacity: 0;
       padding: 0;
 
-      &-show {
-        opacity: 1;
-      }
-
       &__item {
         @include transition(background .2s ease-in-out);
 

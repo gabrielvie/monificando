@@ -19,8 +19,15 @@ body {
 }
 
 #wrapper {
-  @include fill-parent();
   @include row(table);
   background: $clouds;
   min-height: 100%;
+
+	#content-area {
+		@include span-columns(10);
+	}
+
+  #sidebar {
+  	@include span-columns(2);
+  }
 }

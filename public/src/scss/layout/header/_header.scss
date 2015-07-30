@@ -1,10 +1,12 @@
 #header {
   $header-bg: $wet-asphalt;
-  $header-height: 50px;
+  $header-height: $app-header-height;
   $header-lineHeight: $header-height;
+
   @include size(100% $header-height);
   @include padding(0 1.8%);
   @include position(absolute, 0 null null null);
+
   background: $header-bg;
   line-height: $header-lineHeight;
   z-index: 99;
