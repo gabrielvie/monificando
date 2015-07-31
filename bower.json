@@ -1,0 +1,30 @@
+{
+  "name": "Monificando",
+  "version": "0.0.1",
+  "authors": [
+    "Gabriel <gabrielvie@gmail.com>"
+  ],
+  "main": "server.js",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.3",
+    "ui-router": "~0.2.15",
+    "angular-ui-router": "~0.2.15",
+    "angular-breadcrumb": "~0.4.0"
+  },
+  "components": {
+    "angular": "bower_components/angular/angular.min.js",
+    "angularUiRouter": "bower_components/angular-ui-router/release/angular-ui-router.min.js"
+  }
+}

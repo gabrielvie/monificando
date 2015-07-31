@@ -61,7 +61,9 @@
             ...
         </div>
         <div id="content-area">
-            <div ng-view=""></div>
+            <ncy-breadcrumb></ncy-breadcrumb>
+
+            <ui-view></ui-view>
         </div>
     </div>
 
@@ -75,11 +77,8 @@
         ga('send', 'pageview');
     </script>
 
-    <script type="text/javascript" src="src/lib/angular/angular.min.js"></script>
-    <script type="text/javascript" src="src/lib/angular-route/angular-route.min.js"></script>
-
+    <script type="text/javascript" src="assets/js/lib.min.js"></script>
     <script type="text/javascript" src="assets/js/app.min.js"></script>
-    <script type="text/javascript" src="assets/js/script.js"></script>
 
 </body>
 </html>

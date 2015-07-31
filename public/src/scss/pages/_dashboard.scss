@@ -1,0 +1,8 @@
+.card-stack {
+	@include fill-parent();
+
+	.card {
+		@include pad(1% 2%);
+		@include span-columns(4 of 12);
+	}
+}

@@ -12,6 +12,7 @@ module.exports = function (grunt) {
      */
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        bower: grunt.file.readJSON('bower.json'),
         folders: {
             pub: {
                 app: 'public/app',
@@ -19,6 +20,9 @@ module.exports = function (grunt) {
                 src: 'public/src',
                 lib: '<%= folders.pub.src %>/lib',
                 scss: '<%= folders.pub.src %>/scss'
+            },
+            bower: {
+                components: 'bower_components'
             }
         },
 
@@ -56,12 +60,15 @@ module.exports = function (grunt) {
 
         uglify: {
             options: {
-                sourceMap: true,
+                sourceMap: false,
                 mangle: false
             },
             build: {
                 files: {
-                    //'<%= folders.pub.assets %>/js/app.min.js': ['<%= folders.pub.lib %>/angular/angular.min.js','<%= folders.pub.app %>/**/*.js']
+                    '<%= folders.pub.assets %>/js/lib.min.js': [
+                        '<%= bower.components.angular %>',
+                        '<%= bower.components.angularUiRouter %>'
+                    ],
                     '<%= folders.pub.assets %>/js/app.min.js': ['<%= folders.pub.app %>/**/*.js']
                 }
             }
