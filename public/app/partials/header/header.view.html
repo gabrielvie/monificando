@@ -1,0 +1,57 @@
+<div class="logo">
+	<h1><img src="assets/img/logo.png">
+		<!--<span>onificando</span>-->
+	</h1>
+</div>
+<div class="user">
+	<ul class="user__menu">
+		<li class="user__menu__item">
+			<a href="#">
+				<span class="user__menu__item--calendar">
+					<span class="badge badge-red" ng-hide="headCtrl.calendarNotify.count === 0">
+						{{ headCtrl.calendarNotify.count }}
+					</span>
+				</span>
+			</a>
+		</li>
+		<li class="user__menu__item">
+			<a href="#">
+				<span class="user__menu__item--alert">
+					<span class="badge badge-red" ng-hide="headCtrl.alarmNotify.count === 0">
+						{{ headCtrl.alarmNotify.count }}
+					</span>
+				</span>
+			</a>
+		</li>
+		<li class="user__menu__item">
+			<a href="#">
+				<span class="user__menu__item--user">
+					<img src="assets/img/sample/userImage.jpg" class="user__menu__item--user-photo"/>
+					<span class="user__menu__item--user-name">Gabriel
+						<span class="arrow arrow-left"></span>
+					</span>
+				</span>
+			</a>
+			<ul class="user__menu__item__submenu">
+				<li class="user__menu__item__submenu__item">
+					<a href="#">
+						<span class="icon icon-account-inverse"></span>
+						Minha Conta
+					</a>
+				</li>
+				<li class="user__menu__item__submenu__item">
+					<a href="#">
+						<span class="icon icon-help-inverse"></span>
+						Ajuda
+					</a>
+				</li>
+				<li class="user__menu__item__submenu__item">
+					<a href="#">
+						<span class="icon icon-exit-inverse"></span>
+						Sair
+					</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</div>

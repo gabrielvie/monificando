@@ -5,5 +5,55 @@
 
   background: $sidebar-bg;
   height: 100%;
+	padding: 100px 0;
   z-index: 98;
+
+	.menu {
+		&__list {
+			list-style: none;
+			padding: 0;
+
+			&__item,
+			&__item-selected {
+				$item-color: $clouds;
+				$item-height: 50px;
+				$item-line-height: $item-height;
+
+				@include transition(background .2s ease-in-out);
+				height: $item-height;
+				line-height: $item-line-height;
+				padding: 0 20px;
+				position: relative;
+
+				> a {
+					color: $item-color;
+					display: block;
+					font-size: 1.2em;
+					height: inherit;
+					line-height: inherit;
+
+					.icon {
+						vertical-align: middle;
+					}
+				}
+			}
+
+			&__item:hover,
+			&__item-selected {
+				background: $emerald;
+			}
+
+			&__item-selected {
+				&:after {
+					@include position(absolute, 10px 0 null null);
+					border-color: transparent $clouds transparent transparent;
+					border-style: solid;
+					border-width: 15px 20px 15px 0;
+					content: '';
+					height: 0;
+					width: 0;
+				}
+			}
+		}
+	}
 }

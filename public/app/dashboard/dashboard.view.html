@@ -4,20 +4,54 @@
 			<h3 class="card__body__title">R$ 1059,70</h3>
 			<p class="card__body__desc">Próximas Faturas de Cartão de Crédito</p>
 		</div>
-		<footer class="card__footer">Veja mais</footer>
+		<footer class="card__footer">
+			<a href="#">
+				Veja mais
+				<span class="icon icon-arrow-rounded"></span>
+			</a>
+		</footer>
     </div>
     <div class="card card-blue card--amount">
 		<div class="card__body">
-			<h3 class="card__body__title">- R$ 169,20</h3>
+			<h3 class="card__body__title">R$ 169,20</h3>
 			<p class="card__body__desc">Gastos efetuados este mês <br> (Não está incluso cartão de crédito)</p>
 		</div>
-		<footer class="card__footer"></footer>
+		<footer class="card__footer">
+			<a href="#">
+				Veja mais
+				<span class="icon icon-arrow-rounded"></span>
+			</a>
+		</footer>
     </div>
     <div class="card card-yellow card--remainder">
 		<div class="card__body">
-			<h3 class="card__body__title">+ R$ 1023,00</h3>
+			<h3 class="card__body__title">R$ 1023,00</h3>
 			<p class="card__body__desc">Seu saldo atual</p>
 		</div>
-		<footer class="card__footer"></footer>
+		<footer class="card__footer">
+			<a href="#">
+				Veja mais
+				<span class="icon icon-arrow-rounded"></span>
+			</a>
+		</footer>
     </div>
 </section>
+
+<div class="charts">
+	<section class="chart">
+		<div class="chart__title">
+			<h2>Gastos deste Mês (Agosto)</h2>
+		</div>
+		<div class="chart__body">
+			<canvas id="line" class="chart chart-line" data="dashCtrl.lineChart.data" labels="dashCtrl.lineChart.labels"></canvas>
+		</div>
+	</section>
+	<section class="chart">
+		<div class="chart__title">
+			<h2>Gastos dos últimos 3 meses</h2>
+		</div>
+		<div class="chart__body">
+			<canvas id="doughnut" class="chart chart-doughnut" data="dashCtrl.pieChart.data" labels="dashCtrl.pieChart.labels" legend="true"></canvas>
+		</div>
+	</section>
+</div>

@@ -34,13 +34,34 @@
 
     height: $card-footer-height;
     width: 100%;
+
+    a {
+      color: $font-color;
+      display: block;
+      font-size: em(14px);
+      line-height: $card-footer-height;
+      padding: 0 10px;
+      position: relative;
+      text-transform: uppercase;
+      width: 100%;
+
+      .icon-arrow-rounded {
+        @include position(absolute, null 0 14px null);
+        margin-bottom: -5px;
+        transform: rotate(180deg);
+      }
+    }
   }
 
   &-red {
     background: $alizarin;
 
     .card__footer {
-      background: rgba($pomegranate, .5);
+      background: $pomegranate;
+
+      &:hover {
+        background: shade($pomegranate, 20%);
+      }
     }
   }
 
@@ -49,6 +70,10 @@
 
     .card__footer {
       background: $belize-hole;
+
+      &:hover {
+        background: shade($belize-hole, 20%);
+      }
     }
   }
 
@@ -57,6 +82,10 @@
 
     .card__footer {
       background: $nephritis;
+
+      &:hover {
+        background: shade($nephritis, 20%);
+      }
     }
   }
 
@@ -64,7 +93,44 @@
     background: $sun-flower;
 
     .card__footer {
-      background: rgba($orange, .5);
+      background: $orange;
+
+      &:hover {
+        background: shade($orange, 20%);
+      }
+    }
+  }
+
+  &--amount,
+  &--credit,
+  &--remainder {
+    &:before {
+      @include position(absolute, 28px null null 4%);
+      background-repeat: no-repeat;
+      background-size: 60px;
+      content: '';
+      display: block;
+      height: 70px;
+      opacity: .7;
+      width: 70px;
+    }
+  }
+
+  &--amount {
+    &:before {
+      background-image: url($finance-doc-icon-white);
+    }
+  }
+
+  &--credit {
+    &:before {
+      background-image: url($credit-card-icon-white);
+    }
+  }
+
+  &--remainder {
+    &:before {
+      background-image: url($wallet-icon-white);
     }
   }
 }

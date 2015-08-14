@@ -13,58 +13,16 @@
 
     <link type="text/css" rel="stylesheet" href="assets/css/app.min.css">
 </head>
-<body ng-app="app">
+<body ng-app="monificando">
+
+
 
     <div id="wrapper">
-        <header id="header">
-            <div class="logo">
-                <h1><img src="assets/img/logo.png">
-                    <!--<span>onificando</span>-->
-                </h1>
-            </div>
-            <div class="user">
-                    <ul class="user__menu">
-                        <li class="user__menu__item">
-                            <a href="#">
-                                <span class="user__menu__item--calendar">
-                                    <span class="badge badge-red">3</span>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="user__menu__item">
-                            <a href="#">
-                                <span class="user__menu__item--alert">
-                                    <!--<span class="badge">9</span>-->
-                                </span>
-                            </a>
-                        </li>
-                        <li class="user__menu__item">
-                            <a href="#">
-                                <span class="user__menu__item--user">
-                                    <img src="assets/img/sample/userImage.jpg" class="user__menu__item--user-photo"/>
-                                    <span class="user__menu__item--user-name">
-                                        Gabriel
-                                        <span class="arrow arrow-left"></span>
-                                    </span>
-                                </span>
-                            </a>
-                            <ul class="user__menu__item__submenu">
-                                <li class="user__menu__item__submenu__item"><a href="#"><span class="icon icon-account-inverse"></span>Minha Conta</a></li>
-                                <li class="user__menu__item__submenu__item"><a href="#"><span class="icon icon-help-inverse"></span>Ajuda</a></li>
-                                <li class="user__menu__item__submenu__item"><a href="#"><span class="icon icon-exit-inverse"></span>Sair</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-            </div>
-        </header>
-        <div id="sidebar">
-            ...
-        </div>
-        <div id="content-area">
-            <ncy-breadcrumb></ncy-breadcrumb>
 
-            <ui-view></ui-view>
-        </div>
+		<header id="header" ui-view="header"></header>
+		<div id="sidebar" ui-view="sidebar"></div>
+		<div id="content-area" ui-view="main"></div>
+
     </div>
 
     <script>
@@ -78,7 +36,33 @@
     </script>
 
     <script type="text/javascript" src="assets/js/lib.min.js"></script>
-    <script type="text/javascript" src="assets/js/app.min.js"></script>
 
+	<script type="text/javascript" src="app/widgets/charts/charts.js"></script>
+    <script type="text/javascript" src="app/widgets/charts/charts.service.js"></script>
+
+    <script type="text/javascript" src="app/widgets/breadcrumbs/breadcrumbs.js"></script>
+    <script type="text/javascript" src="app/widgets/breadcrumbs/breadcrumbs.directive.js"></script>
+    <script type="text/javascript" src="app/widgets/breadcrumbs/breadcrumbs.controller.js"></script>
+
+	<script type="text/javascript" src="app/app.js"></script>
+
+	<script	type="text/javascript" src="app/partials/partials.js"></script>
+	<script	type="text/javascript" src="app/partials/header/header.controller.js"></script>
+	<script	type="text/javascript" src="app/partials/sidebar/sidebar.service.js"></script>
+	<script	type="text/javascript" src="app/partials/sidebar/sidebar.controller.js"></script>
+	<script	type="text/javascript" src="app/partials/main/main.controller.js"></script>
+
+    <script type="text/javascript" src="app/dashboard/dashboard.controller.js"></script>
+
+	<script type="text/javascript">
+	/*var body = document.getElementsByTagName('body')[0];
+	setTimeout(function(){
+
+		body.setAttribute('ng-app', 'monificando');
+		body.setAttribute('ng-controller', 'AppController as main');
+
+		angular.bootstrap(body, ['ng', 'monificando']);
+	}, 2000);*/
+	</script>
 </body>
 </html>

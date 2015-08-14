@@ -1,41 +1,73 @@
 .icon {
+  $border-color: $clouds;
   $icon-size: 20px;
+
   display: inline-block;
   height: $icon-size;
   margin: 0 $icon-size / 2;
   width: $icon-size;
 
   &-account {
-    background: url($user-accout-icon-white) no-repeat center;
+    background: url($user-accout-icon-white);
 
     &-inverse {
-      background: url($user-accout-icon-mid) no-repeat center;
+      background: url($user-accout-icon-mid);
     }
   }
 
+	&-agenda {
+		background: url($agenda-icon-white);
+	}
+
+  &-arrow-rounded {
+    background: url($left-arrow-white) no-repeat center;
+    background-size: $icon-size - 10;
+    border: 1px solid $border-color;
+    border-radius: 50%;
+  }
+
+	&-graphic {
+		background: url($graphic-icon-white);
+	}
+
   &-help {
-    background: url($help-icon-white) no-repeat center;
+    background: url($help-icon-white);
 
     &-inverse {
-      background: url($help-icon-mid) no-repeat center;
+      background: url($help-icon-mid);
+    }
+  }
+
+  &-home {
+    background: url($home-icon-white);
+
+    &-inverse {
+      background: url($home-icon-mid);
     }
   }
 
   &-exit {
-    background: url($exit-icon-white) no-repeat center;
+    background: url($exit-icon-white);
 
     &-inverse {
-      background: url($exit-icon-mid) no-repeat center;
+      background: url($exit-icon-mid);
     }
   }
 
   &-account,
-  &-help,
-  &-exit {
-    background-size: $icon-size;
+	&-agenda,
+	&-graphic,
+	&-help,
+	&-home,
+	&-exit {
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: $icon-size;
 
     &-inverse {
-      background-size: $icon-size;
+			background-position: center;
+			background-repeat: no-repeat;
+			background-size: $icon-size;
     }
   }
 }

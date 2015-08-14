@@ -69,28 +69,22 @@
       }
     }
 
-    &:hover {
-      background: $item-hover-bg;
-
-      .arrow {
-        @extend .arrow-down;
-      }
-    }
-
     &__submenu {
       $bg-submenu: $clouds;
       $bg-submenu-hover: $item-hover-bg;
+			$bg-submenu-hover-last-item: $pomegranate;
       $item-color: $wet-asphalt;
       $item-color-hover: $clouds;
       $shadow-color: $asbestos;
 
-      @include transition(opacity .2s ease-in-out);
+      @include transition(visibility .0s linear, opacity .2s linear);
 
       background: $bg-submenu;
       box-shadow: 1px 1px 2px 0 $shadow-color;
       list-style: none;
       opacity: 0;
       padding: 0;
+      visibility: hidden;
 
       &__item {
         @include transition(background .2s ease-in-out);
@@ -110,6 +104,10 @@
         &:hover {
           background: $bg-submenu-hover;
 
+          &:last-child {
+						background: $bg-submenu-hover-last-item;
+          }
+
           a {
             color: $item-color-hover;
 
@@ -127,7 +125,20 @@
           }
         }
       }
+    }
 
+    &:hover {
+      background: $item-hover-bg;
+
+      .arrow {
+        @extend .arrow-down;
+      }
+
+      .user__menu__item__submenu {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+      }
     }
   }
 }

@@ -31,7 +31,8 @@ module.exports = function (grunt) {
             options: {
                 globals: {
                     angular: true,
-                    module: true
+                    module: true,
+                    console: true
                 }
             }
         },
@@ -60,14 +61,17 @@ module.exports = function (grunt) {
 
         uglify: {
             options: {
-                sourceMap: false,
+                compress: true,
+                sourceMap: true,
                 mangle: false
             },
             build: {
                 files: {
                     '<%= folders.pub.assets %>/js/lib.min.js': [
+                        '<%= bower.components.chartJs %>',
                         '<%= bower.components.angular %>',
-                        '<%= bower.components.angularUiRouter %>'
+                        '<%= bower.components.angularUiRouter %>',
+                        '<%= bower.components.angularChartJs %>'
                     ],
                     '<%= folders.pub.assets %>/js/app.min.js': ['<%= folders.pub.app %>/**/*.js']
                 }

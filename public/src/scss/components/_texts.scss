@@ -9,9 +9,11 @@ h1, h2, h3 {
 }
 
 h1, h2 {
+  font-size: 2.5em;
   font-weight: $font-weight-semibold;
 
   small {
+    font-size: 60%;
     font-weight: $font-weight-normal;
   }
 }

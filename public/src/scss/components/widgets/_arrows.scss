@@ -10,7 +10,16 @@
   margin-left: 5px;
   width: $size;
 
+  &-inverse {
+    background: url($left-arrow-mid) no-repeat;
+    background-size: $size;
+  }
+
   &-down {
   	transform: rotate(-90deg);
+  }
+
+  &-right {
+    transform: rotate(180deg);
   }
 }

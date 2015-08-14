@@ -24,7 +24,7 @@
     "type": "git",
     "url": "git://"
   },
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "bower": "^1.4.1",
     "grunt": "^0.4.5",

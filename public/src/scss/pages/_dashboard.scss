@@ -1,8 +1,36 @@
 .card-stack {
 	@include fill-parent();
+	clear: both;
+
+	&:after {
+    clear: both;
+    content: "";
+    display: block;
+	}
 
 	.card {
 		@include pad(1% 2%);
 		@include span-columns(4 of 12);
+	}
+}
+
+.charts {
+
+	margin: 25px 0;
+	padding: 25px 0;
+	position: relative;
+
+	.chart {
+		@include span-columns(6);
+
+		&__title {
+			h2 {
+				$title-color: $wet-asphalt;
+
+				color: $title-color;
+				font-size: 1.6em;
+				text-align: center;
+			}
+		}
 	}
 }
