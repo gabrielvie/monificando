@@ -7,6 +7,7 @@
             'ui.router',
             'monificando.charts',
             'monificando.breadcrumbs',
+            'monificando.dropdown',
 			'monificando.partials'
         ])
         .config(config);
@@ -48,7 +49,9 @@
 				url: '/agenda',
 				views: {
 					'content': {
-						templateUrl: '/app/agenda/agenda.view.html'
+						templateUrl: '/app/bills/bills.view.html',
+						controller: 'BillsController',
+						controllerAs: 'billCtrl'
 					}
 				},
 				data: {
