@@ -27,14 +27,7 @@ module.exports = function (grunt) {
         },
 
         jshint: {
-            files: ['Gruntfile.js', '<%= folders.pub.app %>/**/*.js'],
-            options: {
-                globals: {
-                    angular: true,
-                    module: true,
-                    console: true
-                }
-            }
+            files: ['Gruntfile.js', '<%= folders.pub.app %>/**/*.js']
         },
 
         scsslint: {
@@ -96,5 +89,5 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-scss-lint');
 
-    grunt.registerTask('default', ['jshint', 'scsslint', 'sass', 'uglify', 'watch']);
+    grunt.registerTask('default', ['scsslint', 'jshint', 'sass', 'uglify', 'watch']);
 };

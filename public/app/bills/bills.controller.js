@@ -5,10 +5,24 @@
 		.module('monificando')
 		.controller('BillsController', BillsController);
 
-	BillsController.$injector = [];
+	BillsController.$injector = ['DateService', 'BillsService', '$filter'];
 
-	function BillsController() {
+	function BillsController(DateService, BillsService, $filter) {
 		var vm = this;
-		vm.currentMonth = 'Agosto';
+		vm.bills = BillsService.get();
+
+		DateService.setCurrentMonth(vm.bills[0].date);
+
+		vm.monthsList = function () {
+			return DateService.months;
+		};
+
+		vm.selectMonth = function (month) {
+			console.log(month);
+		};
+
+		vm.yearsList = function () {
+			return null;
+		};
 	}
 })();

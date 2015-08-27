@@ -5,6 +5,7 @@
     angular
         .module('monificando', [
             'ui.router',
+            'monificando.utils',
             'monificando.charts',
             'monificando.breadcrumbs',
             'monificando.dropdown',

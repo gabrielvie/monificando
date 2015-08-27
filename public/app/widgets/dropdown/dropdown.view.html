@@ -1,12 +1,15 @@
 <div class="dropdown">
+	<a href="#">
 	<div class="dropdown__display">
-		<span>{{ dropdown.placeholder }}</span>
-		<span></span>
-		<span class="icon"></span>
+		<span>{{ dropdCtrl.getSelectedItem() }}</span>
+		<span class="arrow arrow-inverse arrow-down"></span>
 	</div>
+	</a>
 	<div class="dropdown__list">
 		<ul>
-			<li class="dropdown__list__item"></li>
+			<li ng-repeat="item in dropdCtrl.itemsList"
+				ng-class="item.current ? 'dropdown__list__item--selected' : 'dropdown__list__item'"
+				ng-click="dropdCtrl.selectItem(item._id); callbackMethod({ item: item })">{{ item.name }}</li>
 		</ul>
 	</div>
 </div>

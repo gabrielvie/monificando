@@ -3,24 +3,34 @@
 
 	angular
 		.module('monificando')
-		.factory('billsService', billsService);
+		.factory('BillsService', BillsService);
 
-	billsService.$injector = [];
+	BillsService.$injector = [];
 
-	function billsService() {
+	function BillsService() {
 		var bills = [];
 
-		bills.push({
-			'title': "Mixer Eletrolux",
-			'description': "Mixer comprado na eletrolux.",
-			'date': "2015/06/19"
-		});
+		bills.get = function() {
+			var result = [];
 
-		bills.push({
-			'title': "Eletropaulo",
-			'description': "Conta de Luz",
-			'date': "2015/06/10"
-		});
+			result.push({
+				'title': "Mixer Eletrolux",
+				'description': "Mixer comprado na eletrolux.",
+				'value': '',
+				'date': new Date("2015-06-19 19:55:00")
+			});
+
+			result.push({
+				'title': "Eletropaulo",
+				'description': "Conta de Luz",
+				'value': '',
+				'date': new Date("2015-06-10 15:40:00")
+			});
+
+			return result;
+		};
+
+
 
 		return bills;
 	}
