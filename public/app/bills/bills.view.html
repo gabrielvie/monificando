@@ -1,1 +1,4 @@
 <dropdown placeholder="billCtrl.currentMonth" items-list="billCtrl.monthsList()" callback-method="billCtrl.selectMonth(item)"></dropdown>
+<select>
+    <option ng-repeat="month in billCtrl.monthsList()" value="{{ month._id }}">{{ month.name }}</option>
+</select>
