@@ -1,23 +1,32 @@
 /*global angular, console */
 (function () {
-    'use strict';
+	'use strict';
 
-    angular
-        .module('monificando', [
-            'ui.router',
-            'monificando.utils',
-            'monificando.charts',
-            'monificando.breadcrumbs',
-            'monificando.dropdown',
+	angular
+		.module('monificando', [
+			'ui.router',
+			'ui.bootstrap',
+			'monificando.auth',
+			'monificando.utils',
+			'monificando.widgets',
 			'monificando.partials'
-        ])
-        .config(config);
+		])
+		.config(config);
 
-    config.$inject = ['$stateProvider', '$urlRouterProvider'];
+	config.$inject = ['$stateProvider', '$urlRouterProvider'];
 
-    function config($stateProvider, $urlRouterProvider) {
-
-		var app = {
+	function config($stateProvider, $urlRouterProvider) {
+		var auth = {
+				url: '/auth',
+				views: {
+					'main': {
+						templateUrl: '/app/auth/auth.view.html',
+						controller: 'AuthController',
+						controllerAs: 'authCtrl'
+					}
+				}
+			},
+			app = {
 				url: '/app',
 				views: {
 					'header': {
@@ -62,10 +71,11 @@
 			};
 
 		$stateProvider
-            .state('app', app)
-            .state('app.agenda', agenda);
+			.state('auth', auth)
+			.state('app', app)
+			.state('app.agenda', agenda);
 
 		$urlRouterProvider.otherwise('/app');
-    }
+	}
 
 })();

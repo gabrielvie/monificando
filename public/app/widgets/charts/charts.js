@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular
-		.module('monificando.charts', ['chart.js'])
+		.module('monificando.widgets.charts', ['monificando.widgets', 'chart.js'])
 		.config(configBasicCharts)
 		.config(configChartsColours)
 		.config(configChartsTooltip);

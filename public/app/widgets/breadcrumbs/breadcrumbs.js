@@ -2,5 +2,5 @@
 	'use strict';
 
 	angular
-		.module('monificando.breadcrumbs', []);
+		.module('monificando.widgets.breadcrumbs', ['monificando.widgets']);
 })();

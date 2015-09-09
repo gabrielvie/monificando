@@ -18,3 +18,19 @@
   background: url($bg) no-repeat center;
   background-size: 20px;
 }
+
+@mixin button-color-maker($bg, $bc) {
+	$button-background: $bg;
+	$button-border-color: $bc;
+	$button-hover-background: $button-border-color;
+	$button-hover-border-color: shade($button-border-color, 20%);
+
+	@include transition(background .2s ease-in-out);
+	background-color: $button-background;
+	border-color: $button-border-color;
+
+	&:hover {
+		background-color: $button-hover-background;
+		border-color: $button-hover-border-color;
+	}
+}

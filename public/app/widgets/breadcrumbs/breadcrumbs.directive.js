@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular
-		.module('monificando.breadcrumbs')
+		.module('monificando.widgets.breadcrumbs')
         .directive('breadcrumbs', breadcrumbs);
 
     breadcrumbs.$injector = ['$log', '$parse', '$interpolate'];

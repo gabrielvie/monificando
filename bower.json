@@ -33,14 +33,16 @@
     "tests"
   ],
   "dependencies": {
-    "Chart.js": "~1.0.2",
     "angular": "~1.4.3",
+    "angular-bootstrap": "~0.13.3",
+    "angular-chart.js": "~0.7.2",
     "angular-ui-router": "~0.2.15",
-    "angular-chart.js": "~0.7.2"
+    "Chart.js": "~1.0.2"
   },
   "components": {
     "chartJs": "bower_components/Chart.js/Chart.min.js",
     "angular": "bower_components/angular/angular.min.js",
+	"angularBootstrap": "bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
     "angularUiRouter": "bower_components/angular-ui-router/release/angular-ui-router.min.js",
     "angularChartJs": "bower_components/angular-chart.js/dist/angular-chart.min.js"
   }

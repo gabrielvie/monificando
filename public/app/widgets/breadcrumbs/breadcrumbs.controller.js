@@ -2,7 +2,7 @@
 	'use strict';
 
 	angular
-		.module('monificando.breadcrumbs')
+		.module('monificando.widgets.breadcrumbs')
 		.controller('BreadcrumbsController', BreadcrumbsController);
 
 	BreadcrumbsController.$injector = ['$scope', '$state', '$stateParams'];

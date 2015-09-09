@@ -1,0 +1,59 @@
+select,
+#{$all-text-inputs},
+#{$all-buttons} {
+	background: white;
+	box-sizing: content-box;
+	font-size: inherit;
+	margin: .2em 0;
+	padding: .5em 1em;
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+}
+
+#{$all-buttons} {
+	border-width: 1px;
+	border-style: solid;
+	display: inline-block;
+	padding: .6em 1.5em;
+	position: relative;
+
+	&:active {
+		top: 1px;
+	}
+
+	@include button-color-maker($concrete, $asbestos);
+	@include transition(background .2s ease-in-out);
+	color: $clouds;
+
+	&.btn-blue {
+		@include button-color-maker($peter-river, $belize-hole);
+	}
+
+	&.btn-green {
+		@include button-color-maker($emerald, $nephritis);
+	}
+
+	&.btn-red {
+		@include button-color-maker($alizarin, $pomegranate);
+	}
+
+	&.btn-yellow {
+		@include button-color-maker($sun-flower, $orange);
+	}
+
+	&.btn-blue,
+	&.btn-green,
+	&.btn-red,
+	&.btn-yellow {
+		color: $clouds;
+	}
+}
+
+select:focus,
+select:active,
+#{$all-buttons-focus},
+#{$all-buttons-active},
+#{$all-text-inputs-focus},
+#{$all-text-inputs-active} {
+	outline: none;
+}
