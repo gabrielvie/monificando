@@ -15,9 +15,9 @@
 
 		background: $container-bg-color;
 		border: 1px solid $midnight-blue;
+		overflow: hidden;
 		position: relative;
 		width: $container-width;
-		overflow: hidden;
 
 		.panel-group {
 			width: 100%;
