@@ -25,7 +25,6 @@ module.exports = function(database) {
 	app.use(function(req, res, next) {
 		res.locals.url = req.protocol + '://' + req.headers.host + req.url;
 		next();
-		console.log(res.locals.url);
 	});
 
 	app.set('showStackError', true);
@@ -41,6 +40,41 @@ module.exports = function(database) {
 	app.use(bodyParser.json());
 	app.use(methodOverride());
 	app.use(express.static(path.resolve('./public')));
+
+	var tenso = function(req, res, next) {
+		var token = req.body.token || req.param('token') || req.headers['x-access-token'];
+
+		if (token) {
+			jwt.verify(token, config.jwt.secret_token, function(err, decoded) {
+				if (err) {
+					return res.json({
+						success: true,
+						message: 'Failed to authenticate token.'
+					});
+				} else {
+					req.decode = decoded;
+					next();
+				}
+			});
+		} else {
+			return res.status(403).send({
+				success: false,
+				message: 'No token provided.'
+			});
+		}
+	};
+
+	var unless = function(path, middleware) {
+		return function(req, res, next) {
+			if (path === req.path)
+				return next();
+			else
+				return middleware(req, res, next);
+		}
+	};
+
+	//app.use(unless('/api/signup', tenso));
+	app.use(unless('/api/signin', tenso));
 
 	config.getGlobbedFiles('./app/routes/**/*.js').forEach(function(routePath) {
 		require(path.resolve(routePath))(app);

@@ -1,14 +1,12 @@
 'use strict';
 
-/*module.exports = {
-	app: {
-		title: 'Monificando - Developer Edition'
-	},
-	port: process.env.PORT || 3000,
-	database: 'mongodb://monificando:monificandopassword@ds041623.mongolab.com:41623/monificando-test'
-};*/
 var _ 		= require('lodash'),
 	glob 	= require('glob');
+
+
+module.exports = _.extend(
+	require('./env/all.env')
+);
 
 module.exports.getGlobbedFiles = function(globPatterns, removeRoot) {
 
@@ -40,3 +38,4 @@ module.exports.getGlobbedFiles = function(globPatterns, removeRoot) {
 
 	return output;
 };
+

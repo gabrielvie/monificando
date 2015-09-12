@@ -1,12 +1,10 @@
 'use strict';
 
 var mongoose = require('mongoose'),
-	Users = mongoose.model('Users');
+	User = mongoose.model('User');
 
 exports.index = function(req, res) {
-	console.log("Awweeeee!");
-};
+	req.message = "Awweeeee!";
 
-exports.create = function(req, res) {
-	console.log(req);
+	return req;
 };

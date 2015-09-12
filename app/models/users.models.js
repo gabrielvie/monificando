@@ -1,7 +1,10 @@
-var mongoose 	= require('mongoose'),
-	Schema 	 	= mongoose.Schema;
+'use strict';
 
-var UsersSchema = new Schema({
+var mongoose 	= require('mongoose'),
+	Schema 	 	= mongoose.Schema,
+	bcrypt		= require('bcrypt-nodejs');
+
+var UserSchema = new Schema({
 	email: {
 		type: String,
 		required: true,
@@ -44,16 +47,31 @@ var UsersSchema = new Schema({
 	}
 });
 
-UsersSchema.pre('save', function(next){
-	now = new Date();
+UserSchema.pre('save', function(next){
+	var user = this,
+		now = new Date(),
+		salt = bcrypt.genSaltSync(10);
 
-	this.updated_at = now;
+	user.updated_at = now;
 
-	if (!this.created_at) {
-		this.created_at = now;
+	if (!user.created_at) {
+		user.created_at = now;
 	}
+
+	if (!user.isModified('password')) return next();
+
+	user.password = bcrypt.hashSync(this.password, salt);
 
 	next();
 });
 
-module.exports = mongoose.model('Users', UsersSchema);
+UserSchema.methods.verifyPassword = function(password) {
+	var salt = bcrypt.genSaltSync(10),
+		hash = bcrypt.hashSync(password, salt);
+
+	console.log(bcrypt.compareSync(password, hash));
+
+	return bcrypt.compareSync(password, hash);
+};
+
+module.exports = mongoose.model('User', UserSchema);

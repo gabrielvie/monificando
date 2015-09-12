@@ -5,12 +5,6 @@ var config		= require('./config/config'),
 
 var uriUtil = require('mongodb-uri');
 
-/*app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-
-app.use(express.static(__dirname + '/public'));
-app.use(morgan('dev'));*/
-
 var mongolabUri = 'mongodb://monificando:monificandopassword@ds041623.mongolab.com:41623/monificando-test';
 var mongooseUri = uriUtil.formatMongoose(mongolabUri);
 
