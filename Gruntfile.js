@@ -91,4 +91,5 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-scss-lint');
 
     grunt.registerTask('default', ['scsslint', 'jshint', 'sass', 'uglify', 'watch']);
+    grunt.registerTask('homolog', ['scsslint', 'jshint', 'sass', 'uglify']);
 };
