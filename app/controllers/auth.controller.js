@@ -3,7 +3,6 @@
 var mongoose 	= require('mongoose'),
 	User 		= mongoose.model('User'),
 	jwt			= require('jsonwebtoken'),
-	bcrypt		= require('bcrypt-nodejs'),
 	config		= require('../../config/config');
 
 exports.signin = function(req, res) {

@@ -1,6 +1,6 @@
 .badge {
   $size: 18px;
-  $pos: -$size/2;
+  $pos: -$size / 2;
 
   @include position(absolute, $pos null null $pos);
   @include size($size);

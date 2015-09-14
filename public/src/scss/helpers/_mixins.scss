@@ -1,4 +1,4 @@
-@mixin badge($bg-color, $size, $pos: -$size/2) {
+@mixin badge($bg-color, $size, $pos: -$size / 2) {
   $badge-color: $clouds;
 
   @include position(absolute, $pos null null $pos);

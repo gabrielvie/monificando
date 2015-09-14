@@ -1,11 +1,7 @@
-<script id="template/accordion/accordion.html" type="text/ng-template">
-	<div class="auth__container" ng-transclude></div>
-</script>
-
 <accordion class="auth" close-others="true">
 	<accordion-group>
 		<accordion-heading>Acessar</accordion-heading>
-		<form method="post" is="aignin">
+		<form method="post" id="signin">
 			<div>
 				<input name="email" type="email" placeholder="Email">
 			</div>
@@ -18,43 +14,27 @@
 	<accordion-group>
 		<accordion-heading>Cadastre-se</accordion-heading>
 		<form method="post" id="signup">
-			<input name="first_name" type="text" placeholder="Nome">
-			<input name="last_name" type="text" placeholder="Sobrenome">
-
-			<input name="birth" type="date" placeholder="Data de Nascimento">
-
-			<label for="masculino">Masculino</label>
-			<input type="radio" id="masculino" name="sexo" value="masculino">
-			<label for="feminino">Feminino</label>
-			<input type="radio" id="feminino" name="sexo" value="feminino">
-
-			<input name="celular" type="tel" placeholder="Celular">
-
-			<input name="email" type="email" placeholder="Email">
-
-			<input name="password" type="password" placeholder="Senha">
+			<div>
+				<input name="first_name" type="text" placeholder="Nome">
+				<input name="last_name" type="text" placeholder="Sobrenome">
+			</div>
+			<div class="input-half">
+				<input name="birth" type="date" placeholder="Data de Nascimento">
+				<input name="celular" type="tel" placeholder="Celular">
+			</div>
+			<div>
+				<label for="masculino">Masculino</label>
+				<input type="radio" id="masculino" name="sexo" value="masculino">
+			</div>
+			<div>
+				<label for="feminino">Feminino</label>
+				<input type="radio" id="feminino" name="sexo" value="feminino">
+			</div>
+			<div>
+				<input name="email" type="email" placeholder="Email">
+				<input name="password" type="password" placeholder="Senha">
+			</div>
+			<button class="btn btn-green">Acessar</button>
 		</form>
 	</accordion-group>
 </accordion>
-<!--
-<div class="auth">
-	<div class="auth__container">
-		<section class="auth__container__accordion">
-			<h1 class="auth__container__accordion__header">
-				<a>Login</a>
-			</h1>
-			<div class="auth__container__accordion__body">
-
-			</div>
-		</section>
-		<section class="auth__container__accordion">
-			<h1 class="auth__container__accordion__header">
-				<a>Cadastre-se</a>
-			</h1>
-			<div class="auth__container__accordion__body">
-
-			</div>
-		</section>
-	</div>
-</div>
--->

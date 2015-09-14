@@ -3,9 +3,6 @@
 	$authbox-width: 100%;
 	$authbox-height: $authbox-width;
 
-	$accordion-head-bg-color: $emerald;
-	$accordion-head-tx-color: $clouds;
-
 	@include position(fixed, 0 0);
 	background: $authbox-bg-color;
 	height: 100%;
@@ -22,23 +19,44 @@
 		position: relative;
 		width: $container-width;
 
-		.panel {
-			margin: 10px 0;
+		.accordion {
+			@include position(relative);
+			margin-bottom: 10px;
+			width: 100%;
 
-			.panel-heading {
+			&__head {
+				$accordion-head-bg-color: $emerald;
+				$accordion-head-tx-color: $clouds;
+				$accordion-head-height: 40px;
+
 				background: $accordion-head-bg-color;
-				padding: 10px 20px;
+				box-shadow: 0 .5px 5px 0 shade($wet-asphalt, 10%);
+				height: 40px;
+				position: inherit;
+				width: 100%;
 
-				h4 a {
+				&__link {
 					color: $accordion-head-tx-color;
+					display: block;
+					font-size: em(24px);
+					font-weight: $font-weight-semibold;
+					line-height: $accordion-head-height;
+					padding: 0 15px;
+					width: 100%;
 				}
 			}
 
-			.panel-body {
-				padding: 10px 20px;
-				
-				input[name='email'] {
-					width: 100%;
+			&__body {
+				$accordion-body-bg-color: $clouds;
+				background: $accordion-body-bg-color;
+				height: auto;
+				padding: 15px;
+
+				form {
+					input:not([type='radio']) {
+						display: block;
+						width: 100%;
+					}
 				}
 			}
 		}

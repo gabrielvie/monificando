@@ -42,7 +42,7 @@
   "components": {
     "chartJs": "bower_components/Chart.js/Chart.min.js",
     "angular": "bower_components/angular/angular.min.js",
-	"angularBootstrap": "bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
+	"angularBootstrap": "bower_components/angular-bootstrap/ui-bootstrap.min.js",
     "angularUiRouter": "bower_components/angular-ui-router/release/angular-ui-router.min.js",
     "angularChartJs": "bower_components/angular-chart.js/dist/angular-chart.min.js"
   }
