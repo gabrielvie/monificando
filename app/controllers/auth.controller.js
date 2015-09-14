@@ -19,7 +19,7 @@ exports.signin = function(req, res) {
 		}
 
 		if (user) {
-			var isMatch = user.verifyPassword(req.body.password);
+			var isMatch = user.authenticate(req.body.password);
 
 			if (!isMatch) {
 				console.log("Attempt failed to login with " + user.email);
@@ -63,7 +63,7 @@ exports.signup = function(req, res) {
 	var user = new User(userInfo);
 
 	user.save(function(err) {
-		if (err) throw err;
+		if (err) res.json(err);
 
 		res.json({ success: true });
 	});

@@ -2,11 +2,12 @@
 
 var mongoose 	= require('mongoose'),
 	Schema 	 	= mongoose.Schema,
-	crypto		= '';
+	crypto		= require('crypto');
 
 var UserSchema = new Schema({
 	email: {
 		type: String,
+		match: [/.+\@.+\..+/, 'Please fill a valid email address'],
 		required: true,
 		trim: true
 	},
@@ -15,11 +16,19 @@ var UserSchema = new Schema({
 		required: true,
 		trim: true
 	},
+	salt: {
+		type: String
+	},
 	token: {
 		type: String
 	},
-	created_at: Date,
-	updated_at: Date,
+	created_at: {
+		type: Date,
+		default: Date.now
+	},
+	updated_at: {
+		type: Date
+	},
 	data: {
 		first_name: {
 			type: String,
@@ -47,20 +56,35 @@ var UserSchema = new Schema({
 	}
 });
 
-UserSchema.pre('save', function(next){
-	var user = this,
-		now = new Date();
+UserSchema.methods.hashPassword = function(password) {
+	if (this.salt && password)
+		return crypto.pbkdf2Sync(password, this.salt, 10000, 64).toString('base64');
+	else
+		return password;
 
-	user.updated_at = now;
+};
 
-	if (!user.created_at) {
-		user.created_at = now;
+UserSchema.pre('save', function(next, done){
+	this.updated_at = new Date();
+
+	if (this.password && this.password.length > 6) {
+		this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
+		this.password = this.hashPassword(this.password);
 	}
-
-	if (!user.isModified('password')) return next();
 
 	next();
 });
 
+UserSchema.methods.authenticate = function(password) {
+	return this.password === this.hashPassword(password);
+};
 
-module.exports = mongoose.model('User', UserSchema);
+var User = mongoose.model('User', UserSchema);
+
+module.exports = User;
+
+User.schema.path('email').validate(function(value, respond) {
+	User.findOne({ email: value }, function(err, user) {
+		if (user) respond(false);
+	});
+}, 'Este endereço de email já encontra-se em uso.');

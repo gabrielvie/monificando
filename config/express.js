@@ -5,9 +5,7 @@ var fs 				= require('fs'),
 	https			= require('https'),
 	express			= require('express'),
 	bodyParser 		= require('body-parser'),
-	session			= require('express-session'),
 	methodOverride 	= require('method-override'),
-	cookieParser	= require('cookie-parser'),
 	config			= require('./config'),
 	path			= require('path'),
 	morgan  		= require('morgan'),
@@ -40,11 +38,12 @@ module.exports = function(database) {
 	app.use(bodyParser.urlencoded({ extended: true }));
 	app.use(bodyParser.json());
 	app.use(methodOverride());
+	app.use(express.static(path.resolve('./public')));
 
 	app.use(function(req, res, next) {
 		var token 			= req.body.token || req.param('token') || req.headers['x-access-token'],
 			_				= require('underscore'),
-			nonSecurePaths 	= ['/signin', '/signup'];
+			nonSecurePaths 	= ['/', '/signin', '/signup'];
 
 		if (_.contains(nonSecurePaths, req.path)) return next();
 

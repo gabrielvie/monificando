@@ -5,11 +5,35 @@
 <accordion class="auth" close-others="true">
 	<accordion-group>
 		<accordion-heading>Acessar</accordion-heading>
-		This content is straight in the template.
+		<form method="post" is="aignin">
+			<div>
+				<input name="email" type="email" placeholder="Email">
+			</div>
+			<div>
+				<input name="password" type="password" placeholder="Senha">
+				<button class="btn btn-green">Acessar</button>
+			</div>
+		</form>
 	</accordion-group>
 	<accordion-group>
 		<accordion-heading>Cadastre-se</accordion-heading>
-		This is just some content to illustrate fancy headings.
+		<form method="post" id="signup">
+			<input name="first_name" type="text" placeholder="Nome">
+			<input name="last_name" type="text" placeholder="Sobrenome">
+
+			<input name="birth" type="date" placeholder="Data de Nascimento">
+
+			<label for="masculino">Masculino</label>
+			<input type="radio" id="masculino" name="sexo" value="masculino">
+			<label for="feminino">Feminino</label>
+			<input type="radio" id="feminino" name="sexo" value="feminino">
+
+			<input name="celular" type="tel" placeholder="Celular">
+
+			<input name="email" type="email" placeholder="Email">
+
+			<input name="password" type="password" placeholder="Senha">
+		</form>
 	</accordion-group>
 </accordion>
 <!--
@@ -20,13 +44,7 @@
 				<a>Login</a>
 			</h1>
 			<div class="auth__container__accordion__body">
-				<form method="post">
-					<label for="email">Email</label>
-					<input name="email" id="email" type="email">
 
-					<label for="password">Senha</label>
-					<input name="password" id="password" type="password">
-				</form>
 			</div>
 		</section>
 		<section class="auth__container__accordion">
@@ -34,27 +52,7 @@
 				<a>Cadastre-se</a>
 			</h1>
 			<div class="auth__container__accordion__body">
-				<form method="post">
-					<label for="nome">Nome</label>
-					<input name="nome" id="nome" type="text">
 
-					<label for="data">Nascimento</label>
-					<input name="data" id="data" type="date">
-
-					<label for="masculino">Masculino</label>
-					<input type="radio" id="masculino" name="sexo" value="masculino">
-					<label for="feminino">Feminino</label>
-					<input type="radio" id="feminino" name="sexo" value="feminino">
-
-					<label for="celular">Celular</label>
-					<input name="celular" id="celular" type="tel">
-
-					<label for="email">Email</label>
-					<input name="email" id="email" type="email">
-
-					<label for="password">Senha</label>
-					<input name="password" id="password" type="password">
-				</form>
 			</div>
 		</section>
 	</div>

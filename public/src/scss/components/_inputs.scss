@@ -2,7 +2,7 @@ select,
 #{$all-text-inputs},
 #{$all-buttons} {
 	background: white;
-	box-sizing: content-box;
+	box-sizing: padding-box;
 	font-size: inherit;
 	margin: .2em 0;
 	padding: .5em 1em;
