@@ -34,26 +34,6 @@ exports.signin = function(req, res) {
 					token: token
 				});
 			}
-			/*user.verifyPassword(passw, function (isMatch) {
-
-				console.log(isMatch);
-
-				if (!isMatch) {
-					console.log("Attempt failed to login with " + user.email);
-					return res.send(401);
-				}
-
-				console.log(isMatch);
-
-				var token = jwt.sign(user, config.jwt.secret_token, {
-					expiresInMinutes: config.jwt.expires_in
-				});
-
-				res.json({
-					success: true,
-					token: token
-				});
-			});*/
 		} else {
 			return res.json({
 				success: false,

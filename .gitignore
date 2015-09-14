@@ -4,3 +4,4 @@ bower_components
 public/assets/css/**
 public/assets/js/**
 .sass-cache
+logs

@@ -2,7 +2,7 @@
 
 var mongoose 	= require('mongoose'),
 	Schema 	 	= mongoose.Schema,
-	bcrypt		= require('bcrypt-nodejs');
+	crypto		= '';
 
 var UserSchema = new Schema({
 	email: {
@@ -49,8 +49,7 @@ var UserSchema = new Schema({
 
 UserSchema.pre('save', function(next){
 	var user = this,
-		now = new Date(),
-		salt = bcrypt.genSaltSync(10);
+		now = new Date();
 
 	user.updated_at = now;
 
@@ -60,18 +59,8 @@ UserSchema.pre('save', function(next){
 
 	if (!user.isModified('password')) return next();
 
-	user.password = bcrypt.hashSync(this.password, salt);
-
 	next();
 });
 
-UserSchema.methods.verifyPassword = function(password) {
-	var salt = bcrypt.genSaltSync(10),
-		hash = bcrypt.hashSync(password, salt);
-
-	console.log(bcrypt.compareSync(password, hash));
-
-	return bcrypt.compareSync(password, hash);
-};
 
 module.exports = mongoose.model('User', UserSchema);

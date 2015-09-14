@@ -10,7 +10,8 @@ var fs 				= require('fs'),
 	cookieParser	= require('cookie-parser'),
 	config			= require('./config'),
 	path			= require('path'),
-	enviroment		= process.env.NODE_ENV;
+	morgan  		= require('morgan'),
+	enviroment		= process.argv['2'];
 
 var chalk 	= require('chalk');
 
@@ -31,7 +32,7 @@ module.exports = function(database) {
 	app.set('view engine', 'html');
 
 	if (enviroment === 'development') {
-		app.use(morgam('dev'));
+		app.use(morgan('dev'));
 	} else if (enviroment === 'production'){
 		app.locals.cache = 'memory'
 	}
@@ -39,10 +40,13 @@ module.exports = function(database) {
 	app.use(bodyParser.urlencoded({ extended: true }));
 	app.use(bodyParser.json());
 	app.use(methodOverride());
-	app.use(express.static(path.resolve('./public')));
 
-	var tenso = function(req, res, next) {
-		var token = req.body.token || req.param('token') || req.headers['x-access-token'];
+	app.use(function(req, res, next) {
+		var token 			= req.body.token || req.param('token') || req.headers['x-access-token'],
+			_				= require('underscore'),
+			nonSecurePaths 	= ['/signin', '/signup'];
+
+		if (_.contains(nonSecurePaths, req.path)) return next();
 
 		if (token) {
 			jwt.verify(token, config.jwt.secret_token, function(err, decoded) {
@@ -62,19 +66,7 @@ module.exports = function(database) {
 				message: 'No token provided.'
 			});
 		}
-	};
-
-	var unless = function(path, middleware) {
-		return function(req, res, next) {
-			if (path === req.path)
-				return next();
-			else
-				return middleware(req, res, next);
-		}
-	};
-
-	//app.use(unless('/api/signup', tenso));
-	app.use(unless('/api/signin', tenso));
+	});
 
 	config.getGlobbedFiles('./app/routes/**/*.js').forEach(function(routePath) {
 		require(path.resolve(routePath))(app);
