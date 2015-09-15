@@ -8,6 +8,11 @@ select,
 	padding: .5em 1em;
 }
 
+#{$all-text-inputs} {
+	display: block;
+	width: 100%;
+}
+
 #{$all-buttons} {
 	@include button-color-maker($concrete, $asbestos);
 	@include transition(background .2s ease-in-out);
@@ -56,9 +61,29 @@ select:active,
 	outline: none;
 }
 
-.input-halt {
-	input {
+.input-half {
+	width: 100%;
+
+	#{$all-text-inputs} {
 		display: inline-block;
-		width: 50%;
+		width: 49%;
+
+		&:first-child {
+			margin-right: 1%;
+		}
+	}
+}
+
+.input-button {
+	width: 100%;
+
+	#{$all-text-inputs} {
+		display: inline-block;
+		width: 70%;
+	}
+
+	button {
+		margin-left: -1%;
+		width: 30%;
 	}
 }

@@ -51,13 +51,6 @@
 				background: $accordion-body-bg-color;
 				height: auto;
 				padding: 15px;
-
-				form {
-					input:not([type='radio']) {
-						display: block;
-						width: 100%;
-					}
-				}
 			}
 		}
 	}
