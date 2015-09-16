@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
 	User = mongoose.model('User');
 
 exports.index = function(req, res) {
-	req.message = "Awweeeee!";
+	res.message = "Awweeeee!";
 
-	return req;
+	return res;
 };

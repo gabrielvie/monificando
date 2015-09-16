@@ -6,9 +6,9 @@
         .module('monificando')
         .controller('DashboardController', DashboardController);
 
-    DashboardController.$inject = [];
+    DashboardController.$inject = ['$http'];
 
-    function DashboardController() {
+    function DashboardController($http) {
         var vm = this;
         vm.lineChart = {};
         vm.pieChart = {};
@@ -19,5 +19,13 @@
         vm.pieChart.labels = ['Janeiro', 'Fevereiro', 'Março'];
 		vm.pieChart.series = ['Janeiro', 'Fevereiro', 'Março'];
 		vm.pieChart.data = [1150.59, 2312.40, 1640.34];
+
+		$http.get('http://api.monificando.dev/me')
+			.then(function(response) {
+				console.log(response);
+			}, function(response) {
+				console.log(response);
+			});
     }
+
 })();

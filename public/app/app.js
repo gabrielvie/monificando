@@ -2,20 +2,7 @@
 (function () {
 	'use strict';
 
-	angular
-		.module('monificando', [
-			'ui.router',
-			'ui.bootstrap',
-			'monificando.auth',
-			'monificando.utils',
-			'monificando.widgets',
-			'monificando.partials'
-		])
-		.config(config);
-
-	config.$inject = ['$stateProvider', '$urlRouterProvider'];
-
-	function config($stateProvider, $urlRouterProvider) {
+	function appConfiguration($stateProvider, $urlRouterProvider) {
 		var auth = {
 				url: '/auth',
 				views: {
@@ -77,5 +64,19 @@
 
 		$urlRouterProvider.otherwise('/app');
 	}
+
+	appConfiguration.$inject = ['$stateProvider', '$urlRouterProvider'];
+
+	angular
+		.module('monificando', [
+			'ui.router',
+			'ui.bootstrap',
+			'ngStorage',
+			'monificando.auth',
+			'monificando.utils',
+			'monificando.widgets',
+			'monificando.partials'
+		])
+		.config(appConfiguration);
 
 })();

@@ -21,13 +21,25 @@ module.exports = function(database) {
 		require(path.resolve(modelPath));
 	});
 
+	app.all('/*', function(req, res, next) {
+		// CORS headers
+		res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
+		res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+		// Set custom headers for CORS
+		res.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key');
+		if (req.method == 'OPTIONS') {
+			res.status(200).end();
+		} else {
+			next();
+		}
+	});
+
 	app.use(function(req, res, next) {
 		res.locals.url = req.protocol + '://' + req.headers.host + req.url;
 		next();
 	});
 
 	app.set('showStackError', true);
-	app.set('view engine', 'html');
 
 	if (enviroment === 'development') {
 		app.use(morgan('dev'));
@@ -38,12 +50,13 @@ module.exports = function(database) {
 	app.use(bodyParser.urlencoded({ extended: true }));
 	app.use(bodyParser.json());
 	app.use(methodOverride());
-	app.use(express.static(path.resolve('./public')));
 
 	app.use(function(req, res, next) {
 		var token 			= req.body.token || req.param('token') || req.headers['x-access-token'],
 			_				= require('underscore'),
 			nonSecurePaths 	= ['/', '/signin', '/signup'];
+
+		res.type('application/json');
 
 		if (_.contains(nonSecurePaths, req.path)) return next();
 
