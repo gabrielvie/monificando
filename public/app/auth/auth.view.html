@@ -3,11 +3,11 @@
 		<accordion-heading>Acessar</accordion-heading>
 		<form method="post" id="signin">
 			<div>
-				<input name="email" type="email" placeholder="Email">
+				<input name="email" type="email" placeholder="Email" ng-model="authCtrl.email">
 			</div>
 			<div class="input-button">
-				<input name="password" type="password" placeholder="Senha">
-				<button class="btn btn-green">Acessar</button>
+				<input name="password" type="password" placeholder="Senha" ng-model="authCtrl.password">
+				<button class="btn btn-green" ng-click="authCtrl.login()">Acessar</button>
 			</div>
 		</form>
 	</accordion-group>

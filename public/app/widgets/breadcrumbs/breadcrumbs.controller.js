@@ -1,12 +1,6 @@
 (function(){
 	'use strict';
 
-	angular
-		.module('monificando.widgets.breadcrumbs')
-		.controller('BreadcrumbsController', BreadcrumbsController);
-
-	BreadcrumbsController.$injector = ['$scope', '$state', '$stateParams'];
-
 	function BreadcrumbsController($scope, $state, $stateParams) {
 		var vm = this;
 		vm.breadcrumbs = [];
@@ -26,4 +20,10 @@
 			});
 		};
 	}
+
+	BreadcrumbsController.$injector = ['$scope', '$state', '$stateParams'];
+
+	angular
+		.module('monificando.widgets.breadcrumbs')
+		.controller('BreadcrumbsController', BreadcrumbsController);
 })();

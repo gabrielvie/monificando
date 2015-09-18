@@ -1,16 +1,7 @@
 (function(){
 	'use strict';
 
-	angular
-		.module('monificando.widgets.charts', ['monificando.widgets', 'chart.js'])
-		.config(configBasicCharts)
-		.config(configChartsColours)
-		.config(configChartsTooltip);
-
-	configBasicCharts.$injector = ['ChartJsProvider'];
-	configChartsColours.$injector = ['ChartJsProvider'];
-	configChartsTooltip.$injector = ['ChartJsProvider'];
-
+	/* Set basic charts configs */
 	function configBasicCharts(ChartJsProvider) {
 		ChartJsProvider.setOptions({
 			animation: false,
@@ -20,6 +11,9 @@
 		});
 	}
 
+	configBasicCharts.$injector = ['ChartJsProvider'];
+
+	/* Set default chart colours */
 	function configChartsColours(ChartJsProvider) {
 
 		ChartJsProvider.setOptions({
@@ -42,6 +36,9 @@
 		});
 	}
 
+	configChartsColours.$injector = ['ChartJsProvider'];
+
+	/* Set default tooltip charts config */
 	function configChartsTooltip(ChartJsProvider) {
 
 		ChartJsProvider.setOptions({
@@ -61,4 +58,14 @@
 			multiTooltipTemplate: "<%= value %>",
 		});
 	}
+
+	configChartsTooltip.$injector = ['ChartJsProvider'];
+
+	angular
+		.module('monificando.widgets.charts', [
+			'monificando.widgets', 'chart.js'
+		])
+		.config(configBasicCharts)
+		.config(configChartsColours)
+		.config(configChartsTooltip);
 })();

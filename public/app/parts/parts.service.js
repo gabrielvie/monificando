@@ -1,23 +1,17 @@
 (function(){
 	'use strict';
 
-	angular
-		.module('monificando.partials')
-		.service('SidebarService', SidebarService);
-
-	SidebarService.$injector = [];
-
 	function SidebarService() {
 		this.menu = {
 			main: {
 				icon: 'home',
 				name: 'Painel Principal',
-				sref: 'app'
+				sref: 'app.dashboard'
 			},
 			agenda: {
 				icon: 'agenda',
 				name: 'Minha Agenda',
-				sref: 'app.agenda'
+				sref: 'app.bills'
 			},
 			graphic: {
 				icon: 'graphic',
@@ -27,4 +21,9 @@
 		};
 	}
 
+	SidebarService.$inject = [];
+
+	angular
+		.module('monificando.parts')
+		.service('SidebarService', SidebarService);
 })();
