@@ -1,49 +1,8 @@
 #content-area {
-	$content-area-pad-vertical: $app-header-height * 1.5;
+	margin-top: 50px;
+	overflow-y: auto;
 
-	@include pad($content-area-pad-vertical 2%);
-
-	.section-title {
-		$title-color: $midnight-blue;
-		$subtitle-color: $concrete;
-
-		color: $title-color;
-
-		small {
-			color: $subtitle-color;
-		}
-	}
-
-	.breadcrumbs {
-		background-color: $silver;
-		height: 30px;
-		line-height: 30px;
-		list-style: none;
-		margin: 20px 0;
-		padding-left: 5px;
-
-		&__item {
-			float: left;
-
-			a {
-				color: $midnight-blue;
-			}
-
-			.arrow {
-				margin: 0 10px;
-			}
-
-			.icon {
-				margin-bottom: -5px;
-			}
-		}
-	}
-
-	.page-filters {
-		margin: 20px 0;
-
-		button {
-			float: right;
-		}
+	.container-fluid {
+		padding-bottom: 100px;
 	}
 }

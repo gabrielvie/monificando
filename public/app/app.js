@@ -2,19 +2,23 @@
 (function () {
 	'use strict';
 
-	function defaultRoute($urlRouterProvider, $locationProvider) {
+	/* Deafult app's route */
+	function defaultRoute($urlRouterProvider) {
 		$urlRouterProvider.otherwise('/auth');
-		//$locationProvider.html5Mode(true);
 	}
+
+	defaultRoute.$inject = ['$urlRouterProvider'];
 
 	angular
 		.module('monificando', [
 			'ui.router',
 			'ui.bootstrap',
+			'ui.mask',
 			'ngStorage',
 			'monificando.auth',
 			'monificando.parts',
 			'monificando.dashboard',
+			'monificando.bills',
 			'monificando.widgets'
 		])
 		.config(defaultRoute);

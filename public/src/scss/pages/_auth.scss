@@ -1,0 +1,35 @@
+.auth-backdrop {
+	$authbox-bg-color: $wet-asphalt;
+	$authbox-width: 100%;
+	$authbox-height: $authbox-width;
+
+	@include position(fixed, 0 0);
+	background: $authbox-bg-color;
+	height: 100%;
+	overflow-y: auto;
+	width: 100%;
+	z-index: 1050;
+
+	.auth-container {
+		@include position(absolute, 20% null null 20%);
+
+		.panel-default {
+			$panel-border-color: $nephritis;
+			$panel-bg-color: $clouds;
+
+			background-color: $panel-bg-color;
+			border-color: $panel-border-color;
+			border-radius: 0;
+
+			> .panel-heading {
+				$panel-head-txt-color: $clouds;
+				$panel-head-bg-color: $emerald;
+
+				color: $panel-head-txt-color;
+				background-color: $panel-head-bg-color;
+				border-color: inherit;
+				border-radius: inherit;
+			}
+		}
+	}
+}

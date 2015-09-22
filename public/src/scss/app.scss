@@ -1,34 +1,32 @@
-/* Bourbon and Neat configuration's variables  */
-$disable-warnings: true !default;
-$grid-columns: 12 !default;
-
-@import "vendors/vendors";
-@import "helpers/helpers";
 @import "base/base";
-@import "components/components";
-@import "layout/layout";
-@import "pages/pages";
+@import "vendors/vendors";
 
-html, body {
-  height: 100%;
-  width: 100%;
-}
-
+html,
 body {
-	overflow-x: hidden;
-	position: relative;
+	font-family: "Open Sans", "Droid Sans", "Segoe UI", Arial, sans-serif;
+	height: 100%;
+	width: 100%;
 }
 
 #wrapper {
-  @include row(table);
-  background: $clouds;
-  min-height: 100%;
+	$site-abs-bg-color: $clouds;
+	background: $site-abs-bg-color;
+	height: 100%;
 
+	#sidebar,
 	#content-area {
-		@include span-columns(10);
+		@include position(fixed, 0);
+		height: 100%;
 	}
+}
 
-  #sidebar {
-  	@include span-columns(2);
-  }
+@import "layout/layout";
+@import "components/components";
+@import "pages/pages";
+
+/* Include this file in your html if you are using the CSP mode. */
+
+.ng-animate.item:not(.left):not(.right) {
+	-webkit-transition: 0s ease-in-out left;
+	transition: 0s ease-in-out left
 }

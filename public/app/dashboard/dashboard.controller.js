@@ -2,7 +2,7 @@
 (function () {
     'use strict';
 
-	function DashboardController($http) {
+	function DashboardController($http, APIInfoService) {
 		var vm = this;
 		vm.lineChart = {};
 		vm.pieChart = {};
@@ -14,7 +14,7 @@
 		vm.pieChart.series = ['Janeiro', 'Fevereiro', 'Março'];
 		vm.pieChart.data = [1150.59, 2312.40, 1640.34];
 
-		$http.get('http://api.monificando.dev/me')
+		$http.get(APIInfoService.getFullAPILink('/me'))
 			.then(function(response) {
 				console.log(response);
 			}, function(response) {
@@ -22,7 +22,7 @@
 			});
 	}
 
-	DashboardController.$inject = ['$http'];
+	DashboardController.$inject = ['$http', 'APIInfoService'];
 
     angular
         .module('monificando.dashboard')

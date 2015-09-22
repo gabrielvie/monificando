@@ -11,7 +11,7 @@
 		});
 	}
 
-	configBasicCharts.$injector = ['ChartJsProvider'];
+	configBasicCharts.$inejct = ['ChartJsProvider'];
 
 	/* Set default chart colours */
 	function configChartsColours(ChartJsProvider) {
@@ -36,7 +36,7 @@
 		});
 	}
 
-	configChartsColours.$injector = ['ChartJsProvider'];
+	configChartsColours.$inejct = ['ChartJsProvider'];
 
 	/* Set default tooltip charts config */
 	function configChartsTooltip(ChartJsProvider) {
@@ -59,7 +59,7 @@
 		});
 	}
 
-	configChartsTooltip.$injector = ['ChartJsProvider'];
+	configChartsTooltip.$inejct = ['ChartJsProvider'];
 
 	angular
 		.module('monificando.widgets.charts', [

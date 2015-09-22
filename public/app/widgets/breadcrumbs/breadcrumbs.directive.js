@@ -1,7 +1,7 @@
 (function () {
 	'use strict';
 
-	breadcrumbs.$injector = ['$log', '$parse', '$interpolate'];
+	breadcrumbs.$inject = ['$log', '$parse', '$interpolate'];
 
 	function breadcrumbs($log, $parse, $interpolate){
 		return {

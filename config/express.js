@@ -9,6 +9,8 @@ var fs 				= require('fs'),
 	config			= require('./config'),
 	path			= require('path'),
 	morgan  		= require('morgan'),
+	cors			= require('cors'),
+	jwt				= require('jsonwebtoken'),
 	enviroment		= process.argv['2'];
 
 var chalk 	= require('chalk');
@@ -21,12 +23,22 @@ module.exports = function(database) {
 		require(path.resolve(modelPath));
 	});
 
-	app.all('/*', function(req, res, next) {
+	var whiteList 	= ['http://monificando.dev', 'http://homolog.monificando.com', 'http://monificando.com'],
+		corsOptions	= {
+			origin: function(origin, callabck) {
+				var originIsWhiteListed = whiteList.indexOf(origin) !== -1;
+				callabck(null, originIsWhiteListed);
+			}
+		};
+
+	app.use(cors(corsOptions));
+
+	app.use(function(req, res, next) {
+
 		// CORS headers
-		res.header("Access-Control-Allow-Origin", "*"); // restrict it to the required domain
 		res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-		// Set custom headers for CORS
-		res.header('Access-Control-Allow-Headers', 'Content-type,Accept,X-Access-Token,X-Key');
+		res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, accept');
+
 		if (req.method == 'OPTIONS') {
 			res.status(200).end();
 		} else {
@@ -52,7 +64,7 @@ module.exports = function(database) {
 	app.use(methodOverride());
 
 	app.use(function(req, res, next) {
-		var token 			= req.body.token || req.param('token') || req.headers['x-access-token'],
+		var token 			= req.body.token || req.param('token') || req.headers['token'],
 			_				= require('underscore'),
 			nonSecurePaths 	= ['/', '/signin', '/signup'];
 
@@ -89,13 +101,13 @@ module.exports = function(database) {
 
 		console.error(err.stack);
 
-		res.status(500).render('500', {
+		res.status(500).send('500', {
 			error: err.stack
 		});
 	});
 
 	app.use(function(req, res) {
-		res.status(404).render('404', {
+		res.status(404).send('404', {
 			url: req.originalUrl,
 			error: 'Not found'
 		});

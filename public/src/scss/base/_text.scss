@@ -1,0 +1,52 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300);
+
+$font-family-open-sans: "Open Sans", "Droid Sans", "Segoe UI", Arial, sans-serif;
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+$font-normal-style: 400;
+$font-normal-semibold-style: 600;
+
+body {
+  font-family: $font-family-open-sans;
+  font-size: 12px;
+  font-weight: $font-weight-normal;
+}
+
+h1, h2, h3 {
+  font-family: $font-family-open-sans;
+}
+
+h1, h2 {
+  font-size: 2.5em;
+  font-weight: $font-weight-semibold;
+
+  small {
+    font-size: 60%;
+    font-weight: $font-weight-normal;
+  }
+}
+
+h3 {
+  font-weight: $font-weight-normal;
+
+  small {
+    font-weight: $font-weight-light;
+  }
+}
+
+legend {
+  font-size: em(20px);
+  font-weight: $font-normal-semibold-style;
+}
+
+a {
+  text-decoration: none;
+
+  &:hover {
+
+    text-decoration: none;
+  }
+}

@@ -29,12 +29,11 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "~1.9.0",
-    "bower": "~1.3.8",
     "chalk": "~0.5",
+    "cors": "^2.7.1",
     "crypto": "0.0.3",
     "express": "~4.10.1",
     "glob": "~4.0.5",
-    "grunt-cli": "~0.1.13",
     "grunt-contrib-compass": "^1.0.3",
     "grunt-contrib-concat": "^0.5.1",
     "grunt-contrib-jshint": "^0.11.2",
@@ -47,9 +46,12 @@
     "method-override": "^2.3.5",
     "mongoose": "4.1.6",
     "morgan": "~1.4.1",
+    "mongodb-uri": "^0.9.7",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
-    "mongodb-uri": "^0.9.7"
+    "bower": "~1.3.8",
+    "forever": "^0.15.1",
+    "grunt": "^0.4.5"
   }
 }

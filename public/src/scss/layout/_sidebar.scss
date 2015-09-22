@@ -1,20 +1,16 @@
 #sidebar {
-  $sidebar-bg: $midnight-blue;
+	$sidebar-bg-color: $midnight-blue;
 
-  @include position(fixed, 0 null null 0);
-
-  background: $sidebar-bg;
-  height: 100%;
+	background: $sidebar-bg-color;
 	padding: 100px 0;
-  z-index: 98;
 
 	.menu {
-		&__list {
+		&-list {
 			list-style: none;
 			padding: 0;
 
-			&__item,
-			&__item-selected {
+			&-item,
+			&-item--selected {
 				$item-color: $clouds;
 				$item-height: 50px;
 				$item-line-height: $item-height;
@@ -38,12 +34,12 @@
 				}
 			}
 
-			&__item:hover,
-			&__item-selected {
+			&-item:hover,
+			&-item--selected {
 				background: $emerald;
 			}
 
-			&__item-selected {
+			&-item--selected {
 				&:after {
 					@include position(absolute, 10px 0 null null);
 					border-color: transparent $clouds transparent transparent;

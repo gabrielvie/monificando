@@ -7,15 +7,41 @@ var mongoose 	= require('mongoose'),
 var UserSchema = new Schema({
 	email: {
 		type: String,
-		match: [/.+\@.+\..+/, 'Please fill a valid email address'],
+		index: {
+			unique: true
+		},
 		required: true,
-		trim: true
+		trim: true,
+		match: [/.+\@.+\..+/, 'Please fill a valid email address']
 	},
 	password: {
 		type: String,
 		required: true,
 		trim: true
 	},
+	first_name: {
+		type: String,
+		required: true,
+		trim: true
+	},
+	last_name: {
+		type: String,
+		required: true,
+		trim: true
+	},
+	birthday: {
+		type: Date,
+		required: true
+	},
+	gender: {
+		type: String,
+		required: true,
+		enum: ['male', 'female']
+	},
+	contact: [{
+		type: String,
+		trim: true
+	}],
 	salt: {
 		type: String
 	},
@@ -28,31 +54,6 @@ var UserSchema = new Schema({
 	},
 	updated_at: {
 		type: Date
-	},
-	data: {
-		first_name: {
-			type: String,
-			required: true,
-			trim: true
-		},
-		last_name: {
-			type: String,
-			required: true,
-			trim: true
-		},
-		birthday: {
-			type: Date,
-			required: true
-		},
-		gender: {
-			type: String,
-			required: true,
-			enum: ['male', 'female']
-		},
-		contact: [{
-			type: String,
-			trim: true
-		}]
 	}
 });
 
@@ -62,6 +63,10 @@ UserSchema.methods.hashPassword = function(password) {
 	else
 		return password;
 
+};
+
+UserSchema.methods.authenticate = function(password) {
+	return this.password === this.hashPassword(password);
 };
 
 UserSchema.pre('save', function(next, done){
@@ -75,16 +80,4 @@ UserSchema.pre('save', function(next, done){
 	next();
 });
 
-UserSchema.methods.authenticate = function(password) {
-	return this.password === this.hashPassword(password);
-};
-
-var User = mongoose.model('User', UserSchema);
-
-module.exports = User;
-
-User.schema.path('email').validate(function(value, respond) {
-	User.findOne({ email: value }, function(err, user) {
-		if (user) respond(false);
-	});
-}, 'Este endereço de email já encontra-se em uso.');
+module.exports = mongoose.model('User', UserSchema);

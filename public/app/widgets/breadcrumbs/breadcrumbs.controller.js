@@ -21,7 +21,7 @@
 		};
 	}
 
-	BreadcrumbsController.$injector = ['$scope', '$state', '$stateParams'];
+	BreadcrumbsController.$inject = ['$scope', '$state', '$stateParams'];
 
 	angular
 		.module('monificando.widgets.breadcrumbs')

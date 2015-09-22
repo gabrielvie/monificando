@@ -6,9 +6,6 @@ var mongoose 	= require('mongoose'),
 	config		= require('../../config/config');
 
 exports.signin = function(req, res) {
-	var email = req.body.email,
-		passw = req.body.password,
-		isMatch = false;
 
 	User.findOne({
 		email: req.body.email
@@ -21,51 +18,50 @@ exports.signin = function(req, res) {
 			var isMatch = user.authenticate(req.body.password);
 
 			if (!isMatch) {
-				console.log("Attempt failed to login with " + user.email);
-				return res.send(401);
+				res.status(401).send({'w':'password'});
 			} else {
 				var token = jwt.sign(user, config.jwt.secret_token, {
 					expiresInMinutes: config.jwt.expires_in
 				});
 
-				res.json({
+				res.status(200).send({
 					success: true,
-					token: token
+					token: token,
+					user: {
+						'id': user._id,
+						'email': user.email
+					}
 				});
 			}
 		} else {
-			return res.json({
-				success: false,
-				message: 'Usuário não encontrado.'
-			});
+			res.status(401).send({'w':'email'});
 		}
 	});
 };
 
 exports.signup = function(req, res) {
 
-	var userInfo 	= req.body,
-		data 		= {
-			first_name: userInfo.first_name,
-			last_name: userInfo.last_name,
-			birthday: userInfo.birthday,
-			gender: userInfo.gender
-		};
+	User.findOne({ email: req.body.email }, function(err, data){
+		if (!data) {
 
-	delete userInfo.first_name;
-	delete userInfo.last_name;
-	delete userInfo.birthday;
-	delete userInfo.gender;
+			var newUser = new User(req.body);
 
-	userInfo.data = data;
+			newUser.save(function(err) {
+				if (err) {
+					res.status(501).send({
+						err: err,
+						data: req.body
+					});
+				}
 
-	var user = new User(userInfo);
+				res.status(201).send({ success: true });
+			});
 
-	user.save(function(err) {
-		if (err) res.json(err);
-
-		res.json({ success: true });
+		} else {
+			res.status(409).send({ message: 'Email has already in use.' });
+		}
 	});
+
 };
 
 exports.signout = function(req, res) {

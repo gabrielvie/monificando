@@ -2,14 +2,18 @@
 	'user strict';
 
 	/* Header */
-	function HeaderController() {
+	function HeaderController(AuthenticationService) {
 		var vm = this;
 
 		vm.calendarNotify = { count: 1 };
 		vm.alarmNotify = { count: 11 };
+
+		vm.signOut = function() {
+			AuthenticationService.signOut();
+		};
 	}
 
-	HeaderController.$inject = [];
+	HeaderController.$inject = ['AuthenticationService'];
 
 	/* Content Area */
 	function ContentAreaController($scope, $state) {

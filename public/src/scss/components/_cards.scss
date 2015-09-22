@@ -1,0 +1,135 @@
+%text-shadow {
+	text-shadow: 0 .5px rgba(black, .05);
+}
+
+.card-stack {
+	clear: both;
+	display: block;
+
+	.card {
+		$card-height: 150px;
+		$card-footer-height: $card-height / 4;
+		$font-color: $clouds;
+
+		height: $card-height;
+		padding: 1% 2%;
+		position: relative;
+
+		&-body {
+			color: $font-color;
+			margin: 0;
+			text-align: right;
+
+			h3 {
+				@extend %text-shadow;
+				font-size: 2.5em;
+				font-weight: $font-weight-light;
+
+				small {
+					@extend %text-shadow;
+					color: inherit;
+					display: block;
+				}
+			}
+		}
+
+		&-footer {
+			@include position(absolute, null 0 0 null);
+
+			min-height: $card-footer-height;
+			width: 100%;
+
+			a {
+				color: $font-color;
+				display: block;
+				font-size: em(14px);
+				line-height: $card-footer-height;
+				padding: 0 10px;
+				position: relative;
+				text-transform: uppercase;
+				width: 100%;
+			}
+		}
+
+		&-red {
+			background: $alizarin;
+
+			.card-footer {
+				background: $pomegranate;
+
+				&:hover {
+					background: shade($pomegranate, 20%);
+				}
+			}
+  	}
+
+		&-blue {
+			background: $peter-river;
+
+			.card-footer {
+				background: $belize-hole;
+
+				&:hover {
+					background: shade($belize-hole, 20%);
+				}
+			}
+		}
+
+		&-green {
+			background: $emerald;
+
+			.card-footer {
+				background: $nephritis;
+
+				&:hover {
+					background: shade($nephritis, 20%);
+				}
+			}
+		}
+
+		&-yellow {
+			background: $sun-flower;
+
+			.card-footer {
+				background: $orange;
+
+				&:hover {
+					background: shade($orange, 20%);
+				}
+			}
+		}
+
+		&-amount,
+		&-credit,
+		&-remainder {
+			&:before {
+				@include position(absolute, 28px null null 4%);
+				background-repeat: no-repeat;
+				background-size: 60px;
+				content: '';
+				display: block;
+				height: 70px;
+				opacity: .7;
+				width: 70px;
+			}
+		}
+
+		&-amount {
+			&:before {
+				background-image: url($finance-doc-icon-white);
+			}
+		}
+
+		&-credit {
+			&:before {
+				background-image: url($credit-card-icon-white);
+			}
+		}
+
+		&-remainder {
+			&:before {
+				background-image: url($wallet-icon-white);
+			}
+		}
+	}
+}

@@ -1,7 +1,7 @@
 
 	<nav class="menu">
-		<ul class="menu__list">
-			<li ng-repeat="menu in sideCtrl.menu" ng-class="sideCtrl.isSelected(menu.sref) ? 'menu__list__item-selected' : 'menu__list__item'">
+		<ul class="menu-list">
+			<li ng-repeat="menu in sideCtrl.menu" ng-class="sideCtrl.isSelected(menu.sref) ? 'menu-list-item--selected' : 'menu-list-item'">
 				<a ui-sref="{{ menu.sref }}">
 					<span class="icon icon-{{ menu.icon }}"></span>
 					{{ menu.name }}

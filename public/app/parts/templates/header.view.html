@@ -1,57 +1,70 @@
-<div class="logo">
-	<h1><img src="assets/img/logo.png">
-		<!--<span>onificando</span>-->
-	</h1>
-</div>
-<div class="user">
-	<ul class="user__menu">
-		<li class="user__menu__item">
+<div class="container-fluid">
+	<div class="navbar-header">
+		<a href="/" class="navbar-brand">
+			<img src="assets/img/logo.png" alt="Monificando - Logo" width="70">
+		</a>
+	</div>
+	<ul class="nav navbar-nav navbar-right menu">
+
+		<li class="menu-item">
 			<a href="#">
-				<span class="user__menu__item--calendar">
-					<span class="badge badge-red" ng-hide="headCtrl.calendarNotify.count === 0">
-						{{ headCtrl.calendarNotify.count }}
-					</span>
-				</span>
+				<span class="glyphicon glyphicon-calendar"></span>
+				<span class="label label-danger">1</span>
 			</a>
 		</li>
-		<li class="user__menu__item">
+
+		<li class="menu-item">
 			<a href="#">
-				<span class="user__menu__item--alert">
-					<span class="badge badge-red" ng-hide="headCtrl.alarmNotify.count === 0">
-						{{ headCtrl.alarmNotify.count }}
-					</span>
-				</span>
+				<span class="glyphicon glyphicon-bell"></span>
+				<span class="label label-danger">5</span>
 			</a>
 		</li>
-		<li class="user__menu__item">
+		<li class="menu-item" dropdown>
+			<a href="#" dropdown-toggle>Gabriel <b class="caret"></b></a>
+			<ul class="dropdown-menu">
+				<li><a href="#">
+					<span class="glyphicon glyphicon-user"></span>
+					Meus Dados</a>
+				</li>
+				<li><a href="#">
+					<span class="glyphicon glyphicon-question-sign"></span>
+					Ajuda</a>
+				</li>
+				<li><a href="#">
+					<span class="glyphicon glyphicon-log-out"></span>
+					Sair</a>
+				</li>
+			</ul>
+		</li>
+		<!--<li class="menu-item">
 			<a href="#">
-				<span class="user__menu__item--user">
-					<img src="assets/img/sample/userImage.jpg" class="user__menu__item--user-photo"/>
-					<span class="user__menu__item--user-name">Gabriel
+				<span class="user-menu-item&#45;&#45;user">
+					<img src="assets/img/sample/userImage.jpg" class="user-menu-item&#45;&#45;user-photo img-circle" width="40"/>
+					<span class="user-menu-item&#45;&#45;user-name">Gabriel
 						<span class="arrow arrow-left"></span>
 					</span>
 				</span>
 			</a>
-			<ul class="user__menu__item__submenu">
-				<li class="user__menu__item__submenu__item">
+			&lt;!&ndash;<ul class="user-menu-item-submenu">
+				<li class="user-menu-item-submenu-item">
 					<a href="#">
 						<span class="icon icon-account-inverse"></span>
 						Minha Conta
 					</a>
 				</li>
-				<li class="user__menu__item__submenu__item">
+				<li class="user-menu-item-submenu-item">
 					<a href="#">
 						<span class="icon icon-help-inverse"></span>
 						Ajuda
 					</a>
 				</li>
-				<li class="user__menu__item__submenu__item">
-					<a href="#">
+				<li class="user-menu-item-submenu-item">
+					<a href="#" ng-click="headCtrl.signOut()">
 						<span class="icon icon-exit-inverse"></span>
 						Sair
 					</a>
 				</li>
-			</ul>
-		</li>
+			</ul>&ndash;&gt;
+		</li>-->
 	</ul>
 </div>

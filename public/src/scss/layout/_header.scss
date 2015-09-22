@@ -1,0 +1,69 @@
+.navbar {
+	$navbar-text-color: $clouds;
+	$navbar-text-color-inverse: $wet-asphalt;
+
+	&-monificando {
+		$navbar-bg-color: $wet-asphalt;
+
+		background: $navbar-bg-color;
+
+		.menu {
+			position: relative;
+
+			&-item {
+				$item-hover-bg-color: $midnight-blue;
+				$item-hover-bg-red-color: $pomegranate;
+
+				position: relative;
+
+				a {
+					color: $navbar-text-color;
+					font-size: em(20px);
+
+					.label {
+						@include position(absolute, 7px 20px null null);
+						border-radius: 50%;
+					}
+
+					&:hover,
+					&:focus {
+						background: $item-hover-bg-color;
+					}
+				}
+
+				.dropdown {
+					&-menu {
+						padding: 0;
+
+						a {
+							color: $navbar-text-color-inverse;
+							font-size: .9em;
+							padding: 12px 20px;
+
+							.glyphicon {
+								margin-right: 15px;
+							}
+
+							&:hover,
+							&:focus {
+								color: $navbar-text-color;
+							}
+						}
+
+						li:last-child {
+							a:hover {
+								background: $item-hover-bg-red-color;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.nav .open > a,
+.nav .open > a:focus,
+.nav .open > a:hover {
+	background: $midnight-blue;
+}

@@ -1,7 +1,10 @@
 <ul class="breadcrumbs">
-    <li class="breadcrumbs__item" ng-repeat="item in bread.breadcrumbs">
-        <span ng-show="$first" class="icon icon-home-inverse"></span>
-        <a ui-sref="{{ item.name }}">{{ item.data.displayName }}</a>
-        <span ng-show="!$last" class="arrow arrow-inverse arrow-right"></span>
+    <li class="breadcrumbs-item" ng-repeat="item in bread.breadcrumbs">
+
+        <a ui-sref="{{ item.name }}">
+			<span ng-show="$first" class="glyphicon glyphicon-home"></span>
+			{{ item.data.displayName }}
+		</a>
+        <span ng-show="!$last" class="glyphicon glyphicon-menu-right"></span>
     </li>
 </ul>
