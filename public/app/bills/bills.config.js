@@ -12,7 +12,7 @@
 				}
 			},
 			data: {
-				displayName: 'Meus Lançamentos',
+				displayName: 'Agenda Financeira',
 				displayDescription: ''
 			}
 		};

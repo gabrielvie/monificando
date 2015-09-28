@@ -3,7 +3,7 @@
 	'use strict';
 
 	function APIInfoService($location) {
-		this.getAPILink = $location.protocol() + '://api.' + $location.host();
+		this.getAPILink = $location.protocol() + '://' + $location.host() + '/api';
 
 		this.getFullAPILink = function($uri) {
 			return this.getAPILink + $uri;

@@ -1,0 +1,150 @@
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+	</button>
+	<h4 class="modal-title">
+		Nova Conta
+	</h4>
+</div>
+
+<div class="modal-body">
+
+	<form novalidate
+		  name="newBill"
+		  ng-submit="nBillCtrl.create()"
+		  role="form">
+
+		<!-- Bill type: [credit, debit] -->
+		<div class="form-group">
+			<div class="btn-group">
+				<label class="btn btn-success btn-sm"
+					   ng-model="nBillCtrl.new.type"
+					   btn-radio="'credit'"
+					   required>Crédito</label>
+
+				<label class="btn btn-danger btn-sm"
+					   ng-model="nBillCtrl.new.type"
+					   btn-radio="'debit'"
+					   required>Débito</label>
+			</div>
+		</div>
+		<!-- /Bill type: [credit, debit] -->
+
+		<!-- Bill Description -->
+		<div class="form-group">
+			<input type="text"
+				   ng-model="nBillCtrl.new.description"
+				   class="form-control"
+				   placeholder="Descrição"/>
+		</div>
+		<!-- /Bill Description -->
+
+
+		<div class="row">
+			<!-- Bill value -->
+			<div class="col-sm-5">
+				<div class="form-group">
+					<div class="input-group">
+						<div class="input-group-addon">R$</div>
+						<input type="text"
+							   class="form-control"
+							   placeholder="Valor">
+					</div>
+				</div>
+			</div>
+			<!-- /Bill value -->
+
+			<!-- Bill date -->
+			<div class="col-sm-7">
+				<div class="form-group has-feedback">
+					<span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+					<input required
+						   type="text"
+						   class="form-control"
+						   ng-model="nBillCtrl.new.date"
+						   datepicker-popup="dd/MM/yyyy"
+						   ng-focus="nBillCtrl.calendar.open($event)"
+						   is-open="nBillCtrl.calendar.opened"
+						   placeholder="Data"/>
+				</div>
+			</div>
+			<!-- /Bill date -->
+		</div>
+
+		<div class="form-inline">
+				<div class="form-group has-feedback">
+					<span class="glyphicon glyphicon-chevron-down form-control-feedback"></span>
+					<select class="form-control input-sm"
+							name="payment_mode"
+							ng-model="nBillCtrl.new.paymentOptions">
+						<option ng-repeat="payOpt in nBillCtrl.paymentOptions"
+								value="{{ payOpt.value }}"
+								ng-selected="payOpt.selected">{{ payOpt.display }}
+						</option>
+					</select>
+				</div>
+		</div>
+
+
+		<div class="form-inline">
+				<div class="form-group">
+					<div class="btn-group">
+						<label class="btn btn-primary btn-sm"
+							   ng-model="nBillCtrl.new.hasFrequency"
+							   btn-radio="false"
+							   required>Unica</label>
+
+						<label class="btn btn-primary btn-sm"
+							   ng-model="nBillCtrl.new.hasFrequency"
+							   btn-radio="true"
+							   required>Periódica</label>
+					</div>
+				</div>
+				<div class="form-group has-feedback" ng-if="nBillCtrl.new.hasFrequency">
+					<span class="glyphicon glyphicon-chevron-down form-control-feedback"></span>
+					<select class="form-control input-sm"
+							name="frequency"
+							ng-model="nBillCtrl.new.frequency">
+						<option ng-repeat="frequency in nBillCtrl.frequencies"
+								value="{{ frequency.value }}"
+								ng-selected="frequency.selected">{{ frequency.display }}
+						</option>
+					</select>
+				</div>
+		</div>
+
+		<div class="row" ng-if="nBillCtrl.new.hasFrequency">
+			<div class="col-sm-4">
+				<div class="radio no-margin">
+					<label ng-repeat="repeatType in nBillCtrl.freqRepeats">
+						<input type="radio"
+							   value="{{ repeatType.value }}"
+							   ng-model="nBillCtrl.new.freqType">
+						{{ repeatType.display }}
+					</label>
+				</div>
+			</div>
+			<div class="col-sm-5" ng-if="nBillCtrl.new.freqType !== 'no_prev'">
+				<div class="form-group">
+					<label ng-if="nBillCtrl.new.freqType === 'divided'">
+						Número de Parcelas</label>
+					<label ng-if="nBillCtrl.new.freqType === 'repeat'">
+						Repetirá quantas vezes</label>
+
+					<input type="number"
+						   class="form-control"
+						   ng-model="nBillCtrl.new.freqQty"
+						   min="1"/>
+				</div>
+			</div>
+		</div>
+
+
+	</form>
+</div> <!-- /.modal-body -->
+
+<div class="modal-footer clearfix">
+	<pre>{{ nBillCtrl.new.frequency }}</pre>
+	<br/>
+	<button class="btn btn-success btn-sm pull-right"
+			type="submit">Salvar</button>
+</div>

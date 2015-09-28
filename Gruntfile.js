@@ -67,7 +67,8 @@ module.exports = function (grunt) {
 						'<%= bower.components.angularBootstrap %>',
 						'<%= bower.components.angularUiRouter %>',
 						'<%= bower.components.angularUiMask %>',
-						'<%= bower.components.angularChartJs %>'
+						'<%= bower.components.angularChartJs %>',
+						'<%= bower.components.angularSmartTable %>'
 					],
 					'<%= folders.pub.assets %>/js/app.min.js': ['<%= folders.pub.app %>/**/*.js']
 				}

@@ -10,13 +10,18 @@
 			},
 			agenda: {
 				icon: 'agenda',
-				name: 'Minha Agenda',
+				name: 'Agenda',
 				sref: 'app.bills'
 			},
-			graphic: {
+			config: {
 				icon: 'graphic',
-				name: 'Meus Gastos',
-				sref: 'app.graphics'
+				name: 'Configurações',
+				sref: 'app.config'
+			},
+			config_ccards: {
+				icon: '',
+				name: 'Cartões de Crédito',
+				sref: 'app.config.credit'
 			}
 		};
 	}

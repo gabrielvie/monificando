@@ -48,9 +48,9 @@ exports.signup = function(req, res) {
 
 			newUser.save(function(err) {
 				if (err) {
-					res.status(501).send({
-						err: err,
-						data: req.body
+					res.status(422).send({
+						message: err.message,
+						errors: err.errors
 					});
 				}
 

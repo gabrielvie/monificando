@@ -1,0 +1,24 @@
+.form-inline {
+  > * {
+		margin: 8px 5px !important;
+
+		&:first-child {
+			margin-left: 0 !important;
+		}
+  }
+}
+
+input[type='radio'],
+input[type='checkbox'] {
+	margin-top: 2px;
+}
+
+.radio {
+	label {
+		display: block;
+	}
+}
+
+.radio.no-margin {
+	margin: 0;
+}

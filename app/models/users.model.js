@@ -7,17 +7,18 @@ var mongoose 	= require('mongoose'),
 var UserSchema = new Schema({
 	email: {
 		type: String,
+		required: true,
+		trim: true,
 		index: {
 			unique: true
 		},
-		required: true,
-		trim: true,
 		match: [/.+\@.+\..+/, 'Please fill a valid email address']
 	},
 	password: {
 		type: String,
 		required: true,
-		trim: true
+		trim: true,
+		match: [/((?=.*\d)(?=.*[a-z]).{6,20})/, 'Please fill a password with letters and numbers']
 	},
 	first_name: {
 		type: String,

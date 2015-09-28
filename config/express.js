@@ -52,6 +52,7 @@ module.exports = function(database) {
 	});
 
 	app.set('showStackError', true);
+	app.set('view engine', 'html');
 
 	if (enviroment === 'development') {
 		app.use(morgan('dev'));
@@ -62,11 +63,12 @@ module.exports = function(database) {
 	app.use(bodyParser.urlencoded({ extended: true }));
 	app.use(bodyParser.json());
 	app.use(methodOverride());
+	app.use(express.static(path.resolve('./public')));
 
 	app.use(function(req, res, next) {
 		var token 			= req.body.token || req.param('token') || req.headers['token'],
 			_				= require('underscore'),
-			nonSecurePaths 	= ['/', '/signin', '/signup'];
+			nonSecurePaths 	= ['/', '/api/signin', '/api/signup'];
 
 		res.type('application/json');
 
@@ -75,24 +77,18 @@ module.exports = function(database) {
 		if (token) {
 			jwt.verify(token, config.jwt.secret_token, function(err, decoded) {
 				if (err) {
-					return res.json({
-						success: true,
-						message: 'Failed to authenticate token.'
-					});
+					return res.status(401).send({ message: 'Failed to authenticate token.' });
 				} else {
 					req.decode = decoded;
 					next();
 				}
 			});
 		} else {
-			return res.status(403).send({
-				success: false,
-				message: 'No token provided.'
-			});
+			return res.status(401).send({ message: 'No token provided.'	});
 		}
 	});
 
-	config.getGlobbedFiles('./app/routes/**/*.js').forEach(function(routePath) {
+	config.getGlobbedFiles('./app/routes.js').forEach(function(routePath) {
 		require(path.resolve(routePath))(app);
 	});
 

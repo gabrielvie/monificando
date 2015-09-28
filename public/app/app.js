@@ -16,6 +16,7 @@
 			'ui.mask',
 			'ngStorage',
 			'monificando.auth',
+			'monificando.appconfig',
 			'monificando.parts',
 			'monificando.dashboard',
 			'monificando.bills',

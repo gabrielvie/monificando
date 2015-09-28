@@ -1,42 +1,9 @@
-<script type="text/ng-template" id="new-modal.html">
-	<div class="modal__dialog__header">
-		<h3 class="modal-title">Novo lançamento</h3>
-	</div>
-	<div class="modal__dialog__body">
-		<form>
-			<div>
-				<label>Descrição:</label>
-				<input type="text" name=""/>
-			</div>
-
-			<div>
-				<label>Valor:</label>
-				<input type="text">
-			</div>
-
-			<div>
-				<label>Data</label>
-				<input type=""></input>
-			</div>
-
-			<div>
-				<label>Observações:</label>
-				<textarea name="" id="" cols="30" rows="2"></textarea>
-			</div>
-		</form>
-	</div>
-	<div class="modal__dialog__footer">
-		<button class="btn btn-green" type="button" ng-click="ok()">OK</button>
-		<button class="btn btn-red" type="button" ng-click="cancel()">Cancel</button>
-	</div>
-</script>
-
 <div class="agenda">
 	<div class="page-filters">
 		<select id="month">
 			<option value="">Meses</option>
 		</select>
-		<button class="btn-green" ng-click="billCtrl.new()">Novo</button>
+		<button type="button" class="btn btn-primary" ng-click="billCtrl.new()">Novo</button>
 	</div>
 	<div class="agenda__body">
 		<table class="agenda__body__table">

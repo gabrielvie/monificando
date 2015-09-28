@@ -31,7 +31,8 @@
 					<span class="input-group-btn">
 						<button class="btn" ng-class="signinForm.$invalid ? 'btn-danger' : 'btn-success'"
 								type="submit"
-								ng-disabled="signinForm.$invalid">Acessar
+								ng-disabled="signinForm.$invalid"
+								ng-click="authCtrl.signIn()">Acessar
 						</button>
 					</span>
 				</div>
@@ -146,7 +147,8 @@
 
 				</div>
 
-				<button class="btn" ng-class="signupForm.$invalid ? 'btn-danger' : 'btn-success'"
+				<button class="btn"
+						ng-class="signupForm.$invalid ? 'btn-danger' : 'btn-success'"
 						type="submit"
 						ng-disabled="signupForm.$invalid">Acessar
 				</button>
