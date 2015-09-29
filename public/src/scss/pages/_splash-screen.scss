@@ -1,0 +1,64 @@
+.splash-screen {
+    $splash-screen-bg-color: $clouds;
+    $splash-screen-item-size: 100px;
+
+    @include position(absolute, 0 0 0 0);
+    background: $splash-screen-bg-color no-repeat center !important;
+    background-size: 100% !important;
+    overflow: hidden;
+
+    > * {
+        @include box-sizing(border-box);
+        @include position(absolute, 50% 0 0 50%);
+        @include user-select(none);
+
+        cursor: default;
+    }
+
+    &-circle-outer {
+        $border-color: $emerald;
+        $box-shadow-color: $midnight-blue;
+
+        @include animation(spinPulse 1s infinite ease-in-out);
+        border: 5px solid rgba($border-color, .9);
+        border-radius: 50%;
+        box-shadow: 0 0 35px $box-shadow-color;
+        height: $splash-screen-item-size;
+        margin: -50px 0 0 -50px;
+        opacity: .9;
+        width: $splash-screen-item-size;
+        z-index: 20000;
+    }
+
+    &-item {
+        height: $splash-screen-item-size;
+        margin-left: -$splash-screen-item-size / 2;
+        margin-top: -$splash-screen-item-size / 2;
+        vertical-align: middle;
+        width: $splash-screen-item-size;
+        z-index: 20002;
+    }
+}
+
+@keyframes spinPulse {
+    0% {
+		box-shadow: 0 0 1px #577191;
+		opacity: 0;
+    }
+
+    25% {
+		opacity: .5;
+	}
+
+	50% {
+		opacity: 1;
+	}
+
+	75% {
+		opacity: .5;
+	}
+
+    100% {
+		opacity: 0;
+	}
+}

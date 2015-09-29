@@ -9,16 +9,21 @@
 
     <title>Monificando</title>
 
-	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<link type="text/css" rel="stylesheet" href="assets/css/app.min.css">
 </head>
 <body ng-app="monificando" ng-controller="AppController as appCtrl">
 
-	<div id="wrapper-auth" ng-show="!isLogged()">
+    <div class="splash-screen">
+		<img src="http://homolog.monificando.com/assets/img/logo.png" class="splash-screen-item">
+		<div class="splash-screen-circle-outer"></div>
+	</div>
+
+	<div id="wrapper-auth" ng-if="!isLogged()">
 		<div id="auth-area" ui-view="main"></div>
 	</div>
 
-    <div id="wrapper" ng-show="isLogged()">
+    <div id="wrapper" ng-if="isLogged()">
 
 		<header id="header" class="navbar navbar-monificando navbar-fixed-top"  ui-view="header"></header>
 		<div id="sidebar" class="col-sm-2" ui-view="sidebar"></div>

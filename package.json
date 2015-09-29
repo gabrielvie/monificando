@@ -8,7 +8,7 @@
   "scripts": {
     "start": "forever --minUptime 1000 --spinSleepTime 1000 -e logs/error.log -o logs/output.log start server.js development",
     "restart": "forever restart server.js",
-    "test": "mocha test\\index.js"
+    "test": "mocha test.js"
   },
   "keywords": [
     "MongoDB",
