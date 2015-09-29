@@ -15,4 +15,9 @@ module.exports = function(app) {
 	/* CreditCards Routes */
 	var ccredit = require('./controllers/creditcard.controller.js');
 	app.route('/api/user/:user_id/creditcards').post(ccredit.save);
+
+
+	app.route('/api/me').get(function(req, res){
+		return res.status(200).send({ success: true });
+	});
 };

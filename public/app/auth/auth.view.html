@@ -1,158 +1,166 @@
-<div class="auth-backdrop">
-	<accordion class="auth-container col-sm-3" close-others="true">
-		<accordion-group is-open="$scope.accordion.signin">
-			<accordion-heading>Acessar <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $scope.accordion.signin, 'glyphicon-chevron-right': !$scope.accordion.signin}"></span></accordion-heading>
-			<form novalidate
-				  name="signinForm"
-				  ng-submit="authCtrl.signIn()"
-				  role="form">
+<div class="row">
+	<div class="col-sm-3 col-sm-offset-1 vcenter">
+		<img src="assets/img/logo.png" alt="Monificando Logo" class="logo"/>
+	</div>
+	<div class="col-sm-4 vcenter">
+		<accordion class="auth-container" close-others="true">
+			<accordion-group is-open="$scope.accordion.signin">
+				<accordion-heading>Acessar <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $scope.accordion.signin, 'glyphicon-chevron-right': !$scope.accordion.signin}"></span></accordion-heading>
+				<form novalidate
+					  name="signinForm"
+					  ng-submit="authCtrl.signIn()"
+					  role="form">
 
-				<div class="form-group"
-					 ng-class="{ 'has-error' : signinForm.email.$invalid && !signinForm.email.$pristine }">
+					<div class="form-group"
+						 ng-class="{ 'has-error' : signinForm.email.$invalid && !signinForm.email.$pristine }">
 
-					<input required
-						   name="email"
-						   type="email"
-						   placeholder="Email"
-						   class="form-control"
-						   ng-model="authCtrl.credentials.email"
-						   ng-pattern="/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/">
-				</div>
-				<div class="input-group"
-					 ng-class="{ 'has-error' : signinForm.password.$invalid && !signinForm.password.$pristine }">
+						<input required
+							   name="email"
+							   type="email"
+							   placeholder="Email"
+							   class="form-control"
+							   ng-model="authCtrl.credentials.email"
+							   ng-pattern="/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/">
+					</div>
+					<div class="input-group"
+						 ng-class="{ 'has-error' : signinForm.password.$invalid && !signinForm.password.$pristine }">
 
-					<input required
-						   name="password"
-						   type="password"
-						   class="form-control"
-						   placeholder="Senha"
-						   ng-model="authCtrl.credentials.password">
+						<input required
+							   name="password"
+							   type="password"
+							   class="form-control"
+							   placeholder="Senha"
+							   ng-model="authCtrl.credentials.password">
 
-					<span class="input-group-btn">
-						<button class="btn" ng-class="signinForm.$invalid ? 'btn-danger' : 'btn-success'"
-								type="submit"
-								ng-disabled="signinForm.$invalid"
-								ng-click="authCtrl.signIn()">Acessar
-						</button>
-					</span>
-				</div>
-			</form>
-		</accordion-group>
-		<accordion-group is-open="$scope.accordion.signup">
-			<accordion-heading>Cadastre-se <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $scope.accordion.signup, 'glyphicon-chevron-right': !$scope.accordion.signup}"></span></accordion-heading>
-			<form novalidate
-				  name="signupForm"
-				  ng-submit="authCtrl.signUp()"
-				  role="form">
+						<span class="input-group-btn">
+							<button class="btn" ng-class="signinForm.$invalid ? 'btn-danger' : 'btn-success'"
+									type="submit"
+									ng-disabled="signinForm.$invalid"
+									ng-click="authCtrl.signIn()">Acessar
+							</button>
+						</span>
+					</div>
+				</form>
+			</accordion-group>
+			<accordion-group is-open="$scope.accordion.signup">
+				<accordion-heading>Cadastre-se <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $scope.accordion.signup, 'glyphicon-chevron-right': !$scope.accordion.signup}"></span></accordion-heading>
+				<form novalidate
+					  name="signupForm"
+					  ng-submit="authCtrl.signUp()"
+					  role="form">
 
-				<div class="form-group"
-					 ng-class="{ 'has-error' : signupForm.first_name.$invalid && !signupForm.first_name.$pristine }">
-					<input required
-						   name="first_name"
-						   type="text"
-						   placeholder="Nome"
-						   class="form-control"
-						   ng-model="authCtrl.newUser.first_name">
-				</div>
-				<div class="form-group">
-					<input name="last_name"
-						   type="text"
-						   placeholder="Sobrenome"
-						   class="form-control"
-						   ng-model="authCtrl.newUser.last_name">
-				</div>
-				<div class="row">
-					<div class="col-sm-5">
-						<div class="form-group">
+					<div class="form-group"
+						 ng-class="{ 'has-error' : signupForm.first_name.$invalid && !signupForm.first_name.$pristine }">
+						<input required
+							   name="first_name"
+							   type="text"
+							   placeholder="Nome"
+							   class="form-control"
+							   ng-model="authCtrl.newUser.first_name">
+					</div>
+					<div class="form-group">
+						<input name="last_name"
+							   type="text"
+							   placeholder="Sobrenome"
+							   class="form-control"
+							   ng-model="authCtrl.newUser.last_name">
+					</div>
+					<div class="row">
+						<div class="col-sm-5">
+							<div class="form-group has-feedback">
+								<span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+								<input required
+									   type="text"
+									   class="form-control"
+									   ng-model="authCtrl.newUser.birthday"
+									   datepicker-popup="dd/MM/yyyy"
+									   ng-focus="authCtrl.calendar.open($event)"
+									   is-open="authCtrl.calendar.opened"
+									   datepicker-mode="'year'"
+									   placeholder="Nascimento"/>
+							</div>
+						</div>
+						<div class="col-sm-7">
+							<div class="form-group has-feedback">
+								<span class="glyphicon glyphicon-earphone form-control-feedback"></span>
+								<input name="contact"
+									   type="text"
+									   placeholder="Celular"
+									   class="form-control"
+									   ng-model="authCtrl.newUser.contact"
+									   ui-mask="(99) 999-999-99?9"
+									   ui-mask-placeholder>
+							</div>
+						</div>
+					</div>
+
+					<div class="radio">
+						<label>
 							<input required
-								   name="birthday"
-								   type="text"
-								   placeholder="Nascimento"
-								   class="form-control"
-								   ng-model="authCtrl.newUser.birthday"
-								   ui-mask="99/99/9999"
-								   ui-mask-placeholder>
-						</div>
+								   type="radio"
+								   id="masculino"
+								   name="gender"
+								   value="male"
+								   ng-model="authCtrl.newUser.gender">
+							Masculino
+						</label>
 					</div>
-					<div class="col-sm-7">
-						<div class="form-group">
-							<input name="contact"
-								   type="text"
-								   placeholder="Celular"
-								   class="form-control"
-								   ng-model="authCtrl.newUser.contact"
-								   ui-mask="(99) 999-999-99?9"
-								   ui-mask-placeholder>
-						</div>
+					<div class="radio">
+						<label>
+							<input required
+								   type="radio"
+								   id="feminino"
+								   name="gender"
+								   value="female"
+								   ng-model="authCtrl.newUser.gender">
+							Feminino
+						</label>
 					</div>
-				</div>
+					<br/>
 
-				<div class="radio">
-					<label>
+					<div class="form-group"
+						 ng-class="{ 'has-error' : signinForm.email.$invalid && !signinForm.email.$pristine || authCtrl.error.status }">
+
+						<div class="alert alert-danger"
+							  ng-show="signupForm.email.$error.pattern">Insira um endereço de email válido.</div>
+
+						<div class="alert alert-danger"
+							  ng-show="authCtrl.error.status">{{ authCtrl.error.message }}</div>
+
 						<input required
-							   type="radio"
-							   id="masculino"
-							   name="gender"
-							   value="male"
-							   ng-model="authCtrl.newUser.gender">
-						Masculino
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input required
-							   type="radio"
-							   id="feminino"
-							   name="gender"
-							   value="female"
-							   ng-model="authCtrl.newUser.gender">
-						Feminino
-					</label>
-				</div>
-				<br/>
-
-				<div class="form-group"
-					 ng-class="{ 'has-error' : signinForm.email.$invalid && !signinForm.email.$pristine || authCtrl.error.status }">
-
-					<div class="alert alert-danger"
-						  ng-show="signupForm.email.$error.pattern">Insira um endereço de email válido.</div>
-
-					<div class="alert alert-danger"
-						  ng-show="authCtrl.error.status">{{ authCtrl.error.message }}</div>
-
-					<input required
-						   name="email"
-						   type="email"
-						   placeholder="Email"
-						   class="form-control"
-						   ng-model="authCtrl.credentials.email"
-						   ng-pattern="/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/">
-				</div>
-
-				<div class="form-group"
-					 ng-class="{ 'has-error' : signinForm.password.$invalid && !signinForm.password.$pristine }">
-
-					<div class="alert alert-danger"
-						 ng-show="signinForm.password.$error.pattern">
-						A senha deve conter no mínimo 8 caracteres e deve conter letras e números.
+							   name="email"
+							   type="email"
+							   placeholder="Email"
+							   class="form-control"
+							   ng-model="authCtrl.newUser.email"
+							   ng-pattern="/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/">
 					</div>
 
-					<input required
-						   name="password"
-						   type="password"
-						   class="form-control"
-						   placeholder="Senha"
-						   ng-pattern="/^(?=.*\d)(?=.*[a-z|A-Z])[a-zA-Z0-9]{8,}$/"
-						   ng-model="authCtrl.credentials.password">
+					<div class="form-group"
+						 ng-class="{ 'has-error' : signupForm.password.$invalid && !signupForm.password.$pristine }">
 
-				</div>
+						<div class="alert alert-danger"
+							 ng-show="signupForm.password.$error.pattern">
+							A senha deve conter no mínimo 8 caracteres e deve conter letras e números.
+						</div>
 
-				<button class="btn"
-						ng-class="signupForm.$invalid ? 'btn-danger' : 'btn-success'"
-						type="submit"
-						ng-disabled="signupForm.$invalid">Acessar
-				</button>
-			</form>
-		</accordion-group>
-	</accordion>
+						<input required
+							   name="password"
+							   type="password"
+							   class="form-control"
+							   placeholder="Senha"
+							   ng-pattern="/^(?=.*\d)(?=.*[a-z|A-Z])[a-zA-Z0-9]{8,}$/"
+							   ng-model="authCtrl.newUser.password">
+
+					</div>
+
+					<button class="btn"
+							ng-class="signupForm.$invalid ? 'btn-danger' : 'btn-success'"
+							type="submit"
+							ng-disabled="signupForm.$invalid">Acessar
+					</button>
+				</form>
+			</accordion-group>
+		</accordion>
+	</div>
 </div>

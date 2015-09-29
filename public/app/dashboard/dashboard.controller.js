@@ -16,7 +16,6 @@
 
 		$http.get(APIInfoService.getFullAPILink('/me'))
 			.then(function(response) {
-				console.log(response);
 			}, function(response) {
 				console.log(response);
 			});

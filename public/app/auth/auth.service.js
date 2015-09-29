@@ -6,11 +6,6 @@
 		var apiUrl = APIInfoService.getAPILink;
 		var authServiceFactory = {};
 
-		authServiceFactory.authentication = {
-			isAuth: false,
-			username: ""
-		};
-
 		authServiceFactory.signIn = function(credentials) {
 			var data = 'grant_type=password&email=' + credentials.email + '&password=' + credentials.password;
 			var deferred = $q.defer();
@@ -42,6 +37,7 @@
 
 			$http.post(apiUrl + '/signup', data)
 				.then(function(response){
+					deferred.resolve(response);
 				}, function(error){
 					deferred.reject(error);
 				});

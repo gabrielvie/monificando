@@ -10,14 +10,25 @@
 			password: null
 		};
 
-		vm.newUser = {
-			first_name: null,
-			last_name: null,
-			contact: null,
+		vm.newUser = {};
+
+		vm.emptyForm = {
+			first_name: "",
+			last_name: "",
+			contact: "",
 			birthday: null,
-			gender: null,
-			email: null,
-			password: null
+			gender: "",
+			email: "",
+			password: ""
+		};
+
+		vm.calendar = {
+			opened: false,
+			open: function($event) {
+				$event.preventDefault();
+				$event.stopPropagation();
+				vm.calendar.opened = true;
+			}
 		};
 
 		vm.error = {
@@ -37,15 +48,10 @@
 		};
 
 		vm.signUp = function() {
-			var stringDate = vm.newUser.birthday.replace(/(\d{2})(\d{2})(\d+)/, "$2/$1/$3");
-			vm.newUser.birthday = new Date(stringDate).toISOString();
-
 			AuthenticationService.signUp(vm.newUser).then(function(response){
 
-				$scope.accordion = {
-					signin: false,
-					signup: true
-				};
+				vm.newUser = vm.emptyForm;
+				$scope.signupForm.$setPristine();
 
 				$state.go('auth', {}, { reload: true });
 

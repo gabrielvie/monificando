@@ -9,6 +9,21 @@
 
 	defaultRoute.$inject = ['$urlRouterProvider'];
 
+
+	/* AppControler to manager application */
+	function AppController($scope, $state) {
+
+		$scope.isLogged = function() {
+			if ($state.current.url === '/auth') {
+				return false;
+			} else {
+				return true;
+			}
+		};
+	}
+
+	AppController.$inject = ['$scope', '$state'];
+
 	angular
 		.module('monificando', [
 			'ui.router',
@@ -22,6 +37,7 @@
 			'monificando.bills',
 			'monificando.widgets'
 		])
+		.controller('AppController', AppController)
 		.config(defaultRoute);
 
 }());

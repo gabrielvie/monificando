@@ -22,7 +22,7 @@
 
 	/* Interceptors */
 	function authConfiguration($httpProvider) {
-		$httpProvider.interceptors.push(['$q', '$location', '$localStorage', '$timeout', function ($q, $location, $localStorage, $timeout) {
+		$httpProvider.interceptors.push(['$q', '$location', '$localStorage', '$rootScope', function ($q, $location, $localStorage, $rootScope) {
 
 			return {
 				'request': function (config) {

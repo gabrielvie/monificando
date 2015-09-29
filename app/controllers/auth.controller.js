@@ -18,13 +18,13 @@ exports.signin = function(req, res) {
 			var isMatch = user.authenticate(req.body.password);
 
 			if (!isMatch) {
-				res.status(401).send({'w':'password'});
+				return res.status(401).send({'w':'password'});
 			} else {
 				var token = jwt.sign(user, config.jwt.secret_token, {
 					expiresInMinutes: config.jwt.expires_in
 				});
 
-				res.status(200).send({
+				return res.status(200).send({
 					success: true,
 					token: token,
 					user: {
@@ -34,7 +34,7 @@ exports.signin = function(req, res) {
 				});
 			}
 		} else {
-			res.status(401).send({'w':'email'});
+			return res.status(401).send({'w':'email'});
 		}
 	});
 };
@@ -43,22 +43,21 @@ exports.signup = function(req, res) {
 
 	User.findOne({ email: req.body.email }, function(err, data){
 		if (!data) {
-
 			var newUser = new User(req.body);
 
 			newUser.save(function(err) {
 				if (err) {
-					res.status(422).send({
+					return res.status(422).send({
 						message: err.message,
 						errors: err.errors
 					});
 				}
 
-				res.status(201).send({ success: true });
+				return res.status(201).send({ success: true });
 			});
 
 		} else {
-			res.status(409).send({ message: 'Email has already in use.' });
+			return res.status(409).send({ message: 'Email has already in use.' });
 		}
 	});
 

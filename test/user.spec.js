@@ -25,7 +25,6 @@ describe('User', function () {
 		request(url)
 			.post('/signup')
 			.send(signUpUser)
-			.expect('Content-Type', /json/)
 			.expect(422)
 			.end(function (err, res) {
 				if (err) throw err;
