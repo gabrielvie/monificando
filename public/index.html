@@ -11,19 +11,22 @@
 
     <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<link type="text/css" rel="stylesheet" href="assets/css/app.min.css">
-</head>
-<body ng-app="monificando" ng-controller="AppController as appCtrl">
 
-    <div class="splash-screen">
+	<script type="text/javascript" src="assets/js/lib.min.js"></script>
+	<script type="text/javascript" src="assets/js/app.min.js"></script>
+</head>
+<body>
+
+    <div class="splash-screen" ng-if="false">
 		<img src="http://homolog.monificando.com/assets/img/logo.png" class="splash-screen-item">
 		<div class="splash-screen-circle-outer"></div>
 	</div>
 
-	<div id="wrapper-auth" ng-if="!isLogged()">
+	<div id="wrapper-auth" ng-if="!isLogged()" class="element-hide" ng-class="{ 'element-show' : true}">
 		<div id="auth-area" ui-view="main"></div>
 	</div>
 
-    <div id="wrapper" ng-if="isLogged()">
+    <div id="wrapper" ng-if="isLogged()" class="element-hide" ng-class="{ 'element-show' : isLogged() }">
 
 		<header id="header" class="navbar navbar-monificando navbar-fixed-top"  ui-view="header"></header>
 		<div id="sidebar" class="col-sm-2" ui-view="sidebar"></div>
@@ -41,17 +44,14 @@
         ga('send', 'pageview');
     </script>
 
-    <script type="text/javascript" src="assets/js/lib.min.js"></script>
-	<script type="text/javascript" src="assets/js/app.min.js"></script>
-
 	<script type="text/javascript">
-	/*var body = document.getElementsByTagName('body')[0];
+	var body = document.getElementsByTagName('body')[0];
 	setTimeout(function(){
 
 		body.setAttribute('ng-app', 'monificando');
-
+		body.setAttribute('ng-controller', 'AppController as appCtrl')
 		angular.bootstrap(body, ['ng', 'monificando']);
-	}, 2000);*/
+	}, 5000);
 	</script>
 </body>
 </html>
