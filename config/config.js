@@ -5,7 +5,7 @@ var _ 		= require('lodash'),
 
 
 module.exports = _.extend(
-	require('./env/' + process.argv[2] + '.env')
+	require('./env/development.env')
 );
 
 module.exports.getGlobbedFiles = function(globPatterns, removeRoot) {

@@ -4,7 +4,7 @@ var should = require('should'),
 	expect = require('expect.js'),
 	request = require('supertest');
 
-var url = 'http://localhost:3001/api';
+var url = 'http://monificando.dev/api';
 
 describe('User', function () {
 

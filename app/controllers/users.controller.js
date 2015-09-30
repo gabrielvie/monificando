@@ -6,10 +6,8 @@ var mongoose = require('mongoose'),
 exports.delete = function(req, res) {
 
 	User.remove({ _id: req.params.user_id  }, function(err, user) {
-		if (err) res.status(304).send(err);
+		if (err) { res.status(304).send(err); return; }
 
-		return res.status(200).send({ deleted: true });
+		res.status(200).send({ deleted: true });
 	});
-
-	return res.status(404).send({ deleted: false });
 };

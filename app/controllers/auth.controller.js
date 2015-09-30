@@ -11,20 +11,20 @@ exports.signin = function(req, res) {
 		email: req.body.email
 	}, function(err, user) {
 		if (err) {
-			return res.json(401);
+			res.json(401); return;
 		}
 
 		if (user) {
 			var isMatch = user.authenticate(req.body.password);
 
 			if (!isMatch) {
-				return res.status(401).send({'w':'password'});
+				res.status(401).send({'w':'password'});
 			} else {
 				var token = jwt.sign(user, config.jwt.secret_token, {
 					expiresInMinutes: config.jwt.expires_in
 				});
 
-				return res.status(200).send({
+				res.status(200).send({
 					success: true,
 					token: token,
 					user: {
@@ -34,7 +34,7 @@ exports.signin = function(req, res) {
 				});
 			}
 		} else {
-			return res.status(401).send({'w':'email'});
+			res.status(401).send({'w':'email'});
 		}
 	});
 };
@@ -47,10 +47,12 @@ exports.signup = function(req, res) {
 
 			newUser.save(function(err) {
 				if (err) {
-					return res.status(422).send({
+					res.status(422).send({
 						message: err.message,
 						errors: err.errors
 					});
+
+					return;
 				}
 
 				return res.status(201).send({ success: true });

@@ -4,7 +4,7 @@ var should = require('should'),
 	expect = require('expect.js'),
 	request = require('supertest');
 
-var url = 'http://localhost:3001/api';
+var url = 'http://monificando.dev/api';
 
 describe('Credit Card', function () {
 
@@ -57,8 +57,21 @@ describe('Credit Card', function () {
 			.set('token', token)
 			.send(fakeCreditCard)
 			.expect(201)
-			.expect({success: true})
-			.end(done);
+			.end(function(err, res) {
+				if (err) throw err;
+
+				var response = res.body;
+
+				expect(response.success).to.equal(true);
+				expect(response.data.description).to.equal(fakeCreditCard.description);
+				expect(response.data.payment_day).to.equal(fakeCreditCard.payment_day);
+				expect(response.data.valid_thru).to.equal(fakeCreditCard.valid_thru);
+				expect(response.data.buy_day).to.equal(fakeCreditCard.buy_day);
+
+				fakeCreditCard.id = response.data._id;
+
+				done();
+			});
 	});
 
 	after(function (done) {

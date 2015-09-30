@@ -8,7 +8,7 @@ module.exports = {
 	},
 	port: 3001,
 	database: function() {
-		var mongoLab = 'mongodb://monificando:monificandopassword@ds041623.mongolab.com:41623/monificando-test';
+		var mongoLab = 'mongodb://localhost/dev_monificando';
 
 		return mongodbUri.formatMongoose(mongoLab);
 	},
