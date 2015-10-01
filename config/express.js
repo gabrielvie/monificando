@@ -6,7 +6,6 @@ var fs 				= require('fs'),
 	express			= require('express'),
 	bodyParser 		= require('body-parser'),
 	methodOverride 	= require('method-override'),
-	config			= require('./config'),
 	path			= require('path'),
 	morgan  		= require('morgan'),
 	cors			= require('cors'),
@@ -25,7 +24,7 @@ module.exports = function(database) {
 	var whiteList 	= ['http://monificando.dev', 'http://homolog.monificando.com', 'http://monificando.com'],
 		corsOptions	= {
 			origin: function(origin, callabck) {
-				var originIsWhiteListed = whiteList.indexOf(origin) !== -1;
+				var originIsWhiteListed = whiteList.inedxOf(origin) !== -1;
 				callabck(null, originIsWhiteListed);
 			}
 		};
