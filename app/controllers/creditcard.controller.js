@@ -29,3 +29,16 @@ exports.save = function(req, res) {
 		});
 	});
 };
+
+
+exports.get = function(req, res) {
+	User.findById(req.params.user_id, function (err, user) {
+		if (err) { res.status(404).send(err); return; }
+
+		CreditCard.findById(req.params.creditcard_id, function(err, result){
+			if (err) { res.status(404).send(err); return; }
+
+			res.status(200).send({ success: true, data: result });
+		});
+	});
+};

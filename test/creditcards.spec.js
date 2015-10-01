@@ -74,6 +74,24 @@ describe('Credit Card', function () {
 			});
 	});
 
+	it('should return a created credit card using id.', function(done){
+
+		request(url)
+			.get('/user/' + user_id + '/creditcards/' + fakeCreditCard.id)
+			.set('token', token)
+			.expect(200)
+			.end(function(err, res){
+				if (err) throw err;
+
+				var response = res.body;
+
+				expect(response.success).to.equal(true);
+				expect(response.data._id).to.equal(fakeCreditCard.id);
+
+				done();
+			});
+	});
+
 	after(function (done) {
 		request(url)
 			.del('/user/' + user_id)
