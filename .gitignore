@@ -5,3 +5,4 @@ public/assets/css/**
 public/assets/js/**
 .sass-cache
 logs
+*.cache

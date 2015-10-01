@@ -1,18 +1,15 @@
 {
   "name": "monificando",
-  "url": "http://www.monificando.com.br",
+  "url": "http://monificando.com",
   "copyright": "2015",
   "version": "0.0.1",
   "description": "Aplicação de controle financeiro pessoal",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [
-    "MongoDB",
-    "expressJS",
     "AngularJS",
-    "NodeJS"
+    "Frontend",
+    "Bootstrap",
+    "Chart.js",
+    "Simgle Page Application"
   ],
   "authors": [
     "Gabriel Santos <gabrielvie@gmail.com>",
@@ -20,18 +17,7 @@
     "Natalia Galdino",
     "Thiago Syllos"
   ],
-  "moduleType": [
-    "globals",
-    "node"
-  ],
   "license": "MIT",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
   "dependencies": {
     "angular": "~1.4.3",
     "angular-bootstrap": "~0.12.0",
@@ -41,6 +27,9 @@
     "angular-ui-router": "~0.2.15",
     "Chart.js": "~1.0.2",
     "ngstorage": "~0.3.9"
+  },
+  "resolutions": {
+    "angular": "~1.4.*"
   },
   "components": {
     "chartJs": "bower_components/Chart.js/Chart.min.js",

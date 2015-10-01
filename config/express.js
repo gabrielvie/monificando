@@ -10,7 +10,6 @@ var fs 				= require('fs'),
 	path			= require('path'),
 	morgan  		= require('morgan'),
 	cors			= require('cors'),
-	jwt				= require('jsonwebtoken'),
 	enviroment		= process.argv['2'];
 
 var chalk 	= require('chalk');
@@ -65,27 +64,8 @@ module.exports = function(database) {
 	app.use(methodOverride());
 	app.use(express.static(path.resolve('./public')));
 
-	app.use(function(req, res, next) {
-		var token 			= req.body.token || req.param('token') || req.headers['token'],
-			_				= require('underscore'),
-			nonSecurePaths 	= ['/', '/api/signin', '/api/signup'];
-
-		res.type('application/json');
-
-		if (_.contains(nonSecurePaths, req.path)) return next();
-
-		if (token) {
-			jwt.verify(token, config.jwt.secret_token, function(err, decoded) {
-				if (err) {
-					return res.status(401).send({ message: 'Failed to authenticate token.' });
-				} else {
-					req.decode = decoded;
-					next();
-				}
-			});
-		} else {
-			return res.status(401).send({ message: 'No token provided.'	});
-		}
+	config.getGlobbedFiles('./app/middlewares/**/*.js').forEach(function(modelPath) {
+		require(path.resolve(modelPath))(app);
 	});
 
 	config.getGlobbedFiles('./app/routes.js').forEach(function(routePath) {
