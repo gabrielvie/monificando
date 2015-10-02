@@ -26,6 +26,7 @@
     "angular-ui-mask": "~1.4.5",
     "angular-ui-router": "~0.2.15",
     "Chart.js": "~1.0.2",
+    "ng-tags-input": "~3.0.0",
     "ngstorage": "~0.3.9"
   },
   "resolutions": {

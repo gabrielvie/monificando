@@ -22,29 +22,6 @@ module.exports = function(database) {
 		require(path.resolve(modelPath));
 	});
 
-	var whiteList 	= ['http://monificando.dev', 'http://homolog.monificando.com', 'http://monificando.com'],
-		corsOptions	= {
-			origin: function(origin, callabck) {
-				var originIsWhiteListed = whiteList.inedxOf(origin) !== -1;
-				callabck(null, originIsWhiteListed);
-			}
-		};
-
-	app.use(cors(corsOptions));
-
-	app.use(function(req, res, next) {
-
-		// CORS headers
-		res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-		res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, accept');
-
-		if (req.method == 'OPTIONS') {
-			res.status(200).end();
-		} else {
-			next();
-		}
-	});
-
 	app.use(function(req, res, next) {
 		res.locals.url = req.protocol + '://' + req.headers.host + req.url;
 		next();
