@@ -21,7 +21,7 @@ module.exports = function(app) {
 
 	app.route('/api/user/:user_id/creditcards').post(ccredit.save);
 	app.route('/api/user/:user_id/creditcards/:creditcard_id').get(ccredit.get);
-	app.route('/api/user/:user_id/creditcards').get(ccredit.getall);
+	app.route('/api/user/:user_id/creditcards').get(ccredit.list);
 	app.route('/api/user/:user_id/creditcards/:creditcard_id').put(ccredit.update);
 	app.route('/api/user/:user_id/creditcards/:creditcard_id').delete(ccredit.delete);
 
