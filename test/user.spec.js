@@ -88,7 +88,7 @@ describe('User', function () {
 			});
 	});
 
-	it('should return an HTTP status [200] (Ok) when an user was deleted.', function (done) {
+	it('should return an HTTP status [404] when an user was deleted.', function (done) {
 
 		request(url)
 			.del('/user/' + fakeUser.id)

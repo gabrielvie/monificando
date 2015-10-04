@@ -74,13 +74,13 @@ describe('Credit Card', function () {
 			});
 	});
 
-	it('should return a created credit card using id.', function(done){
+	it('should return a found credit card using an id.', function(done) {
 
 		request(url)
 			.get('/user/' + user_id + '/creditcards/' + fakeCreditCard.id)
 			.set('token', token)
 			.expect(200)
-			.end(function(err, res){
+			.end(function(err, res) {
 				if (err) throw err;
 
 				var response = res.body;
@@ -90,6 +90,84 @@ describe('Credit Card', function () {
 
 				done();
 			});
+	});
+
+	it('should return a list with all credit cards associated to an user.', function(done) {
+
+		request(url)
+			.get('/user/' + user_id + '/creditcards')
+			.set('token', token)
+			.expect(200)
+			.end(function(err, res) {
+				if (err) throw err;
+
+				var response = res.body;
+
+				expect(response.success).to.equal(true);
+				expect(response.list).to.be.an('array');
+
+				done();
+			});
+	});
+
+	it('should update and return a sent credit card. ', function(done) {
+
+		var ufakeCreditCard = {
+			description: 'Visa 4435',
+			buy_day: 10,
+			payment_day: 15,
+			valid_thru: '06/19'
+		};
+
+		request(url)
+			.put('/user/' + user_id + '/creditcards/' + fakeCreditCard.id)
+			.set('token', token)
+			.send(ufakeCreditCard)
+			.expect(200)
+			.end(function(err, res) {
+				if (err) throw err;
+
+				var response = res.body;
+
+				expect(response.nModified).to.equal(1);
+			});
+
+		request(url)
+			.get('/user/' + user_id + '/creditcards/' + fakeCreditCard.id)
+			.set('token', token)
+			.expect(200)
+			.end(function(err, res) {
+				if (err) throw err;
+
+				var response = res.body;
+
+				expect(response.success).to.equal(true);
+				expect(response.data._id).to.equal(fakeCreditCard.id);
+				expect(response.data.description).to.equal(ufakeCreditCard.description);
+				expect(response.data.payment_day).to.equal(ufakeCreditCard.payment_day);
+				expect(response.data.valid_thru).to.equal(ufakeCreditCard.valid_thru);
+				expect(response.data.buy_day).to.equal(ufakeCreditCard.buy_day);
+
+				done();
+			});
+	});
+
+	it('should return Ok when credit card will be deleted.', function (done) {
+
+		request(url)
+			.del('/user/' + user_id + '/creditcards/' + fakeCreditCard.id)
+			.set('token', token)
+			.expect(200)
+			.end(done);		
+	});
+
+	it('shouldn\'t return an credit card that was deleted.', function (done) {
+		
+		request(url)
+			.get('/user/' + user_id + '/creditcards/' + fakeCreditCard.id)
+			.set('token', token)
+			.expect(404)
+			.end(done);
 	});
 
 	after(function (done) {

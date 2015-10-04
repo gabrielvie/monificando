@@ -54,13 +54,13 @@ module.exports = function(database) {
 
 		console.error(err.stack);
 
-		res.status(500).send('500', {
+		res.status(500).send({
 			error: err.stack
 		});
 	});
 
 	app.use(function(req, res) {
-		res.status(404).send('404', {
+		res.status(404).send({
 			url: req.originalUrl,
 			error: 'Not found'
 		});
