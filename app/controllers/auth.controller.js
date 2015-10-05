@@ -28,8 +28,8 @@ exports.signin = function(req, res) {
 					success: true,
 					token: token,
 					user: {
-						'id': user._id,
-						'email': user.email
+						_id: user.id,
+						email: user.email
 					}
 				});
 			}
@@ -37,32 +37,6 @@ exports.signin = function(req, res) {
 			res.status(401).send({'w':'email'});
 		}
 	});
-};
-
-exports.signup = function(req, res) {
-
-	User.findOne({ email: req.body.email }, function(err, data){
-		if (!data) {
-			var newUser = new User(req.body);
-
-			newUser.save(function(err) {
-				if (err) {
-					res.status(422).send({
-						message: err.message,
-						errors: err.errors
-					});
-
-					return;
-				}
-
-				return res.status(201).send({ success: true });
-			});
-
-		} else {
-			return res.status(409).send({ message: 'Email has already in use.' });
-		}
-	});
-
 };
 
 exports.signout = function(req, res) {

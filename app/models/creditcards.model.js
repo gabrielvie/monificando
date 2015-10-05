@@ -27,11 +27,6 @@ var CreditCardSchema = new Schema({
 	},
 	updated_at: {
 		type: Date
-	},
-	_user: {
-		type: mongoose.Schema.Types.ObjectId,
-		ref: 'User',
-		required: true
 	}
 });
 

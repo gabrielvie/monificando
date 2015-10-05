@@ -2,6 +2,8 @@
 
 var mongoose 	= require('mongoose'),
 	Schema 	 	= mongoose.Schema,
+	CreditCard	= mongoose.model('CreditCard'),
+	Bill		= mongoose.model('Bill'),
 	crypto		= require('crypto');
 
 var UserSchema = new Schema({
@@ -20,29 +22,31 @@ var UserSchema = new Schema({
 		trim: true,
 		match: [/((?=.*\d)(?=.*[a-z]).{6,20})/, 'Please fill a password with letters and numbers']
 	},
-	first_name: {
-		type: String,
-		required: true,
-		trim: true
+	data: {
+		first_name: {
+			type: String,
+			required: true,
+			trim: true
+		},
+		last_name: {
+			type: String,
+			required: true,
+			trim: true
+		},
+		birthday: {
+			type: Date,
+			required: true
+		},
+		gender: {
+			type: String,
+			required: true,
+			enum: ['male', 'female']
+		},
+		contact: [{
+			type: String,
+			trim: true
+		}]
 	},
-	last_name: {
-		type: String,
-		required: true,
-		trim: true
-	},
-	birthday: {
-		type: Date,
-		required: true
-	},
-	gender: {
-		type: String,
-		required: true,
-		enum: ['male', 'female']
-	},
-	contact: [{
-		type: String,
-		trim: true
-	}],
 	salt: {
 		type: String
 	},
@@ -55,7 +59,10 @@ var UserSchema = new Schema({
 	},
 	updated_at: {
 		type: Date
-	}
+	},
+
+	credit_cards: [CreditCard.schema],
+	bills: [Bill.schema]
 });
 
 UserSchema.methods.hashPassword = function(password) {

@@ -5,4 +5,4 @@ var should 	= require('should'),
 	request = require('supertest');
 
 require('./test/user.spec');
-require('./test/creditcards.spec');
+require('./test/bills.spec');

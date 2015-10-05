@@ -8,7 +8,7 @@ var url = 'http://monificando.dev/api';
 
 describe('User', function () {
 
-	var fakeUser = {
+	var fake_user = {
 		email: 'supertest',
 		password: 'supertest',
 		first_name: 'Supertest',
@@ -20,7 +20,7 @@ describe('User', function () {
 
 	it('should return an HTTP status [422] (Unprocessable Entity) when an user try to create an account with invalid informations.', function (done) {
 
-		var signUpUser = fakeUser;
+		var signUpUser = fake_user;
 
 		request(url)
 			.post('/signup')
@@ -41,10 +41,10 @@ describe('User', function () {
 
 	it('should return an HTTP status [201] (Created) when an user was created.', function (done) {
 
-		fakeUser.email += '@mocha.com';
-		fakeUser.password += '123';
+		fake_user.email += '@mocha.com';
+		fake_user.password += '123';
 
-		var signUpUser = fakeUser;
+		var signUpUser = fake_user;
 
 		request(url)
 			.post('/signup')
@@ -56,7 +56,7 @@ describe('User', function () {
 
 	it('should return an HTTP status [409] (Conflit) when user try to create an account with an email has already in use.', function (done) {
 
-		var signUpUser = fakeUser;
+		var signUpUser = fake_user;
 
 		request(url)
 			.post('/signup')
@@ -70,8 +70,8 @@ describe('User', function () {
 	it('should return an HTTP status [200] (Ok) and a message when an user was logged.', function (done) {
 
 		var credentidals = {
-			email: fakeUser.email,
-			password: fakeUser.password
+			email: fake_user.email,
+			password: fake_user.password
 		};
 
 		request(url)
@@ -81,8 +81,8 @@ describe('User', function () {
 			.end(function (err, res) {
 				if (err) throw err;
 
-				fakeUser.token = res.body.token;
-				fakeUser.id = res.body.user.id;
+				fake_user.token = res.body.token;
+				fake_user.id = res.body.user._id;
 
 				done();
 			});
@@ -91,8 +91,9 @@ describe('User', function () {
 	it('should return an HTTP status [404] when an user was deleted.', function (done) {
 
 		request(url)
-			.del('/user/' + fakeUser.id)
-			.send({'token': fakeUser.token})
+			.del('/user/' + fake_user.id)
+			.set('token', fake_user.token)
+			.send({ '_id': fake_user.id })
 			.end(done);
 	});
 });

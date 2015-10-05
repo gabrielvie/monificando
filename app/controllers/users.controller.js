@@ -3,21 +3,42 @@
 var mongoose = require('mongoose'),
 	User = mongoose.model('User');
 
+exports.save = function(req, res) {
 
-exports.verify = function(req, res, next) {
+	User.findOne({ email: req.body.email }, function(err, data){
+		if (!data) {
 
-	User.findById(req.params.user_id, function(err, user) {
-		if (err) { res.status(501).send(err); return; }
+			var newUser = new User({
+				email: req.body.email,
+				password: req.body.password,
+				data: {
+					first_name: req.body.first_name,
+					last_name: req.body.last_name,
+					birthday: req.body.birthday,
+					gender: req.body.gender
+				}
+			});
 
-		if (user) {
-			next();
+			newUser.save(function(err) {
+				if (err) {
+					res.status(422).send({
+						message: err.message,
+						errors: err.errors
+					});
+
+					return;
+				}
+
+				return res.status(201).send({ success: true });
+			});
+
 		} else {
-			res.status(401).send({ success: false, message: 'User not found.' });
-			return;
+			return res.status(409).send({ message: 'Email has already in use.' });
 		}
 	});
 
 };
+
 
 exports.get = function(req, res) {
 
@@ -33,9 +54,11 @@ exports.get = function(req, res) {
 
 };
 
+
 exports.update = function(req, res) {
 
 };
+
 
 exports.delete = function(req, res) {
 
