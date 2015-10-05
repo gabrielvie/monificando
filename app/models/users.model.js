@@ -4,6 +4,7 @@ var mongoose 	= require('mongoose'),
 	Schema 	 	= mongoose.Schema,
 	CreditCard	= mongoose.model('CreditCard'),
 	Bill		= mongoose.model('Bill'),
+	Tags		= mongoose.model('Tags'),
 	crypto		= require('crypto');
 
 var UserSchema = new Schema({
@@ -62,7 +63,8 @@ var UserSchema = new Schema({
 	},
 
 	credit_cards: [CreditCard.schema],
-	bills: [Bill.schema]
+	bills: [Bill.schema],
+	tags: [Tags.schema]
 });
 
 UserSchema.methods.hashPassword = function(password) {
