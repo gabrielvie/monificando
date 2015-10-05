@@ -57,7 +57,7 @@ describe('Bills', function() {
 			});
 	});
 
-	it('should return an variable with followed key:value (success:true) when bill was created.', function(done) {
+	it('should return an variable with followed key:value (success:true) when bill will created.', function(done) {
 
 		request(url)
 			.post('/user/' + fake_user.id + '/bills')
@@ -110,7 +110,48 @@ describe('Bills', function() {
 				done();
 			});
 	});
-
+	
+	it('should return a updated bill after send new update.', function(done) {
+		
+		var ufake_bill = {
+			description: 'Conta de Agua'
+		};
+		    
+	    request(url)
+	    	.put('/user/' + fake_user.id + '/bills/' + fake_bill.id)
+	    	.set('token', fake_user.token)
+	    	.send(ufake_bill)
+	    	.expect(200)
+	    	.end(function(err, res) {
+	    		if (err) throw err;
+	    		
+	    		var response = res.body;
+	    		
+	    		response.success.should.be.true;
+	    		response.data.description.should.be.equal(ufake_bill.description);
+	    		
+	    		done();
+	    	});
+	});
+	
+	it('should return an variable with followed key:value (deleted:true) when bill will deleted.', function(done) {
+		
+		request(url)
+			.del('/user/' + fake_user.id + '/bills/' + fake_bill.id)
+			.set('token', fake_user.token)
+			.send({ '_id': fake_user.id })
+			.expect(200)
+			.end(function(err, res) {
+				if (err) throw err;
+				
+				var response = res.body;
+				
+				response.deleted.should.be.true;
+				
+				done();	
+			});
+	});
+	
 	after(function(done) {
 
 		request(url)
