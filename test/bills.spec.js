@@ -79,7 +79,7 @@ describe('Bills', function() {
 			.get('/user/' + fake_user.id + '/bills')
 			.set('token', fake_user.token)
 			.expect(200)
-			.end(function(err, res){
+			.end(function(err, res) {
 				if (err) throw err;
 
 				var response = res.body;
@@ -87,7 +87,25 @@ describe('Bills', function() {
 				response.success.should.be.true;
 				response.list.should.be.an.array;
 				response.list[0].should.containEql({ description: fake_bill.description });
-				fake_bill._id = response.list[0]._id;
+				fake_bill.id = response.list[0]._id;
+
+				done();
+			});
+	});
+
+	it('should return a created bill passing user id and bill id.', function(done) {
+
+		request(url)
+			.get('/user/' + fake_user.id + '/bills/' + fake_bill.id)
+			.set('token', fake_user.token)
+			.expect(200)
+			.end(function(err, res) {
+				if (err) throw err;
+
+				var response = res.body;
+
+				response.success.should.be.true;
+				response.data.description.should.equal(fake_bill.description);
 
 				done();
 			});

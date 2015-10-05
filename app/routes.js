@@ -30,6 +30,7 @@ module.exports = function(app) {
 
 	app.route('/api/user/:user_id/bills').post(bill.save);
 	app.route('/api/user/:user_id/bills').get(bill.list);
+	app.route('/api/user/:user_id/bills/:bill_id').get(bill.get);
 
 	app.route('/api/me').get(function(req, res){
 		return res.status(200).send({ success: true });
