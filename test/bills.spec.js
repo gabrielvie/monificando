@@ -5,7 +5,6 @@ var chai 	= require("chai"),
 chai.use(require('chai-things'));
 
 var	expect 	= chai.expect,
-	assert 	= chai.assert,
 	request = require('supertest');
 
 
@@ -57,7 +56,7 @@ describe('Bills', function() {
 			});
 	});
 
-	it('should return an variable with followed key:value (success:true) when bill will created.', function(done) {
+	it('should return an variable with followed key:value (success:true) when bill was created.', function(done) {
 
 		request(url)
 			.post('/user/' + fake_user.id + '/bills')
@@ -114,9 +113,12 @@ describe('Bills', function() {
 	it('should return a updated bill after send new update.', function(done) {
 		
 		var ufake_bill = {
-			description: 'Conta de Agua'
+			description: 'Conta de Agua',
+			total: 245.65
 		};
-		    
+		
+		console.log('/user/' + fake_user.id + '/bills/' + fake_bill.id);
+
 	    request(url)
 	    	.put('/user/' + fake_user.id + '/bills/' + fake_bill.id)
 	    	.set('token', fake_user.token)
@@ -152,12 +154,13 @@ describe('Bills', function() {
 			});
 	});
 	
-	after(function(done) {
+
+	/*after(function(done) {
 
 		request(url)
 			.del('/user/' + fake_user.id)
 			.set('token', fake_user.token)
 			.send({ '_id': fake_user.id })
 			.end(done);
-	});
+	});*/
 });

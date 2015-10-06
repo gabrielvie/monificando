@@ -74,7 +74,10 @@ exports.update = function(req, res) {
 		};
 
 	User.findOneAndUpdate(conditions, uCreditCard, function(err, user) {
-		if (err) { res.status(404).send(err); return; }
+		if (err || !user) {
+			res.status(404).send({ success: false, err: err });
+			return;
+		}
 
 		uCreditCard = user.credit_cards.id(req.params.creditcard_id);
 
@@ -88,7 +91,10 @@ exports.delete = function(req, res) {
 	var userId = req.params.user_id;
 
 	User.findById(userId, function(err, user) {
-		if (err) { res.status(404).send(err); return; }
+		if (err || !user) {
+			res.status(404).send({ success: false, err: err });
+			return;
+		}
 
 		user.credit_cards.id(req.params.creditcard_id).remove();
 

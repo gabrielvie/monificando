@@ -38,11 +38,11 @@ module.exports = function(app) {
 	/* Tags Routes */
 	var tag = require('./controllers/tags.controller');
 	
-	tag.route('/api/user/:user_id/tags').post(tag.save);
-	tag.route('/api/user/:user_id/tags').get(tag.list);
-	tag.route('/api/user/:user_id/tags/:tags_name').get(tag.get);
-	tag.route('/api/user/:user_id/tags/:tags_id').put(tag.update);
-	tag.route('/api/user/:user_id/tags/:tags_id').delete(tag.delete);
+	app.route('/api/user/:user_id/tags').post(tag.save);
+	app.route('/api/user/:user_id/tags').get(tag.list);
+	app.route('/api/user/:user_id/tags/:tags_name').get(tag.get);
+	app.route('/api/user/:user_id/tags/:tags_id').put(tag.update);
+	app.route('/api/user/:user_id/tags/:tags_id').delete(tag.delete);
 	
 	app.route('/api/me').get(function(req, res){
 		return res.status(200).send({ success: true });
