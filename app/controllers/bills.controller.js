@@ -24,7 +24,7 @@ exports.save = function(req, res) {
 
 		nBill.values = nBill.valuesTrait(req.body.repeat, req.body.total, req.body.qty);
 
-		user.bills.push(nBill);
+		user.bills.create(nBill);
 
 		user.save(function(err, savedUser) {
 			if (err) { res.status(501).send(err); return; }
@@ -69,21 +69,30 @@ exports.list = function(req, res) {
 
 exports.update = function(req, res) {
 	
-	var uBill = req.body,
+	var to_update = {},
 		conditions = {
 			'_id': req.params.user_id,
 			'bills._id': req.params.bill_id
 		};
 
-	User.findOneAndUpdate(conditions, uBill, function(err, user) {
-		if (err || !user) {
-			res.status(404).send({ success: false, err: err });
+	for (var field in req.body) {
+		to_update['bills.$.' + field] = req.body[field];
+	}
+
+	User.update(conditions, { $set: to_update }, function(err, affecteds){
+		if (err) {
+			res.status(304).send({ success: false, err: err });
 			return;
 		}
-		
-		uBill = user.bills.id(req.params.bill_id);
-		
-		res.status(200).send({ success: true, data: uBill });
+
+		User.findById(req.params.user_id, function(err, user) {
+			if (err || !user) {
+				res.status(404).send({ success: false, err: err });
+				return;
+			}
+
+			res.status(200).send({ success: true, data: user.bills.id(req.params.bill_id) });
+		});
 	});
 };
 

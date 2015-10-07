@@ -6,7 +6,7 @@ var should = require('should'),
 
 var url = 'http://monificando.dev/api';
 
-describe('User', function () {
+describe('USER ---------------| ', function () {
 
 	var fake_user = {
 		email: 'supertest',

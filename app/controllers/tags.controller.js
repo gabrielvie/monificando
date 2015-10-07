@@ -35,7 +35,7 @@ exports.get = function(req, res) {
 			return;
 		}
 
-		//get por nome da tag
+		res.status(200).send({});
 	});
 };
 
@@ -55,31 +55,39 @@ exports.list = function(req, res) {
 
 exports.update = function(req, res) {
 
-	var uTag = req.body,
-	    conditions = {
-	        '_id': req.params.user_id,
-			'tags': {
-				'_id': req.params.tag_id
+	var to_update = {},
+		conditions = {
+			'_id': req.params.user_id,
+			'tags._id': req.params.tag_id
+		};
+
+	for (var field in req.body) {
+		to_update['tags.$.' + field] = req.body[field];
+	}
+
+	User.update(conditions, { $set: to_update }, function(err, affecteds){
+		if (err) {
+			res.status(304).send({ success: false, err: err });
+			return;
+		}
+
+		User.findById(req.params.user_id, function(err, user) {
+			if (err || !user) {
+				res.status(404).send({ success: false, err: err });
+				return;
 			}
-	    };
-	    
-	User.findOneAndUpdate(conditions, uTag, function(err, user) {
-	    if (err) { res.status(404).send(err); return; }
-	    
-	    uTag = user.tags.id(req.params.tag_id);
-	    
-	    res.status(200).send({ succes: true, data: uTag });
+
+			res.status(200).send({ success: true, data: user.tags.id(req.params.tags_id) });
+		});
 	});
 };
 
 
 exports.delete = function(req, res) {
 
-	var userId = req.params.user_id;
-
-	User.findById(userId, function(err, user) {
+	User.findById(req.params.user_id, function(err, user) {
 		if (err) { res.status(404).send(err); return; }
-
+		
 		user.tags.id(req.params.tag_id).remove();
 
 		user.save(function(err, user) {

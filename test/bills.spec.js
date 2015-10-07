@@ -10,7 +10,7 @@ var	expect 	= chai.expect,
 
 var url = 'http://monificando.dev/api';
 
-describe('Bills', function() {
+describe('BILLS --------------| ', function() {
 
 	var fake_user = {
 		email: 'supertest@mocha.com',
@@ -56,7 +56,7 @@ describe('Bills', function() {
 			});
 	});
 
-	it('should return an variable with followed key:value (success:true) when bill was created.', function(done) {
+	it('[POST]: should return an variable with followed key:value (success:true) when BILL will be created.', function(done) {
 
 		request(url)
 			.post('/user/' + fake_user.id + '/bills')
@@ -72,7 +72,7 @@ describe('Bills', function() {
 			});
 	});
 
-	it('should return a list of bills passing an user id.', function(done) {
+	it('[LIST]: should return a list of BILLs passing the user\'s id.', function(done) {
 
 		request(url)
 			.get('/user/' + fake_user.id + '/bills')
@@ -92,7 +92,7 @@ describe('Bills', function() {
 			});
 	});
 
-	it('should return a created bill passing user id and bill id.', function(done) {
+	it('[GET]: should return a created BILL passing the user\'s id and BILL\'s id.', function(done) {
 
 		request(url)
 			.get('/user/' + fake_user.id + '/bills/' + fake_bill.id)
@@ -110,14 +110,12 @@ describe('Bills', function() {
 			});
 	});
 	
-	it('should return a updated bill after send new update.', function(done) {
+	it('[PUT]: should return a updated BILL after send new update.', function(done) {
 		
 		var ufake_bill = {
 			description: 'Conta de Agua',
 			total: 245.65
 		};
-		
-		console.log('/user/' + fake_user.id + '/bills/' + fake_bill.id);
 
 	    request(url)
 	    	.put('/user/' + fake_user.id + '/bills/' + fake_bill.id)
@@ -136,7 +134,7 @@ describe('Bills', function() {
 	    	});
 	});
 	
-	it('should return an variable with followed key:value (deleted:true) when bill will deleted.', function(done) {
+	it('[DELETE]: should return an variable with followed key:value (deleted:true) when BILL will be deleted.', function(done) {
 		
 		request(url)
 			.del('/user/' + fake_user.id + '/bills/' + fake_bill.id)
@@ -155,12 +153,12 @@ describe('Bills', function() {
 	});
 	
 
-	/*after(function(done) {
+	after(function(done) {
 
 		request(url)
 			.del('/user/' + fake_user.id)
 			.set('token', fake_user.token)
 			.send({ '_id': fake_user.id })
 			.end(done);
-	});*/
+	});
 });
