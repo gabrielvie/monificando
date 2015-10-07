@@ -21,7 +21,7 @@ exports.signin = function(req, res) {
 				res.status(401).send({'w':'password'});
 			} else {
 				var token = jwt.sign(user, config.jwt.secret_token, {
-					expiresInMinutes: config.jwt.expires_in
+					expiresIn: config.jwt.expires_in
 				});
 
 				res.status(200).send({

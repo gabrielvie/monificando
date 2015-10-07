@@ -78,7 +78,6 @@ describe('TAGS ---------------| ', function() {
 				expect(response.success).to.equal(true);
 				expect(response.list[0].description).to.equal(fake_TAG.description);
 
-				console.log('receive: ', response.list[0]._id);
 				fake_TAG.id = response.list[0]._id;
 
 				done();
@@ -111,7 +110,7 @@ describe('TAGS ---------------| ', function() {
 		var ufake_TAG = {
 			description: 'Alimentação'
 		};
-		console.log('Request URI:', '/user/' + fake_user.id + '/tags/' + fake_TAG.id);
+
 	    request(url)
 	    	.put('/user/' + fake_user.id + '/tags/' + fake_TAG.id)
 	    	.set('token', fake_user.token)
@@ -122,7 +121,6 @@ describe('TAGS ---------------| ', function() {
 	    		
 	    		var response = res.body;
 	    		
-	    		console.log('response: ', response);
 	    		expect(response.success).to.equal(true);
 	    		expect(response.data.description).to.equal(ufake_TAG.description);
 	    		
