@@ -63,13 +63,8 @@ describe('BILLS --------------| ', function() {
 			.set('token', fake_user.token)
 			.send(fake_bill)
 			.expect(201)
-			.end(function(err, res){
-				if (err) throw err;
-
-				res.body.success.should.be.true;
-
-				done();
-			});
+			.expect({ success: true })
+			.end(done);
 	});
 
 	it('[LIST]: should return a list of BILLs passing the user\'s id.', function(done) {
@@ -83,10 +78,10 @@ describe('BILLS --------------| ', function() {
 
 				var response = res.body;
 
-				response.success.should.be.true;
-				response.list.should.be.an.array;
-				response.list[0].should.containEql({ description: fake_bill.description });
-				fake_bill.id = response.list[0]._id;
+				expect(response.success).to.equal(true);
+				expect(response.list[0].description).to.equal(fake_TAG.description);
+
+				fake_TAG.id = response.list[0]._id;
 
 				done();
 			});
@@ -103,8 +98,8 @@ describe('BILLS --------------| ', function() {
 
 				var response = res.body;
 
-				response.success.should.be.true;
-				response.data.description.should.equal(fake_bill.description);
+				expect(response.success).to.equal(true);
+				expect(response.data.description).to.equal(fake_TAG.description);
 
 				done();
 			});
@@ -127,8 +122,8 @@ describe('BILLS --------------| ', function() {
 	    		
 	    		var response = res.body;
 	    		
-	    		response.success.should.be.true;
-	    		response.data.description.should.be.equal(ufake_bill.description);
+	    		expect(response.success).to.equal(true);
+	    		expect(response.data.description).to.equal(ufake_bill.description);
 	    		
 	    		done();
 	    	});
@@ -146,7 +141,7 @@ describe('BILLS --------------| ', function() {
 				
 				var response = res.body;
 				
-				response.deleted.should.be.true;
+				expect(response.deleted).to.equal(true);
 				
 				done();	
 			});

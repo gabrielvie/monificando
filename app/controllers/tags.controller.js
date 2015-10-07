@@ -57,7 +57,7 @@ exports.update = function(req, res) {
 
 	var to_update = {},
 		conditions = {
-			'_id': req.params.user_id,
+			_id: req.params.user_id,
 			'tags._id': req.params.tag_id
 		};
 
@@ -65,7 +65,7 @@ exports.update = function(req, res) {
 		to_update['tags.$.' + field] = req.body[field];
 	}
 
-	User.update(conditions, { $set: to_update }, function(err, affecteds){
+	User.update(conditions, { '$set': to_update }, function(err, affecteds){
 		if (err) {
 			res.status(304).send({ success: false, err: err });
 			return;
@@ -76,7 +76,7 @@ exports.update = function(req, res) {
 				res.status(404).send({ success: false, err: err });
 				return;
 			}
-
+			console.log(user.tags);
 			res.status(200).send({ success: true, data: user.tags.id(req.params.tags_id) });
 		});
 	});

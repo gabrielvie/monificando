@@ -60,13 +60,8 @@ describe('TAGS ---------------| ', function() {
 			.set('token', fake_user.token)
 			.send(fake_TAG)
 			.expect(201)
-			.end(function(err, res){
-				if (err) throw err;
-
-				res.body.success.should.be.true;
-
-				done();
-			});
+			.expect({ success: true })
+			.end(done);
 	});
 
 	it('[LIST]: should return a list of TAGs passing the user\'s id.', function(done) {
@@ -80,17 +75,19 @@ describe('TAGS ---------------| ', function() {
 
 				var response = res.body;
 
-				response.success.should.be.true;
-				response.list.should.be.an.array;
-				response.list[0].should.containEql({ description: fake_TAG.description });
+				expect(response.success).to.equal(true);
+				expect(response.list[0].description).to.equal(fake_TAG.description);
+
+				console.log('receive: ', response.list[0]._id);
 				fake_TAG.id = response.list[0]._id;
 
 				done();
 			});
 	});
 
-	it('[GET]: should return a created TAG passing the user\'s id and TAG\'s id.', function(done) {
-
+	// TODO Busca por nome da TAG
+	/*it('[GET]: should return a created TAG passing the user\'s id and TAG\'s id.', function(done) {
+		console.log('Request URI:', '/user/' + fake_user.id + '/tags/' + fake_TAG.id);
 		request(url)
 			.get('/user/' + fake_user.id + '/tags/' + fake_TAG.id)
 			.set('token', fake_user.token)
@@ -100,19 +97,21 @@ describe('TAGS ---------------| ', function() {
 
 				var response = res.body;
 
-				response.success.should.be.true;
-				response.data.description.should.equal(fake_TAG.description);
+				console.log('response: ', response);
+
+				expect(response.success).to.equal(true);
+				expect(response.data.description).to.equal(fake_TAG.description);
 
 				done();
 			});
-	});
+	});*/
 	
 	it('[PUT]: should return a updated TAG after send new update.', function(done) {
 		
 		var ufake_TAG = {
 			description: 'Alimentação'
 		};
-
+		console.log('Request URI:', '/user/' + fake_user.id + '/tags/' + fake_TAG.id);
 	    request(url)
 	    	.put('/user/' + fake_user.id + '/tags/' + fake_TAG.id)
 	    	.set('token', fake_user.token)
@@ -123,14 +122,15 @@ describe('TAGS ---------------| ', function() {
 	    		
 	    		var response = res.body;
 	    		
-	    		response.success.should.be.true;
-	    		response.data.description.should.be.equal(ufake_TAG.description);
+	    		console.log('response: ', response);
+	    		expect(response.success).to.equal(true);
+	    		expect(response.data.description).to.equal(ufake_TAG.description);
 	    		
 	    		done();
 	    	});
 	});
 	
-	it('[DELETE]: should return an variable with followed key:value (deleted:true) when TAG will be deleted.', function(done) {
+	/*it('[DELETE]: should return an variable with followed key:value (deleted:true) when TAG will be deleted.', function(done) {
 		
 		request(url)
 			.del('/user/' + fake_user.id + '/tags/' + fake_TAG.id)
@@ -142,11 +142,11 @@ describe('TAGS ---------------| ', function() {
 				
 				var response = res.body;
 				
-				response.deleted.should.be.true;
+				expect(response.deleted).to.equal(true);
 				
 				done();	
 			});
-	});
+	});*/
 	
 
 	after(function(done) {
