@@ -61,7 +61,16 @@ describe('TAGS ---------------| ', function() {
 			.send(fake_TAG)
 			.expect(201)
 			.expect({ success: true })
-			.end(done);
+			.end(function(err, res) {
+
+				request(url)
+					.post('/user/' + fake_user.id + '/tags')
+					.set('token', fake_user.token)
+					.send(fake_TAG)
+					.expect(201)
+					.expect({ success: true })
+					.end(done);				
+			});
 	});
 
 	it('[LIST]: should return a list of TAGs passing the user\'s id.', function(done) {

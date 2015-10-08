@@ -55,19 +55,36 @@ exports.list = function(req, res) {
 
 exports.update = function(req, res) {
 
-	var set = {},
-		conditions = {
-			_id: mongoose.Types.ObjectId(req.params.user_id),
-			'tags._id': mongoose.Types.ObjectId(req.params.tag_id)
-		};
+	User.findById(req.params.user_id, function(err, user) {		
+		if (err || !user) {
+			res.status(404).send({ success: false, err: err });
+			return;
+		}
 
-	for (var field in req.body) {
-		set['tags.$.' + field] = req.body[field];
-	}
-	
-	mongoose.set('debug', true);
+		user.tags.forEach(function(elem, idx) {
+			if (elem._id == req.params.tags_id) {
+				var to_set = {};
+				
+				for(var field in req.body) {
+					to_set['tags.' + idx + '.' + field] = req.body[field];
+				}
 
-	User.update(conditions, { '$set': set }, function(err, affecteds){
+				user.set(to_set);
+			}
+
+		});
+
+		user.save(function(err, user) {
+			if (err) {
+				res.status(304).send({ success: false, err: err });
+				return;
+			}
+
+			res.status(200).send({ success: true, data: user.tags.id(req.params.tags_id) });
+		});
+
+	});
+	/*User.update(conditions, { '$set': set }, function(err, affecteds){
 		if (err) {
 			res.status(304).send({ success: false, err: err });
 			return;
@@ -81,7 +98,7 @@ exports.update = function(req, res) {
 
 			res.status(200).send({ success: true, data: user.tags.id(req.params.tags_id) });
 		});
-	});
+	});*/
 };
 
 
