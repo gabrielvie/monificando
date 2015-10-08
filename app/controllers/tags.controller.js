@@ -107,7 +107,7 @@ exports.delete = function(req, res) {
 	User.findById(req.params.user_id, function(err, user) {
 		if (err) { res.status(404).send(err); return; }
 		
-		user.tags.id(req.params.tag_id).remove();
+		user.tags.id(req.params.tags_id).remove();
 
 		user.save(function(err, user) {
 			if (err) { res.status(304).send(err); return; }

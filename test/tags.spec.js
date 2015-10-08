@@ -61,16 +61,7 @@ describe('TAGS ---------------| ', function() {
 			.send(fake_TAG)
 			.expect(201)
 			.expect({ success: true })
-			.end(function(err, res) {
-
-				request(url)
-					.post('/user/' + fake_user.id + '/tags')
-					.set('token', fake_user.token)
-					.send(fake_TAG)
-					.expect(201)
-					.expect({ success: true })
-					.end(done);				
-			});
+			.end(done);
 	});
 
 	it('[LIST]: should return a list of TAGs passing the user\'s id.', function(done) {
@@ -137,12 +128,11 @@ describe('TAGS ---------------| ', function() {
 	    	});
 	});
 	
-	/*it('[DELETE]: should return an variable with followed key:value (deleted:true) when TAG will be deleted.', function(done) {
+	it('[DELETE]: should return an variable with followed key:value (deleted:true) when TAG will be deleted.', function(done) {
 		
 		request(url)
 			.del('/user/' + fake_user.id + '/tags/' + fake_TAG.id)
 			.set('token', fake_user.token)
-			.send({ '_id': fake_user.id })
 			.expect(200)
 			.end(function(err, res) {
 				if (err) throw err;
@@ -153,7 +143,7 @@ describe('TAGS ---------------| ', function() {
 				
 				done();	
 			});
-	});*/
+	});
 	
 
 	after(function(done) {
