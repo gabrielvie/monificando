@@ -35,7 +35,16 @@ exports.get = function(req, res) {
 			return;
 		}
 
-		res.status(200).send({});
+		var pattern = new RegExp("\\b(?=\\w*(" + req.params.tag_name + "))\\w+\\b", "gi"); 
+		var to_return = [];
+
+		user.tags.forEach(function(tag, idx) {
+			if (pattern.test(tag.description)) {
+				to_return.push(tag);
+			}
+		});
+
+		res.status(200).send({ success: true, list: to_return });
 	});
 };
 
