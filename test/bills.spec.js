@@ -79,9 +79,9 @@ describe('BILLS --------------| ', function() {
 				var response = res.body;
 
 				expect(response.success).to.equal(true);
-				expect(response.list[0].description).to.equal(fake_TAG.description);
+				expect(response.list[0].description).to.equal(fake_bill.description);
 
-				fake_TAG.id = response.list[0]._id;
+				fake_bill.id = response.list[0]._id;
 
 				done();
 			});
@@ -99,7 +99,7 @@ describe('BILLS --------------| ', function() {
 				var response = res.body;
 
 				expect(response.success).to.equal(true);
-				expect(response.data.description).to.equal(fake_TAG.description);
+				expect(response.data.description).to.equal(fake_bill.description);
 
 				done();
 			});
