@@ -19,7 +19,7 @@ var CreditCardSchema = new Schema({
 	valid_thru: {
 		type: String,
 		trim: true,
-		match: [/[0-9]{2}[\/][0-9]{2}/, 'Unrecognized valid thru date']
+		match: [/^(1[0-2]|0[0-9])(20\d{2})/, 'Unrecognized valid thru date']
 	},
 	created_at: {
 		type: Date,

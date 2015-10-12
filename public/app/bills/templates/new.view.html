@@ -71,8 +71,7 @@
 		</div>
 
 		<div class="form-inline">
-				<div class="form-group has-feedback">
-					<span class="glyphicon glyphicon-chevron-down form-control-feedback"></span>
+				<div class="form-group">
 					<select class="form-control input-sm"
 							name="payment_mode"
 							ng-model="nBillCtrl.new.paymentOptions">
@@ -99,8 +98,7 @@
 							   required>Periódica</label>
 					</div>
 				</div>
-				<div class="form-group has-feedback" ng-if="nBillCtrl.new.hasFrequency">
-					<span class="glyphicon glyphicon-chevron-down form-control-feedback"></span>
+				<div class="form-group" ng-if="nBillCtrl.new.hasFrequency">
 					<select class="form-control input-sm"
 							name="frequency"
 							ng-model="nBillCtrl.new.frequency">

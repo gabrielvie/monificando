@@ -7,7 +7,7 @@
 		var route = {
 			url: '/auth',
 			views: {
-				'main': {
+				'wrapper': {
 					templateUrl: '/app/auth/auth.view.html',
 					controller: 'AuthController',
 					controllerAs: 'authCtrl'
@@ -34,7 +34,7 @@
 					return config;
 				},
 				'responseError': function (response) {
-					$location.path('/auth');
+					//$location.path('/auth');
 
 					return $q.reject(response);
 				}

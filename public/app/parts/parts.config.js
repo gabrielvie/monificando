@@ -5,26 +5,29 @@
 		var route = {
 			url: '/',
 			views: {
-				'header': {
+				'wrapper': {
+					templateUrl: '/app/parts/templates/main.view.html'
+				},
+				'header@app': {
 					templateUrl: '/app/parts/templates/header.view.html',
 					controller: 'HeaderController',
 					controllerAs: 'headCtrl'
 				},
-				'sidebar': {
+				'sidebar@app': {
 					templateUrl: '/app/parts/templates/sidebar.view.html',
 					controller: 'SidebarController',
 					controllerAs: 'sideCtrl'
 				},
-				'main': {
-					templateUrl: '/app/parts/templates/main.view.html',
+				'content-area@app': {
+					templateUrl: '/app/parts/templates/content.view.html',
 					controller: 'ContentAreaController',
-					controllerAs: 'mainCtrl'
+					controllerAs: 'contentCtrl'
 				}
-			},
+			}/*,
 			data: {
 				displayName: 'Painel Principal',
 				displayDescription: 'Seu resumo mensal e estatísticas de gastos.'
-			}
+			}*/
 		};
 
 		$stateProvider.state('app', route);

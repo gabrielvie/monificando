@@ -99,7 +99,10 @@ exports.update = function(req, res) {
 exports.delete = function(req, res) {
 
 	User.findById(req.params.user_id, function(err, user) {
-		if (err) { res.status(404).send(err); return; }
+		if (err || !user) {
+			res.status(404).send({ success: false, err: err });
+			return;
+		}
 		
 		user.tags.id(req.params.tag_id).remove();
 

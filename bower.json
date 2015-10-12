@@ -36,7 +36,7 @@
     "chartJs": "bower_components/Chart.js/Chart.min.js",
     "angular": "bower_components/angular/angular.min.js",
     "angularNgStorage": "bower_components/ngstorage/ngStorage.min.js",
-    "angularSmartTable": "bower_components/angular-smart-table/dist/smart-table.js",
+    "angularSmartTable": "bower_components/angular-smart-table/dist/smart-table.min.js",
     "angularBootstrap": "bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
     "angularUiRouter": "bower_components/angular-ui-router/release/angular-ui-router.min.js",
     "angularUiMask": "bower_components/angular-ui-mask/dist/mask.min.js",

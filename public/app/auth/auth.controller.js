@@ -42,20 +42,23 @@
 		};
 
 		vm.signIn = function() {
-			AuthenticationService.signIn(vm.credentials).then(function(response){
+			AuthenticationService.signIn(vm.credentials).then(function(response) {
 				$state.go('app.dashboard');
+			}, function(response) {
+				console.log(response);
 			});
 		};
 
 		vm.signUp = function() {
-			AuthenticationService.signUp(vm.newUser).then(function(response){
+			AuthenticationService.signUp(vm.newUser).then(function(response) {
 
 				vm.newUser = vm.emptyForm;
 				$scope.signupForm.$setPristine();
 
 				$state.go('auth', {}, { reload: true });
 
-			}, function(response){
+			}, function(response) {
+				console.log(response);
 				if (response.status === 409) {
 					vm.error.status = true;
 					vm.error.message = "Endereço de email já encontra-se em uso.";

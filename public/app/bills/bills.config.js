@@ -1,12 +1,12 @@
-(function(){
-	'use strict';
+(function () {
+  	'use strict';
 
 	function billsRoute($stateProvider) {
 		var route = {
 			url: 'bills',
 			views: {
 				'content': {
-					templateUrl: '/app/bills/bills.view.html',
+					templateUrl: '/app/bills/templates/bills.view.html',
 					controller: 'BillsController',
 					controllerAs: 'billCtrl'
 				}

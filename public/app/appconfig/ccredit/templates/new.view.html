@@ -1,0 +1,91 @@
+<div class="modal-header">
+	<button type="button" class="close" ng-click="mCreditCtrl.close()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<h4 class="modal-title">
+		Novo Cartão
+	</h4>
+</div>
+<div class="modal-body">
+	<form novalidate
+		  name="newCreditCard"
+		  ng-submit="mCreditCtrl.create()"
+		  role="form">
+
+		<!-- Credit Card Description -->
+		<div class="form-group">
+			<input required
+				   name="description"
+				   type="text"
+				   placeholder="Descrição"
+				   class="form-control"
+				   ng-model="mCreditCtrl.fields.description"/>
+		</div>
+		<!-- /Credit Card Description -->
+
+		<label>Datas de: </label>
+		<div class="row">
+			<div class="col-sm-4">
+				<div class="form-group has-feedback">
+					<span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+					<input required
+						   type="text"
+						   name="paymentDate"
+						   class="form-control"
+						   ng-model="mCreditCtrl.fields.payment_day"
+
+						   placeholder="Fatura"
+						   ui-mask="99"
+						   ui-mask-placeholder
+						   ng-pattern="/^(0[1-9]|[12][0-9]|3[01])/"/>
+				</div>
+				<div class="alert alert-danger" ng-show="newCreditCard.paymentDate.$error.pattern">Insira uma dia do mês válida. Entre 01 e 31.</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group has-feedback">
+					<span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+					<input required
+						   type="text"
+						   name="buyDate"
+						   class="form-control"
+						   ng-model="mCreditCtrl.fields.buy_day"
+
+						   placeholder="Fechamento"
+						   ui-mask="99"
+						   ui-mask-placeholder
+						   ng-pattern="/^(0[1-9]|[12][0-9]|3[01])/"/>
+				</div>
+				<div class="alert alert-danger" ng-show="newCreditCard.buyDate.$error.pattern">Insira uma dia do mês válida. Entre 01 e 31.</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="form-group has-feedback">
+					<span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+					<input required
+						   type="text"
+						   name="validThru"
+						   class="form-control"
+						   ng-model="mCreditCtrl.fields.valid_thru"
+
+						   placeholder="Validade"
+						   ui-mask="99/9999"
+						   ui-mask-placeholder
+						   ng-pattern="/^(1[0-2]|0[0-9])/"/>
+				</div>
+				<div class="alert alert-danger" ng-show="newCreditCard.validThru.$error.pattern">Insira uma data válida. Ex.: MÊS/ANO.</div>
+			</div>
+		</div>
+	</form>
+</div>
+<div class="modal-footer">
+	<button class="btn btn-warning btn-sm pull-left"
+			ng-click="mCreditCtrl.close()">
+		Cancelar
+	</button>
+	<button class="btn btn-sm pull-right"
+			type="submit"
+			ng-class="newCreditCard.$invalid ? 'btn-danger' : 'btn-success'"
+			ng-click="mCreditCtrl.create()"
+			ng-disabled="newCreditCard.$invalid">
+		Salvar
+	</button>
+</div>
