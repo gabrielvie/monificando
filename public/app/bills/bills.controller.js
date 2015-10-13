@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 
-	function BillsController($modal) {
+	function BillsController($modal, TagsService) {
 		var vm = this;
 
 		vm.new = function() {
@@ -12,9 +12,24 @@
 				size: '100px'
 			});
 		};
+
+		vm.loadTags = function(query) {
+			return TagsService
+						.list()
+						.then(function(response) {
+
+							console.log(response);
+							return response.list;
+
+						}, function(error){
+
+							console.log(error);
+
+						});
+		};
 	}
 
-	BillsController.$inject = ['$modal', '$scope'];
+	BillsController.$inject = ['$modal', 'TagsService'];
 
 	function NewBillModalController() {
 		var vm = this;
@@ -23,7 +38,7 @@
 			type: 'credit',
 			description: null,
 			value: null,
-			date: new Date(),
+			date: null,
 			category: null,
 			subcategory: null,
 			hasFrequency: false,

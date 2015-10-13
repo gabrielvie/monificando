@@ -1,7 +1,7 @@
 /.idea
 node_modules
 bower_components
-public/assets/css/**
+public/assets/css/app.min.css
 public/assets/js/**
 .sass-cache
 logs

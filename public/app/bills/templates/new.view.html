@@ -123,10 +123,14 @@
 			</div>
 			<div class="col-sm-5" ng-if="nBillCtrl.new.freqType !== 'no_prev'">
 				<div class="form-group">
+
 					<label ng-if="nBillCtrl.new.freqType === 'divided'">
-						Número de Parcelas</label>
+						Número de Parcelas
+					</label>
+
 					<label ng-if="nBillCtrl.new.freqType === 'repeat'">
-						Repetirá quantas vezes</label>
+						Repetirá quantas vezes
+					</label>
 
 					<input type="number"
 						   class="form-control"
@@ -141,8 +145,6 @@
 </div> <!-- /.modal-body -->
 
 <div class="modal-footer clearfix">
-	<pre>{{ nBillCtrl.new.frequency }}</pre>
-	<br/>
 	<button class="btn btn-success btn-sm pull-right"
 			type="submit">Salvar</button>
 </div>

@@ -1,19 +1,34 @@
-<div class="agenda">
-	<div class="page-filters">
-		<select id="month">
-			<option value="">Meses</option>
-		</select>
-		<button type="button" class="btn btn-primary" ng-click="billCtrl.new()">Novo</button>
-	</div>
-	<div class="agenda__body">
-		<table class="agenda__body__table">
-			<tr>
-				<th>Nome</th>
-				<th>Parcela</th>
-				<th>Calegoria</th>
-				<th>Valor</th>
-				<th>Status</th>
-			</tr>
-		</table>
+<div class="row">
+	<div class="col-sm-12">
+		<tags-input ng-model="billCtrl.tags" class="form-control">
+			<auto-complete source="billCtrl.loadTags($query)"></auto-complete>
+		</tags-input>
+		<button type="button"
+				class="btn btn-primary pull-right"
+				ng-click="billCtrl.new()">
+			Novo
+		</button>
 	</div>
 </div>
+	<div class="">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Descrição</th>
+					<th>Parcela</th>
+					<th>Valor</th>
+					<th>Tags</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
