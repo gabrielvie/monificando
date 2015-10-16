@@ -1,8 +1,12 @@
 <div class="modal-header">
-	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+	<button type="button"
+			class="close"
+			aria-label="Close">
+
+		<span aria-hidden="true">&times;</span>
 	</button>
 	<h4 class="modal-title">
-		Nova Conta
+		Nova Despesa
 	</h4>
 </div>
 
@@ -10,19 +14,19 @@
 
 	<form novalidate
 		  name="newBill"
-		  ng-submit="nBillCtrl.create()"
+		  ng-submit="mBillCtrl.create()"
 		  role="form">
 
 		<!-- Bill type: [credit, debit] -->
 		<div class="form-group">
 			<div class="btn-group">
 				<label class="btn btn-success btn-sm"
-					   ng-model="nBillCtrl.new.type"
+					   ng-model="mBillCtrl.fields.type"
 					   btn-radio="'credit'"
 					   required>Crédito</label>
 
 				<label class="btn btn-danger btn-sm"
-					   ng-model="nBillCtrl.new.type"
+					   ng-model="mBillCtrl.fields.type"
 					   btn-radio="'debit'"
 					   required>Débito</label>
 			</div>
@@ -31,10 +35,12 @@
 
 		<!-- Bill Description -->
 		<div class="form-group">
-			<input type="text"
-				   ng-model="nBillCtrl.new.description"
+			<input required
+		   	   	   type="text"
+			   	   name="description"
 				   class="form-control"
-				   placeholder="Descrição"/>
+				   placeholder="Descrição"
+				   ng-model="mBillCtrl.fields.description">
 		</div>
 		<!-- /Bill Description -->
 
@@ -45,9 +51,12 @@
 				<div class="form-group">
 					<div class="input-group">
 						<div class="input-group-addon">R$</div>
-						<input type="text"
+						<input required
+		   	   	  			   type="text"
+						   	   name="value"
 							   class="form-control"
-							   placeholder="Valor">
+							   placeholder="Valor"
+							   ng-model="mBillCtrl.fields.value">
 					</div>
 				</div>
 			</div>
@@ -59,50 +68,55 @@
 					<span class="glyphicon glyphicon-calendar form-control-feedback"></span>
 					<input required
 						   type="text"
+						   name="date"
 						   class="form-control"
-						   ng-model="nBillCtrl.new.date"
+						   ng-model="mBillCtrl.fields.date"
 						   datepicker-popup="dd/MM/yyyy"
-						   ng-focus="nBillCtrl.calendar.open($event)"
-						   is-open="nBillCtrl.calendar.opened"
+						   ng-focus="mBillCtrl.calendar.open($event)"
+						   is-open="mBillCtrl.calendar.opened"
 						   placeholder="Data"/>
 				</div>
 			</div>
 			<!-- /Bill date -->
 		</div>
 
+		<!-- Bill payment form -->
 		<div class="form-inline">
 				<div class="form-group">
-					<select class="form-control input-sm"
+					<select required
+							name="paymentForm"
+							class="form-control input-sm"
 							name="payment_mode"
-							ng-model="nBillCtrl.new.paymentOptions">
-						<option ng-repeat="payOpt in nBillCtrl.paymentOptions"
+							ng-model="mBillCtrl.fields.paymentForm">
+						<option ng-repeat="payOpt in mBillCtrl.paymentOptions"
 								value="{{ payOpt.value }}"
 								ng-selected="payOpt.selected">{{ payOpt.display }}
 						</option>
 					</select>
 				</div>
 		</div>
+		<!-- /Bill payment form -->
 
-
+		<!-- Bill frequency options -->
 		<div class="form-inline">
 				<div class="form-group">
 					<div class="btn-group">
 						<label class="btn btn-primary btn-sm"
-							   ng-model="nBillCtrl.new.hasFrequency"
+							   ng-model="mBillCtrl.fields.hasFrequency"
 							   btn-radio="false"
 							   required>Unica</label>
 
 						<label class="btn btn-primary btn-sm"
-							   ng-model="nBillCtrl.new.hasFrequency"
+							   ng-model="mBillCtrl.fields.hasFrequency"
 							   btn-radio="true"
 							   required>Periódica</label>
 					</div>
 				</div>
-				<div class="form-group" ng-if="nBillCtrl.new.hasFrequency">
+				<div class="form-group" ng-if="mBillCtrl.fields.hasFrequency">
 					<select class="form-control input-sm"
 							name="frequency"
-							ng-model="nBillCtrl.new.frequency">
-						<option ng-repeat="frequency in nBillCtrl.frequencies"
+							ng-model="mBillCtrl.fields.frequency">
+						<option ng-repeat="frequency in mBillCtrl.frequencies"
 								value="{{ frequency.value }}"
 								ng-selected="frequency.selected">{{ frequency.display }}
 						</option>
@@ -110,41 +124,57 @@
 				</div>
 		</div>
 
-		<div class="row" ng-if="nBillCtrl.new.hasFrequency">
+		<div class="row" ng-if="mBillCtrl.fields.hasFrequency">
 			<div class="col-sm-4">
 				<div class="radio no-margin">
-					<label ng-repeat="repeatType in nBillCtrl.freqRepeats">
+					<label ng-repeat="repeatType in mBillCtrl.freqRepeats">
 						<input type="radio"
 							   value="{{ repeatType.value }}"
-							   ng-model="nBillCtrl.new.freqType">
+							   ng-model="mBillCtrl.fields.freqType">
 						{{ repeatType.display }}
 					</label>
 				</div>
 			</div>
-			<div class="col-sm-5" ng-if="nBillCtrl.new.freqType !== 'no_prev'">
+			<div class="col-sm-5" ng-if="mBillCtrl.fields.freqType !== 'no_prev'">
 				<div class="form-group">
 
-					<label ng-if="nBillCtrl.new.freqType === 'divided'">
+					<label ng-if="mBillCtrl.fields.freqType === 'divided'">
 						Número de Parcelas
 					</label>
 
-					<label ng-if="nBillCtrl.new.freqType === 'repeat'">
+					<label ng-if="mBillCtrl.fields.freqType === 'repeat'">
 						Repetirá quantas vezes
 					</label>
 
 					<input type="number"
 						   class="form-control"
-						   ng-model="nBillCtrl.new.freqQty"
+						   ng-model="mBillCtrl.fields.freqQty"
 						   min="1"/>
 				</div>
 			</div>
 		</div>
+		<!-- Bill frequency options -->
 
+		<!-- Bill Tags -->
+		<div class="row">
+			<br><br>
+			<div class="col-sm-12">
+				<tags-input ng-model="mBillCtrl.fields.tags"
+							placeholder="Adiciones Tags para essa conta"
+							class="bootstrap">
+					<auto-complete source="mBillCtrl.loadTags($query)"></auto-complete>
+				</tags-input>
+			</div>
+		</div>
+		<!-- /Bill Tags -->
 
 	</form>
 </div> <!-- /.modal-body -->
 
 <div class="modal-footer clearfix">
 	<button class="btn btn-success btn-sm pull-right"
-			type="submit">Salvar</button>
+			type="submit"
+			ng-class="newBill.$invalid ? 'btn-danger' : 'btn-success'"
+			ng-click="mBillCtrl.create()"
+			ng-disabled="newBill.$invalid">Salvar</button>
 </div>

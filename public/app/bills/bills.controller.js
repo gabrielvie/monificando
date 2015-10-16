@@ -8,40 +8,25 @@
 			var modal = $modal.open({
 				animation: true,
 				templateUrl: 'app/bills/templates/new.view.html',
-				controller: 'NewBillModalController as nBillCtrl',
+				controller: 'ModalBillController as mBillCtrl',
 				size: '100px'
 			});
-		};
-
-		vm.loadTags = function(query) {
-			return TagsService
-						.list()
-						.then(function(response) {
-
-							console.log(response);
-							return response.list;
-
-						}, function(error){
-
-							console.log(error);
-
-						});
 		};
 	}
 
 	BillsController.$inject = ['$modal', 'TagsService'];
 
-	function NewBillModalController() {
+	function ModalBillController(BillsOptionsService, TagsService, CreditCardService, $scope) {
 		var vm = this;
 
-		vm.new = {
+		vm.fields = {
 			type: 'credit',
 			description: null,
 			value: null,
 			date: null,
-			category: null,
-			subcategory: null,
+		  	tags: null,
 			hasFrequency: false,
+			paymentForm: 'money',
 			frequency: 'monthly',
 			freqType: 'no_prev',
 			freqQty: 1
@@ -56,38 +41,26 @@
 			}
 		};
 
-		vm.frequencies = [
-			{ value: 'weekly', 	 	display: 'Semanal' },
-			{ value: 'biweekly', 	display: 'Quinzenal' },
-			{ value: 'monthly',  	display: 'Mensal', selected: true },
-			{ value: 'bimonthly', 	display: 'Bimestral' },
-			{ value: 'quarterly', 	display: 'Trimestral' },
-			{ value: 'semiannual', 	display: 'Semestral' },
-			{ value: 'annual', 		display: 'Anual' }
-		];
 
-		vm.freqRepeats = [
-			{ value: 'no_prev', 	display: 'Sem Previsões', selected: true },
-			{ value: 'repeat', 		display: 'Repetido' },
-			{ value: 'divided', 	display: 'Parcelado' }
-		];
+		vm.frequencies = BillsOptionsService.frequencies();
+	  	vm.freqRepeats = BillsOptionsService.frequenciesRepeat();
+	  	vm.paymentOptions = BillsOptionsService.payment();
+		//vm.reference = CreditCardService.list();
 
-		vm.paymentOptions = [
-			{ value: null, 			display: 'Forma de Pagamento', selected: true },
-			{ value: 'money', 		display: 'Dinheiro' },
-			{ value: 'debit', 		display: 'Débito em Conta' },
-			{ value: 'credit', 		display: 'Cartão de Crédito' }
-		];
+	  	vm.loadTags = function(query) {
+			return TagsService.search(query);
+		};
 
 		vm.create = function(){
-			console.log(vm.new);
+			console.log(vm.fields);
 		};
+
 	}
 
-	NewBillModalController.$inject = [];
+	ModalBillController.$inject = ['BillsOptionsService', 'TagsService', 'CreditCardService', '$scope'];
 
 	angular
-		.module('monificando')
+		.module('monificando.bills')
 		.controller('BillsController', BillsController)
-		.controller('NewBillModalController', NewBillModalController);
+		.controller('ModalBillController', ModalBillController);
 }());

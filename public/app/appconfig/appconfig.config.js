@@ -25,7 +25,8 @@
 	angular
 		.module('monificando.appconfig', [
 			'monificando',
-			'monificando.appconfig.ccredit'
+			'monificando.appconfig.ccredit',
+			'monificando.appconfig.tags'
 		])
 		.config(appconfigRoute);
 
