@@ -60,8 +60,16 @@ describe('TAGS ---------------| ', function() {
 			.set('token', fake_user.token)
 			.send(fake_TAG)
 			.expect(201)
-			.expect({ success: true })
-			.end(done);
+			.end(function(err, res) {
+				if (err) throw err;
+
+				var response = res.body;
+
+				expect(response.success).to.equal(true);
+				expect(response.data.description).to.equal(fake_TAG.description);
+
+				done();
+			});
 	});
 
 	it('[LIST]: should return a list of TAGs passing the user\'s id.', function(done) {
@@ -104,9 +112,9 @@ describe('TAGS ---------------| ', function() {
 				done();
 			});
 	});*/
-	
+
 	it('[PUT]: should return a updated TAG after send new update.', function(done) {
-		
+
 		var ufake_TAG = {
 			description: 'Alimentação'
 		};
@@ -118,33 +126,33 @@ describe('TAGS ---------------| ', function() {
 	    	.expect(200)
 	    	.end(function(err, res) {
 	    		if (err) throw err;
-	    		
+
 	    		var response = res.body;
-	    		
+
 	    		expect(response.success).to.equal(true);
 	    		expect(response.data.description).to.equal(ufake_TAG.description);
-	    		
+
 	    		done();
 	    	});
 	});
-	
+
 	it('[DELETE]: should return an variable with followed key:value (deleted:true) when TAG will be deleted.', function(done) {
-		
+
 		request(url)
 			.del('/user/' + fake_user.id + '/tags/' + fake_TAG.id)
 			.set('token', fake_user.token)
 			.expect(200)
 			.end(function(err, res) {
 				if (err) throw err;
-				
+
 				var response = res.body;
-				
+
 				expect(response.deleted).to.equal(true);
-				
-				done();	
+
+				done();
 			});
 	});
-	
+
 
 	after(function(done) {
 

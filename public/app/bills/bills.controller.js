@@ -52,7 +52,33 @@
 		};
 
 		vm.create = function(){
-			console.log(vm.fields);
+			var nBill = {
+					description: vm.fields.description,
+					total: vm.fields.type === 'credit' ? vm.fields.value : vm.fields.value * (-1),
+					date: vm.fields.date.toISOString(),
+					payment_options: vm.fields.paymentForm,
+					payment_ref: vm.fields.paymentReference,
+					period: vm.fields.frequency,
+					repeat: !vm.fields.hasFrequency ? 'no_repeat' : vm.fields.freqType,
+					qty: vm.fields.freqQty,
+					tags: []
+				};
+
+			vm.fields.tags.forEach(function(tag, idx) {
+				if (tag._id === undefined) {
+					TagsService
+						.save(tag)
+						.then(function(response) {
+							nBill.tags.push(response.data._id);
+						});
+				} else {
+					nBill.tags.push(tag._id);
+				}
+			});
+
+
+			console.log('before: ', vm.fields);
+			console.log('after: ', nBill);
 		};
 
 	}

@@ -13,14 +13,15 @@ exports.save = function(req, res) {
 		}
 
 		var nTag = new Tags(req.body);
-		
+		console.log(req.body);
 		user.tags.push(nTag);
-		
+
 		user.save(function(err, savedUser) {
 		    if (err) { res.status(501).send(err); return; }
-		    
+
 		    res.status(201).send({
-		        success: true
+		        success: true,
+				data: nTag
 		    });
 		});
 	});
@@ -35,7 +36,7 @@ exports.get = function(req, res) {
 			return;
 		}
 
-		var pattern = new RegExp("\\b(?=\\w*(" + req.params.tag_name + "))\\w+\\b", "gi"); 
+		var pattern = new RegExp("\\b(?=\\w*(" + req.params.tag_name + "))\\w+\\b", "gi");
 		var to_return = [];
 
 		user.tags.forEach(function(tag, idx) {
@@ -64,7 +65,7 @@ exports.list = function(req, res) {
 
 exports.update = function(req, res) {
 
-	User.findById(req.params.user_id, function(err, user) {		
+	User.findById(req.params.user_id, function(err, user) {
 		if (err || !user) {
 			res.status(404).send({ success: false, err: err });
 			return;
@@ -73,7 +74,7 @@ exports.update = function(req, res) {
 		user.tags.forEach(function(tag, idx) {
 			if (tag._id == req.params.tag_id) {
 				var to_set = {};
-				
+
 				for(var field in req.body) {
 					to_set['tags.' + idx + '.' + field] = req.body[field];
 				}
@@ -103,7 +104,7 @@ exports.delete = function(req, res) {
 			res.status(404).send({ success: false, err: err });
 			return;
 		}
-		
+
 		user.tags.id(req.params.tag_id).remove();
 
 		user.save(function(err, user) {

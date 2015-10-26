@@ -63,8 +63,16 @@ describe('BILLS --------------| ', function() {
 			.set('token', fake_user.token)
 			.send(fake_bill)
 			.expect(201)
-			.expect({ success: true })
-			.end(done);
+			.end(function (err, res) {
+				if (err) throw err;
+
+				var response = res.body;
+				
+				expect(response.success).to.equal(true);
+				expect(response.data.description).to.equal(fake_bill.description);
+
+				done();
+			});
 	});
 
 	it('[LIST]: should return a list of BILLs passing the user\'s id.', function(done) {

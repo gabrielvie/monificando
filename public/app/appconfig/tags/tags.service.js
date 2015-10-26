@@ -6,6 +6,24 @@
 		var apiUrl = APIInfoService.getAPILink + '/user/' + $localStorage.user._id,
 			Tag = {};
 
+		Tag.save = function(data) {
+			var deferred = $q.defer();
+
+			$http
+				.post(apiUrl + '/tags', data)
+				.then(function(response) {
+
+					deferred.resolve(response.data);
+
+				}, function(error) {
+
+					deferred.reject(error);
+
+				});
+
+			return deferred.promise;
+		};
+
 		Tag.get = function(query) {
 			var deferred = $q.defer();
 
@@ -28,10 +46,11 @@
 			var deferred = $q.defer();
 
 			$http
-				.get(apiUrl + '/tags/' + query)
+				.get(apiUrl + '/tags/' + query, { cache: true })
 				.then(function(response) {
-					console.log(response);
-					return response.data.list;
+					var responseList = response.data.list;
+
+					deferred.resolve(responseList);
 
 				}, function(error) {
 

@@ -161,10 +161,18 @@
 			<br><br>
 			<div class="col-sm-12">
 				<tags-input ng-model="mBillCtrl.fields.tags"
-							placeholder="Adiciones Tags para essa conta"
-							class="bootstrap">
-					<auto-complete source="mBillCtrl.loadTags($query)"></auto-complete>
-				</tags-input>
+			                display-property="description" 
+							placeholder="Adicionar Tags">
+					
+					<auto-complete 
+							source="mBillCtrl.loadTags($query)"
+					        min-length="0"
+					        load-on-focus="true"
+					        load-on-empty="true"
+					        max-results-to-show="32"
+					        key-property="_id"
+					        display-property="description"></auto-complete>
+			    </tags-input>
 			</div>
 		</div>
 		<!-- /Bill Tags -->

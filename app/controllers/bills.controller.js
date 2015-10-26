@@ -2,7 +2,8 @@
 
 var mongoose 	= require('mongoose'),
 	User 		= mongoose.model('User'),
-	Bill		= mongoose.model('Bill');
+	Bill		= mongoose.model('Bill'),
+	Tags 		= mongoose.model('Tags');
 
 exports.save = function(req, res) {
 
@@ -15,28 +16,40 @@ exports.save = function(req, res) {
 		var nBill = new Bill({
 			description: req.body.description,
 			total: req.body.total,
+			date: req.body.date,
 			payment: {
 				payment_type: req.body.payment_options,
 				reference: req.body.payment_ref
 			},
-			repeat: req.body.repeat
+			period: req.body.period,
+			repeat: req.body.repeat,
+			values: [],
+			tags: []
 		});
 
 		nBill.values = nBill.valuesTrait(req.body.repeat, req.body.total, req.body.qty);
+
+		if (req.body.tags !== undefined) {
+			nBill.tags = req.body.tags;
+		}
+
 
 		user.bills.push(nBill);
 
 		user.save(function(err, savedUser) {
 			if (err) { res.status(501).send(err); return; }
 
-			res.status(201).send({ success: true });
+			res.status(201).send({ 
+				success: true, 
+				data: nBill 
+			});
 		});
 	});
 };
 
 
 exports.get = function(req, res) {
-	
+
 	User.findById(req.params.user_id, function(err, user) {
 		if (err || !user) {
 			res.status(404).send({ success: false, err: err });
@@ -44,7 +57,7 @@ exports.get = function(req, res) {
 		}
 
 		var bill = user.bills.id(req.params.bill_id);
-		
+
 		if (bill) {
 			res.status(200).send({ success: true, data: bill });
 		} else {
@@ -62,13 +75,13 @@ exports.list = function(req, res) {
 			return;
 		}
 
-		res.status(200).send({ success: true, list: user.bills });		
+		res.status(200).send({ success: true, list: user.bills });
 	});
 };
 
 
 exports.update = function(req, res) {
-	
+
 	User.findById(req.params.user_id, function(err, user) {
 		if (err || !user) {
 			res.status(404).send({ success: false, err: err });
@@ -103,7 +116,7 @@ exports.delete = function(req, res) {
 
 	User.findById(req.params.user_id, function(err, user) {
 		if (err) { res.status(404).send(err); return; }
-		
+
 		user.bills.id(req.params.bill_id).remove();
 
 		user.save(function(err, user) {
