@@ -2,7 +2,7 @@
   "name": "monificando",
   "url": "http://www.monificando.com.br",
   "copyright": "2015",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Aplicação de controle financeiro pessoal",
   "main": "app.js",
   "scripts": {
