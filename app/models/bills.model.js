@@ -58,17 +58,34 @@ BillsSchema.methods.onUpdateValue = function(vObj) {
 
 	switch(this.repeat) {
 		case 'no_prev':
-			this.values[0].value = vObj.value;
+
+			if (vObj.before === true) {
+
+				for (var i = 0; i < this.values.length; i++) {
+					this.values[i].value = vObj.value;
+				}
+
+			} else {
+
+				var last = this.values.length - 1;
+				this.values[last].value = vObj.value;
+
+			}
+
 			break;
 		case 'repeat':
+
 			for (var i = 0; i < this.values.length; i++) {
 				this.values[i].value = vObj.value;
 			}
+
 			break;
 		case 'installment':
+
 			for (var i = 0; i < this.values.length; i++) {
 				this.values[i].value = vObj.value / this.values.length;
 			}
+
 			break;
 	};
 

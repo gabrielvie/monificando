@@ -97,7 +97,11 @@ exports.update = function(req, res) {
 				var to_set = {},
 					oBill = new Bill(user.bills.id(req.params.bill_id));
 
-				req.body.values = oBill.onUpdateValue({ value: req.body.value, date: req.body.date });
+				req.body.values = oBill.onUpdateValue({
+					value: req.body.value,
+					date: req.body.date,
+					before: req.body.before
+				});
 
 				delete req.body.value;
 				delete req.body.date;
