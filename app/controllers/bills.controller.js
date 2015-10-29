@@ -13,35 +13,39 @@ exports.save = function(req, res) {
 			return;
 		}
 
-		var nBill = new Bill({
-			description: req.body.description,
-			total: req.body.total,
-			date: req.body.date,
-			payment: {
-				payment_type: req.body.payment_options,
-				reference: req.body.payment_ref
-			},
-			period: req.body.period,
-			repeat: req.body.repeat,
-			values: [],
-			tags: []
+
+		var request = req.body,
+			nBill = new Bill({
+				description: request.description,
+				payment: {
+					payment_type: request.payment_options,
+					reference: request.payment_ref
+				},
+				period: request.period,
+				repeat: request.repeat,
+				values: [],
+				tags: []
+			});
+
+		nBill.onCreateValue({
+			value: 	request.value,
+			date:	request.date,
+			qty:	request.qty
 		});
 
-		nBill.values = nBill.valuesTrait(req.body.repeat, req.body.total, req.body.qty);
 
-		if (req.body.tags !== undefined) {
+		if (request.tags !== undefined) {
 			nBill.tags = req.body.tags;
 		}
-
 
 		user.bills.push(nBill);
 
 		user.save(function(err, savedUser) {
 			if (err) { res.status(501).send(err); return; }
 
-			res.status(201).send({ 
-				success: true, 
-				data: nBill 
+			res.status(201).send({
+				success: true,
+				data: nBill
 			});
 		});
 	});
@@ -90,7 +94,13 @@ exports.update = function(req, res) {
 
 		user.bills.forEach(function(bill, idx) {
 			if (bill._id == req.params.bill_id) {
-				var to_set = {};
+				var to_set = {},
+					oBill = new Bill(user.bills.id(req.params.bill_id));
+
+				req.body.values = oBill.onUpdateValue({ value: req.body.value, date: req.body.date });
+
+				delete req.body.value;
+				delete req.body.date;
 
 				for(var field in req.body) {
 					to_set['bills.' + idx + '.' + field] = req.body[field];
@@ -107,7 +117,7 @@ exports.update = function(req, res) {
 			}
 
 			res.status(200).send({ success: true, data: user.bills.id(req.params.bill_id) });
-		})
+		});
 	});
 };
 

@@ -10,13 +10,6 @@ var BillsSchema = new Schema({
 		required: true,
 		trim: true
 	},
-	total: {
-		type: Number,
-		required: true
-	},
-	date: {
-		type: Date
-	},
 	payment: {
 		payment_options: {
 			type: String,
@@ -28,7 +21,8 @@ var BillsSchema = new Schema({
 	},
 	repeat: {
 		type: String,
-		enum: ['no_repeat', 'no_prev', 'repeat', 'installment']
+		enum: ['no_repeat', 'no_prev', 'repeat', 'installment'],
+		required: true
 	},
 	period: {
 		type: String,
@@ -36,10 +30,12 @@ var BillsSchema = new Schema({
 	},
 	values: [{
 		value: {
-			type: Number
+			type: Number,
+			required: true
 		},
 		date: {
-			type: Date
+			type: Date,
+			required: true
 		},
 		paid: {
 			type: Boolean,
@@ -58,74 +54,130 @@ var BillsSchema = new Schema({
 	}
 });
 
-BillsSchema.methods.valuesTrait = function(repeatType, total, qty) {
+BillsSchema.methods.onUpdateValue = function(vObj) {
 
-	qty = typeof qty !== 'undefined' ? qty : 1;
-
-	var values = [];
-
-	switch(repeatType) {
+	switch(this.repeat) {
 		case 'no_prev':
-			values.push({ value: total });
+			this.values[0].value = vObj.value;
 			break;
 		case 'repeat':
-			for (var i = 1; i <= qty; i++) {
-				values.push({ value: total });
+			for (var i = 0; i < this.values.length; i++) {
+				this.values[i].value = vObj.value;
 			}
 			break;
 		case 'installment':
-			for (var i = 1; i <= qty; i++) {
-				values.push({ value: total / qty });
+			for (var i = 0; i < this.values.length; i++) {
+				this.values[i].value = vObj.value / this.values.length;
 			}
 			break;
 	};
-
-
-	return values;
-};
-
-BillsSchema.pre('save', function(next, done) {
-	this.updated_at = new Date();
 
 	if (this.period !== undefined && (this.repeat === 'repeat' || this.repeat === 'installment')) {
 		switch (this.period) {
 			case 'weekly':
 				for (var i = 0; i < this.values.length; i++) {
-					this.values[i].date = moment(this.date).add(i, 'w').format();
+					this.values[i].date = moment(vObj.date).add(i, 'w').format();
 				}
 				break;
 			case 'biweekly':
 				for (var i = 0; i < this.values.length; i++) {
-					this.values[i].date = moment(this.date).add(15 * i, 'd').format();
-				}			
+					this.values[i].date = moment(vObj.date).add(15 * i, 'd').format();
+				}
 				break;
 			case 'monthly':
 				for (var i = 0; i < this.values.length; i++) {
-					this.values[i].date = moment(this.date).add(i, 'M').format();
+					this.values[i].date = moment(vObj.date).add(i, 'M').format();
 				}
 				break;
 			case 'bimonthly':
 				for (var i = 0; i < this.values.length; i++) {
-					this.values[i].date = moment(this.date).add(2 * i, 'M').format();
+					this.values[i].date = moment(vObj.date).add(2 * i, 'M').format();
 				}
 				break;
 			case 'quarterly':
 				for (var i = 0; i < this.values.length; i++) {
-					this.values[i].date = moment(this.date).add(i, 'Q').format();
+					this.values[i].date = moment(vObj.date).add(i, 'Q').format();
 				}
 				break;
 			case 'semiannual':
 				for (var i = 0; i < this.values.length; i++) {
-					this.values[i].date = moment(this.date).add(2 * i, 'Q').format();
+					this.values[i].date = moment(vObj.date).add(2 * i, 'Q').format();
 				}
 				break;
 			case 'annual':
 				for (var i = 0; i < this.values.length; i++) {
-					this.values[i].date = moment(this.date).add(i, 'y').format();
+					this.values[i].date = moment(vObj.date).add(i, 'y').format();
 				}
 				break;
 		}
 	}
+
+	return this.values;
+};
+
+BillsSchema.methods.onCreateValue = function(vObj) {
+
+	switch(this.repeat) {
+		case 'no_prev':
+			this.values.push({ value: vObj.value });
+			break;
+		case 'repeat':
+			for (var i = 1; i <= vObj.qty; i++) {
+				this.values.push({ value: vObj.value });
+			}
+			break;
+		case 'installment':
+			for (var i = 1; i <= vObj.qty; i++) {
+				this.values.push({ value: vObj.value / vObj.qty });
+			}
+			break;
+	};
+
+
+	if (this.period !== undefined && (this.repeat === 'repeat' || this.repeat === 'installment')) {
+		switch (this.period) {
+			case 'weekly':
+				for (var i = 0; i < this.values.length; i++) {
+					this.values[i].date = moment(vObj.date).add(i, 'w').format();
+				}
+				break;
+			case 'biweekly':
+				for (var i = 0; i < this.values.length; i++) {
+					this.values[i].date = moment(vObj.date).add(15 * i, 'd').format();
+				}
+				break;
+			case 'monthly':
+				for (var i = 0; i < this.values.length; i++) {
+					this.values[i].date = moment(vObj.date).add(i, 'M').format();
+				}
+				break;
+			case 'bimonthly':
+				for (var i = 0; i < this.values.length; i++) {
+					this.values[i].date = moment(vObj.date).add(2 * i, 'M').format();
+				}
+				break;
+			case 'quarterly':
+				for (var i = 0; i < this.values.length; i++) {
+					this.values[i].date = moment(vObj.date).add(i, 'Q').format();
+				}
+				break;
+			case 'semiannual':
+				for (var i = 0; i < this.values.length; i++) {
+					this.values[i].date = moment(vObj.date).add(2 * i, 'Q').format();
+				}
+				break;
+			case 'annual':
+				for (var i = 0; i < this.values.length; i++) {
+					this.values[i].date = moment(vObj.date).add(i, 'y').format();
+				}
+				break;
+		}
+	}
+};
+
+
+BillsSchema.pre('save', function(next, done) {
+	this.updated_at = new Date();
 
 	next();
 });
