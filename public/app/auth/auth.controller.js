@@ -12,16 +12,6 @@
 
 		vm.newUser = {};
 
-		vm.emptyForm = {
-			first_name: "",
-			last_name: "",
-			contact: "",
-			birthday: null,
-			gender: "",
-			email: "",
-			password: ""
-		};
-
 		vm.calendar = {
 			opened: false,
 			open: function($event) {
@@ -32,7 +22,7 @@
 		};
 
 		vm.error = {
-			status: false,
+			status: null,
 			message: null
 		};
 
@@ -52,17 +42,34 @@
 		vm.signUp = function() {
 			AuthenticationService.signUp(vm.newUser).then(function(response) {
 
-				vm.newUser = vm.emptyForm;
-				$scope.signupForm.$setPristine();
+				vm.error.message = "";
+				vm.error.status = "";
+
+				vm.newUser = {};
 
 				$state.go('auth', {}, { reload: true });
 
 			}, function(response) {
-				console.log(response);
-				if (response.status === 409) {
-					vm.error.status = true;
-					vm.error.message = "Endereço de email já encontra-se em uso.";
+
+				switch (response.status === 409) {
+
+					case 401:
+						vm.error.status = response.w;
+
+						if (response.w === "password") {
+							vm.error.message = "Senha incorreta!";
+						} else if (response.w === "email") {
+							vm.error.message = "Email incorreto!";
+						}
+
+						break;
+					case 409:
+						vm.error.status = "email_already_in_use";
+						vm.error.message = "Endereço de email já encontra-se em uso.";
+						break;
+
 				}
+
 			});
 		};
 	}

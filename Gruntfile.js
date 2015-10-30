@@ -27,7 +27,24 @@ module.exports = function (grunt) {
         },
 
         jshint: {
-            files: ['Gruntfile.js', '<%= folders.pub.app %>/**/*.js']
+			production: {
+				options: {
+				  	globals: {
+						angular: true,
+						console: false
+				  	}
+				},
+            	src: ['Gruntfile.js', '<%= folders.pub.app %>/**/*.js']
+			},
+			development: {
+				options: {
+				  	"globals": {
+						"angular": true,
+						"console": true,
+				  	}
+				},
+            	src: ['Gruntfile.js', '<%= folders.pub.app %>/**/*.js']
+			}
         },
 
         scsslint: {
@@ -53,12 +70,33 @@ module.exports = function (grunt) {
         },
 
         uglify: {
-			options: {
-				compress: false,
-				sourceMap: false,
-				mangle: false
+			production: {
+				options: {
+					compress: true,
+					sourceMap: false,
+					mangle: false
+				},
+				files: {
+					'<%= folders.pub.assets %>/js/lib.min.js': [
+						'<%= bower.components.chartJs %>',
+						'<%= bower.components.angular %>',
+						'<%= bower.components.angularBootstrap %>',
+						'<%= bower.components.angularChartJs %>',
+						'<%= bower.components.angularInputMasks %>',
+						'<%= bower.components.angularNgStorage %>',
+						'<%= bower.components.angularNgTagsInput %>',
+						'<%= bower.components.angularSmartTable %>',
+						'<%= bower.components.angularUiRouter %>'
+					],
+					'<%= folders.pub.assets %>/js/app.min.js': ['<%= folders.pub.app %>/**/*.js']
+				}
 			},
-			build: {
+			development: {
+				options: {
+					compress: false,
+					sourceMap: true,
+					mangle: false
+				},
 				files: {
 					'<%= folders.pub.assets %>/js/lib.min.js': [
 						'<%= bower.components.chartJs %>',
@@ -83,7 +121,7 @@ module.exports = function (grunt) {
             },
             js: {
                 files: '<%= jshint.files %>',
-                tasks: ['jshint', 'uglify']
+                tasks: ['jshint:development', 'uglify:development']
             }
         }
     });
@@ -94,6 +132,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-scss-lint');
 
-    grunt.registerTask('default', ['scsslint', 'jshint', 'sass', 'uglify', 'watch']);
-    grunt.registerTask('homolog', ['scsslint', 'jshint', 'sass', 'uglify']);
+    grunt.registerTask('devel', ['scsslint', 'jshint:development', 'sass', 'uglify:development']);
+    grunt.registerTask('prod', ['scsslint', 'jshint:production', 'sass', 'uglify:production']);
 };
