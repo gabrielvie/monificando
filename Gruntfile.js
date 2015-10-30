@@ -105,7 +105,8 @@ module.exports = function (grunt) {
 				options: {
 					compress: false,
 					sourceMap: true,
-					mangle: false
+					mangle: false,
+					beautify: true
 				},
 				files: {
 					'<%= folders.pub.assets %>/js/lib.min.js': [
