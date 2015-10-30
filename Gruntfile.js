@@ -27,24 +27,34 @@ module.exports = function (grunt) {
         },
 
         jshint: {
+
+			// Default Options
+    		options: {
+				curly: true,
+    			eqeqeq: true,
+    			eqnull: true,
+    			browser: true
+			},
+			//globals: { angular: true },
+
+			// Options for Deploy on Production
 			production: {
 				options: {
-				  	globals: {
-						angular: true,
-						console: false
-				  	}
+					devel: false
 				},
-            	src: ['Gruntfile.js', '<%= folders.pub.app %>/**/*.js']
+				src: ['<%= folders.pub.app %>/**/*.js']
 			},
+
+			// Options for Development's Enviroment
 			development: {
 				options: {
-				  	"globals": {
-						"angular": true,
-						"console": true,
-				  	}
+					devel: true,
+					node: true
 				},
-            	src: ['Gruntfile.js', '<%= folders.pub.app %>/**/*.js']
+
+				src: ['Gruntfile.js', '<%= folders.pub.app %>/**/*.js']
 			}
+
         },
 
         scsslint: {
