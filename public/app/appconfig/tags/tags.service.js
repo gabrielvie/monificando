@@ -27,10 +27,12 @@
 		Tag.get = function(query) {
 			var deferred = $q.defer();
 
+			console.log(apiUrl + '/tags?' + query);
+
 			$http
-				.get(apiUrl + '/tags/' + query)
+				.get(apiUrl + '/tags?' + query)
 				.then(function(response) {
-					console.log(response);
+					
 					deferred.resolve(response.data);
 
 				}, function(error) {
@@ -43,10 +45,11 @@
 		};
 
 		Tag.search = function(query) {
-			var deferred = $q.defer();
+			var deferred = $q.defer(),
+				urlQuery = query === "" ? apiUrl + '/tags/list' : apiUrl + '/tags?description=' + query;
 
 			$http
-				.get(apiUrl + '/tags/' + query, { cache: true })
+				.get(urlQuery, { cache: true })
 				.then(function(response) {
 					var responseList = response.data.list;
 

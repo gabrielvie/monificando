@@ -43,8 +43,6 @@
 						});
 					}
 
-				}, function(error) {
-					console.log(response);
 				});
 		};
 
@@ -71,8 +69,6 @@
 				.then(function(response) {
 
 					vm.list();
-
-				}, function(error) {
 
 				});
 		};
@@ -116,8 +112,6 @@
 					$rootScope.$broadcast('updateCreditCardList', {});
 					vm.close();
 
-				}, function(error) {
-
 				});
 		};
 
@@ -131,12 +125,10 @@
 					$rootScope.$broadcast('updateCreditCardList', {});
 					vm.close();
 
-				}, function(error) {
-
 				});
 		};
 
-		vm.close = function () {
+		vm.close = function() {
 			$modalInstance.dismiss('cancel');
 		};
 

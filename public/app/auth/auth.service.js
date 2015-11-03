@@ -13,13 +13,17 @@
 			$http.post(apiUrl + '/signin', data, {
 				headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 			}).then(function(response){
+				
 				$localStorage.token = response.data.token;
 				$localStorage.user = response.data.user;
 
 				deferred.resolve(response);
+
 			}, function(error){
+				
 				authServiceFactory.signOut();
-				deferred.reject(error.data);
+				deferred.reject(error);
+
 			});
 
 			return deferred.promise;

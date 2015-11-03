@@ -13,7 +13,6 @@ exports.save = function(req, res) {
 			return;
 		}
 
-
 		var request = req.body,
 			nBill = new Bill({
 				description: request.description,
@@ -79,7 +78,21 @@ exports.list = function(req, res) {
 			return;
 		}
 
-		res.status(200).send({ success: true, list: user.bills });
+		var bills = [];
+
+		user.bills.forEach(function(bill, idx) {
+
+			bill.values.forEach(function(value, idx) {
+				var currentMonth = new Date().getMonth();
+
+				if (currentMonth === value.date.getMonth()) {
+					bills.push(bill);
+				}
+			});
+
+		});
+
+		res.status(200).send({ success: true, list: bills });
 	});
 };
 

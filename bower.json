@@ -2,7 +2,7 @@
   "name": "monificando",
   "url": "http://monificando.com",
   "copyright": "2015",
-  "version": "1.0.2",
+  "version": "1.2.0",
   "description": "Aplicação de controle financeiro pessoal",
   "keywords": [
     "AngularJS",
@@ -24,6 +24,7 @@
     "angular-chart.js": "~0.8.5",
     "angular-input-masks": "~2.1.0",
     "angular-smart-table": "~2.1.*",
+    "angular-ui-mask": "~1.4.7",
     "angular-ui-router": "~0.2.*",
     "Chart.js": "~1.0.2",
     "ng-tags-input": "~3.0.*",
@@ -36,12 +37,13 @@
     "angular": "bower_components/angular/angular.min.js",
     "angularBootstrap": "bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
     "angularChartJs": "bower_components/angular-chart.js/dist/angular-chart.min.js",
-	"angularInputMasks": "bower_components/angular-input-masks/angular-input-masks-standalone.js",
+    "angularInputMasks": "bower_components/angular-input-masks/angular-input-masks-standalone.js",
     "angularSmartTable": "bower_components/angular-smart-table/dist/smart-table.min.js",
     "angularUiRouter": "bower_components/angular-ui-router/release/angular-ui-router.min.js",
+    "angularUiMask": "bower_components/angular-ui-mask/dist/mask.js",
     "angularNgStorage": "bower_components/ngstorage/ngStorage.min.js",
     "angularNgTagsInput": "bower_components/ng-tags-input/ng-tags-input.min.js",
     "chartJs": "bower_components/Chart.js/Chart.min.js",
-	"stringMask": "bower_components/string-mask/src/string-mask.js"
+    "stringMask": "bower_components/string-mask/src/string-mask.js"
   }
 }

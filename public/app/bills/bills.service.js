@@ -20,7 +20,7 @@
 			return [
 				{ value: 'no_prev', 	display: 'Sem Previsões', selected: true },
 				{ value: 'repeat', 		display: 'Repetido' },
-				{ value: 'divided', 	display: 'Parcelado' }
+				{ value: 'installment',	display: 'Parcelado' }
 			];
 		};
 
@@ -38,8 +38,55 @@
 
 	BillsOptionsService.$inject = [];
 
+
+	function BillService(APIInfoService, $q, $http, $localStorage) {
+		var apiUrl = APIInfoService.getAPILink + '/user/' + $localStorage.user._id,
+			Bill 	= {};
+
+		Bill.save = function(data) {
+			var deferred = $q.defer();
+
+			$http
+				.post(apiUrl + '/bills', data)
+				.then(function(response) {
+
+					deferred.resolve(response.data);
+
+				}, function(error) {
+
+					deferred.reject(error);
+
+				});
+
+			return deferred.promise;
+		};
+
+		Bill.list = function() {
+			var deferred = $q.defer();
+
+			$http
+				.get(apiUrl + '/bills')
+				.then(function(response) {
+
+					deferred.resolve(response.data);
+
+				}, function(error) {
+
+					deferred.reject(response.data);
+
+				});
+
+			return deferred.promise;
+		};
+
+		return Bill;
+	}
+
+	BillService.$inject = ['APIInfoService', '$q', '$http', '$localStorage'];
+
 	angular
 		.module('monificando.bills')
-		.factory('BillsOptionsService', BillsOptionsService);
+		.factory('BillsOptionsService', BillsOptionsService)
+		.factory('BillService', BillService);
 
 }());

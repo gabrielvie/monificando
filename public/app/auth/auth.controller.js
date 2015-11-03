@@ -33,9 +33,28 @@
 
 		vm.signIn = function() {
 			AuthenticationService.signIn(vm.credentials).then(function(response) {
+				
 				$state.go('app.dashboard');
+
 			}, function(response) {
-				console.log(response);
+
+				if (response.status === 401) {
+
+					vm.error.status = response.data.w;
+					console.log(typeof vm.error.status);
+					console.log(vm.error.status === "password");
+
+					if (vm.error.status === "password") {
+
+						vm.error.message = "Senha incorreta!";
+
+					} else if (vm.error.status === "email") {
+
+						vm.error.message = "Email incorreto!";
+
+					}
+				}
+
 			});
 		};
 
@@ -51,23 +70,9 @@
 
 			}, function(response) {
 
-				switch (response.status === 409) {
-
-					case 401:
-						vm.error.status = response.w;
-
-						if (response.w === "password") {
-							vm.error.message = "Senha incorreta!";
-						} else if (response.w === "email") {
-							vm.error.message = "Email incorreto!";
-						}
-
-						break;
-					case 409:
-						vm.error.status = "email_already_in_use";
-						vm.error.message = "Endereço de email já encontra-se em uso.";
-						break;
-
+				if (response.status === 409) {
+					vm.error.status = "email_already_in_use";
+					vm.error.message = "Endereço de email já encontra-se em uso.";
 				}
 
 			});

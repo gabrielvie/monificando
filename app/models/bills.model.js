@@ -26,7 +26,7 @@ var BillsSchema = new Schema({
 	},
 	period: {
 		type: String,
-		enum: ['weekly', 'biweekly', 'monthly', 'bimonthly', 'quarterly', 'semiannual', 'annual']
+		enum: [null, 'weekly', 'biweekly', 'monthly', 'bimonthly', 'quarterly', 'semiannual', 'annual']
 	},
 	values: [{
 		value: {
@@ -73,13 +73,16 @@ BillsSchema.methods.onUpdateValue = function(vObj) {
 			}
 
 			break;
+
 		case 'repeat':
+		case 'no_repeat':
 
 			for (var i = 0; i < this.values.length; i++) {
 				this.values[i].value = vObj.value;
 			}
 
 			break;
+
 		case 'installment':
 
 			for (var i = 0; i < this.values.length; i++) {
@@ -136,6 +139,7 @@ BillsSchema.methods.onCreateValue = function(vObj) {
 
 	switch(this.repeat) {
 		case 'no_prev':
+		case 'no_repeat':
 			this.values.push({ value: vObj.value });
 			break;
 		case 'repeat':
@@ -189,6 +193,10 @@ BillsSchema.methods.onCreateValue = function(vObj) {
 				}
 				break;
 		}
+	} else if (this.repeat === 'no_repeat') {
+
+		this.values[0].date = new Date(vObj.date);
+
 	}
 };
 

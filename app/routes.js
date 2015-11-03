@@ -8,6 +8,7 @@ module.exports = function(app) {
 	app.route('/api/signup').post(user.save);
 	app.route('/api/user/:user_id').delete(user.delete);
 
+	
 	/* Authentication Routes */
 	var auth = require('./controllers/auth.controller.js');
 
@@ -39,8 +40,8 @@ module.exports = function(app) {
 	var tag = require('./controllers/tags.controller');
 	
 	app.route('/api/user/:user_id/tags').post(tag.save);
-	app.route('/api/user/:user_id/tags').get(tag.list);
-	app.route('/api/user/:user_id/tags/:tag_name').get(tag.get);
+	app.route('/api/user/:user_id/tags').get(tag.get);
+	app.route('/api/user/:user_id/tags/list').get(tag.list);
 	app.route('/api/user/:user_id/tags/:tag_id').put(tag.update);
 	app.route('/api/user/:user_id/tags/:tag_id').delete(tag.delete);
 	

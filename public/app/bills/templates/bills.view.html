@@ -7,24 +7,52 @@
 		</button>
 	</div>
 </div>
-	<div class="">
+	<div class="table-responsive">
 		<table class="table table-striped">
 			<thead>
 				<tr>
 					<th>Descrição</th>
-					<th>Parcela</th>
 					<th>Valor</th>
+					<th>Data</th>
 					<th>Tags</th>
-					<th>Status</th>
+					<th width="150" class="text-center">Status</th>
+					<th width="20"></th>
+					<th width="20"></th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
+				<tr ng-repeat="bill in billCtrl.billsCollection">
+					<td>{{ bill.description }}</td>
+					<td>{{ bill.value | currency : "R$" : 2 }}</td>
+					<td>{{ bill.date | date : "dd/MMM" }}</td>
+					<td>
+						<span ng-repeat="tag in bill.tags" 
+							  class="label label-default"
+							  style="margin-right: 5px">
+							{{ tag.description }}
+						</span>
+					</td>
+					<td align="center">
+						<div class="checkbox" style="margin: 0;">
+						    <label>
+						        <input type="checkbox" ng-model="bill.paid" value="true">
+						       	{{ !bill.paid ? 'Pendente' : 'Pago' ; }}
+						    </label>
+						</div>
+					</td>
+					<td>
+						<button type="button"
+							ng-click="creditCtrl.edit(row)"
+							class="btn btn-xs btn-primary">
+						<i class="glyphicon glyphicon-pencil"></i>
+					</button>
+					</td>
+					<td><button type="button"
+								ng-click="creditCtrl.remove(row._id)"
+								class="btn btn-xs btn-danger">
+							<i class="glyphicon glyphicon-remove"></i>
+						</button>
+					</td>
 				</tr>
 			</tbody>
 		</table>

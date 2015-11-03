@@ -13,7 +13,7 @@ exports.save = function(req, res) {
 		}
 
 		var nTag = new Tags(req.body);
-		console.log(req.body);
+
 		user.tags.push(nTag);
 
 		user.save(function(err, savedUser) {
@@ -35,18 +35,33 @@ exports.get = function(req, res) {
 			res.status(404).send({ success: false, err: err });
 			return;
 		}
-
-		var pattern = new RegExp("\\b(?=\\w*(" + req.params.tag_name + "))\\w+\\b", "gi");
+		
 		var to_return = [];
 
-		user.tags.forEach(function(tag, idx) {
-			if (pattern.test(tag.description)) {
+		if (req.query.description !== undefined) {
+
+			var pattern = new RegExp("\\b(?=\\w*(" + req.query.description + "))\\w+\\b", "gi");
+
+			user.tags.forEach(function(tag, idx) {
+				if (pattern.test(tag.description)) {
+					to_return.push(tag);
+				}
+			});
+
+		} else if (req.query.ids !== undefined) {
+
+			req.query.ids.forEach(function(id) {
+				var tag = user.tags.id(id);
+
 				to_return.push(tag);
-			}
-		});
+			});
+
+		}
+		
 
 		res.status(200).send({ success: true, list: to_return });
 	});
+
 };
 
 

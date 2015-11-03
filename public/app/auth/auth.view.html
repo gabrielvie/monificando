@@ -13,10 +13,10 @@
 						  role="form">
 
 						<div class="form-group"
-							 ng-class="{ 'has-error' : (signinForm.email.$invalid && !signinForm.email.$pristine) || authCtrl.error.status === 'email' }">
+							 ng-class="{ 'has-error' : (signinForm.email.$invalid && !signinForm.email.$pristine) || authCtrl.error.status == 'email' || authCtrl.error.status == 'password' }">
 
 							<div class="alert alert-danger"
-								  ng-show="authCtrl.error.status">{{ authCtrl.error.message }}</div>
+								  ng-show="authCtrl.error.status || authCtrl.error.status == 'password' || authCtrl.error.status == 'email' ">{{ authCtrl.error.message }}</div>
 
 							<input required
 								   name="email"
@@ -27,10 +27,7 @@
 								   ng-pattern="/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/">
 						</div>
 						<div class="input-group"
-							 ng-class="{ 'has-error' : (signinForm.password.$invalid && !signinForm.password.$pristine) || authCtrl.error.status === 'password' }">
-
-							<div class="alert alert-danger"
-								  ng-show="authCtrl.error.status">{{ authCtrl.error.message }}</div>
+							 ng-class="{ 'has-error' : (signinForm.password.$invalid && !signinForm.password.$pristine) || authCtrl.error.status == 'password' }">
 
 							<input required
 								   name="password"
@@ -126,10 +123,10 @@
 						<br/>
 
 						<div class="form-group"
-							 ng-class="{ 'has-error' : signinForm.email.$invalid && !signinForm.email.$pristine || authCtrl.error.status }">
+							 ng-class="{ 'has-error' : signinForm.email.$invalid && !signinForm.email.$pristine || authCtrl.error.status == 'email_already_in_use' }">
 
 							<div class="alert alert-danger"
-								  ng-show="signupForm.email.$error.pattern">Insira um endereço de email válido.</div>
+								 ng-show="signupForm.email.$error.pattern">Insira um endereço de email válido.</div>
 
 							<div class="alert alert-danger"
 								  ng-show="authCtrl.error.status === 'email_already_in_use'">{{ authCtrl.error.message }}</div>

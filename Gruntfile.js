@@ -95,7 +95,8 @@ module.exports = function (grunt) {
 						'<%= bower.components.angularInputMasks %>',
 						'<%= bower.components.angularNgStorage %>',
 						'<%= bower.components.angularNgTagsInput %>',
-						'<%= bower.components.angularSmartTable %>',
+                        '<%= bower.components.angularSmartTable %>',
+						'<%= bower.components.angularUiMask %>',
 						'<%= bower.components.angularUiRouter %>'
 					],
 					'<%= folders.pub.assets %>/js/app.min.js': ['<%= folders.pub.app %>/**/*.js']
@@ -104,7 +105,7 @@ module.exports = function (grunt) {
 			development: {
 				options: {
 					compress: false,
-					sourceMap: true,
+					sourceMap: false,
 					mangle: false,
 					beautify: true
 				},
@@ -131,7 +132,7 @@ module.exports = function (grunt) {
                 tasks: ['scsslint', 'sass']
             },
             js: {
-                files: '<%= jshint.files %>',
+                files: '<%= jshint.development.src %>',
                 tasks: ['jshint:development', 'uglify:development']
             }
         }
@@ -143,6 +144,6 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-scss-lint');
 
-    grunt.registerTask('devel', ['scsslint', 'jshint:development', 'sass', 'uglify:development']);
+    grunt.registerTask('default', ['scsslint', 'jshint:development', 'sass', 'uglify:development', 'watch']);
     grunt.registerTask('prod', ['scsslint', 'jshint:production', 'sass', 'uglify:production']);
 };

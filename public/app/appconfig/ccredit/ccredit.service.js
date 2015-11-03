@@ -69,7 +69,6 @@
 					deferred.resolve(response.data);
 
 				}, function(error) {
-					console.log(error);
 
 					deferred.reject(error);
 
@@ -86,4 +85,5 @@
 	angular
 		.module('monificando.appconfig.ccredit')
 		.factory('CreditCardService', CreditCardService);
+		
 }());
