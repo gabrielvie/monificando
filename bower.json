@@ -40,7 +40,7 @@
     "angularInputMasks": "bower_components/angular-input-masks/angular-input-masks-standalone.js",
     "angularSmartTable": "bower_components/angular-smart-table/dist/smart-table.min.js",
     "angularUiRouter": "bower_components/angular-ui-router/release/angular-ui-router.min.js",
-    "angularUiMask": "bower_components/angular-ui-mask/dist/mask.js",
+    "angularUiMask": "bower_components/angular-ui-mask/dist/mask.min.js",
     "angularNgStorage": "bower_components/ngstorage/ngStorage.min.js",
     "angularNgTagsInput": "bower_components/ng-tags-input/ng-tags-input.min.js",
     "chartJs": "bower_components/Chart.js/Chart.min.js",

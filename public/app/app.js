@@ -28,6 +28,7 @@
 		.module('monificando', [
 			'ui.bootstrap',
 			'ui.router',
+			'ui.mask',
 			'ui.utils.masks',
 			'ngStorage',
 			'ngTagsInput',

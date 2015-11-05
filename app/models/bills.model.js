@@ -11,9 +11,10 @@ var BillsSchema = new Schema({
 		trim: true
 	},
 	payment: {
-		payment_options: {
+		form: {
 			type: String,
-			enum: ['money', 'debit', 'credit']
+			enum: ['money', 'debit', 'credit'],
+			default: 'money'
 		},
 		reference: {
 			type: Schema.Types.ObjectId
@@ -26,7 +27,7 @@ var BillsSchema = new Schema({
 	},
 	period: {
 		type: String,
-		enum: [null, 'weekly', 'biweekly', 'monthly', 'bimonthly', 'quarterly', 'semiannual', 'annual']
+		enum: ['', 'weekly', 'biweekly', 'monthly', 'bimonthly', 'quarterly', 'semiannual', 'annual']
 	},
 	values: [{
 		value: {

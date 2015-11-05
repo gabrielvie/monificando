@@ -17,14 +17,18 @@ exports.save = function(req, res) {
 			nBill = new Bill({
 				description: request.description,
 				payment: {
-					payment_type: request.payment_options,
-					reference: request.payment_ref
+					form: request.payment_options,
+					reference: user.credit_cards.id(request.payment_ref)
 				},
-				period: request.period,
+				period: request.period === null ? '' : request.period,
 				repeat: request.repeat,
 				values: [],
 				tags: []
 			});
+
+		console.log(request);
+		console.log(user.credit_cards.id(request.payment_ref));
+		console.log(nBill);
 
 		nBill.onCreateValue({
 			value: 	request.value,
@@ -61,6 +65,10 @@ exports.get = function(req, res) {
 
 		var bill = user.bills.id(req.params.bill_id);
 
+		bill.tags.forEach(function(tagId, index) {
+			bill.tags[index] = user.tags.id(tagId);
+		});
+
 		if (bill) {
 			res.status(200).send({ success: true, data: bill });
 		} else {
@@ -86,6 +94,11 @@ exports.list = function(req, res) {
 				var currentMonth = new Date().getMonth();
 
 				if (currentMonth === value.date.getMonth()) {
+	
+					bill.tags.forEach(function(tagId, index) {
+						bill.tags[index] = user.tags.id(tagId);
+					});
+					
 					bills.push(bill);
 				}
 			});

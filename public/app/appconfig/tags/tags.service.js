@@ -27,8 +27,6 @@
 		Tag.get = function(query) {
 			var deferred = $q.defer();
 
-			console.log(apiUrl + '/tags?' + query);
-
 			$http
 				.get(apiUrl + '/tags?' + query)
 				.then(function(response) {

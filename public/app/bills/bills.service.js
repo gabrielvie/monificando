@@ -61,6 +61,24 @@
 			return deferred.promise;
 		};
 
+		Bill.get = function(id) {
+			var deferred = $q.defer();
+
+			$http
+				.get(apiUrl + '/bills/' + id)
+				.then(function(response) {
+
+					deferred.resolve(response.data);
+
+				}, function(error) {
+
+					deferred.reject(error);
+
+				});
+
+			return deferred.promise;
+		};
+
 		Bill.list = function() {
 			var deferred = $q.defer();
 
@@ -73,6 +91,24 @@
 				}, function(error) {
 
 					deferred.reject(response.data);
+
+				});
+
+			return deferred.promise;
+		};
+
+		Bill.remove = function(id) {
+			var deferred = $q.defer();
+
+			$http
+				.delete(apiUrl + '/bills/' + id)
+				.then(function(response) {
+
+					deferred.resolve(response.data);
+
+				}, function(error) {
+
+					deferred.reject(error);
 
 				});
 

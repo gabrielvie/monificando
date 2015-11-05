@@ -111,16 +111,17 @@ module.exports = function (grunt) {
 				},
 				files: {
 					'<%= folders.pub.assets %>/js/lib.min.js': [
-						'<%= bower.components.chartJs %>',
-						'<%= bower.components.angular %>',
-						'<%= bower.components.angularBootstrap %>',
-						'<%= bower.components.angularChartJs %>',
-						'<%= bower.components.angularInputMasks %>',
-						'<%= bower.components.angularNgStorage %>',
-						'<%= bower.components.angularNgTagsInput %>',
-						'<%= bower.components.angularSmartTable %>',
-						'<%= bower.components.angularUiRouter %>'
-					],
+                        '<%= bower.components.chartJs %>',
+                        '<%= bower.components.angular %>',
+                        '<%= bower.components.angularBootstrap %>',
+                        '<%= bower.components.angularChartJs %>',
+                        '<%= bower.components.angularInputMasks %>',
+                        '<%= bower.components.angularNgStorage %>',
+                        '<%= bower.components.angularNgTagsInput %>',
+                        '<%= bower.components.angularSmartTable %>',
+                        '<%= bower.components.angularUiMask %>',
+                        '<%= bower.components.angularUiRouter %>'
+                    ],
 					'<%= folders.pub.assets %>/js/app.min.js': ['<%= folders.pub.app %>/**/*.js']
 				}
 			}

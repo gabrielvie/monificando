@@ -1,0 +1,157 @@
+<div class="modal-header">
+	<button type="button" class="close" ng-click="eMBillCtrl.close()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	</button>
+	<h4 class="modal-title">
+		Editar Despesa
+	</h4>
+</div>
+
+<div class="modal-body">
+
+	<form novalidate
+		  name="newBill"
+		  ng-submit="eMBillCtrl.create()"
+		  role="form">
+
+		<!-- Bill type: [credit, debit] -->
+		<div class="form-group">
+			<div class="btn-group">
+				<label class="btn btn-success btn-sm"
+					   ng-model="eMBillCtrl.fields.type"
+					   btn-radio="'credit'"
+					   required>Crédito</label>
+
+				<label class="btn btn-danger btn-sm"
+					   ng-model="eMBillCtrl.fields.type"
+					   btn-radio="'debit'"
+					   required>Débito</label>
+			</div>
+		</div>
+		<!-- /Bill type: [credit, debit] -->
+
+		<!-- Bill Description -->
+		<div class="form-group">
+			<input required
+		   	   	   type="text"
+			   	   name="description"
+				   class="form-control"
+				   placeholder="Descrição"
+				   ng-model="eMBillCtrl.fields.description">
+		</div>
+		<!-- /Bill Description -->
+
+
+		<div class="row">
+			<!-- Bill value -->
+			<div class="col-sm-5">
+				<div class="form-group">
+					<div class="input-group">
+						<div class="input-group-addon">R$</div>
+						<input required
+		   	   	  			   type="text"
+						   	   name="value"
+							   class="form-control"
+							   placeholder="Valor"
+							   ng-model="eMBillCtrl.fields.value"
+							   ui-number-mask="decimals"/>
+					</div>
+				</div>
+			</div>
+			<!-- /Bill value -->
+
+			<!-- Bill date -->
+			<div class="col-sm-7">
+				<div class="form-group has-feedback">
+					<span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+					<input required
+						   type="text"
+						   name="date"
+						   class="form-control"
+						   ng-model="eMBillCtrl.fields.date"
+						   datepicker-popup="dd/MM/yyyy"
+						   ng-focus="eMBillCtrl.calendar.open($event)"
+						   is-open="eMBillCtrl.calendar.opened"
+						   placeholder="Data"/>
+				</div>
+			</div>
+			<!-- /Bill date -->
+		</div>
+
+		<!-- Bill payment form -->
+		<div class="form-inline">
+				<div class="form-group">
+					<select required
+							name="paymentForm"
+							class="form-control input-sm"
+							name="payment_mode"
+							ng-model="eMBillCtrl.fields.paymentForm">
+						<option ng-repeat="payOpt in eMBillCtrl.paymentOptions"
+								value="{{ payOpt.value }}"
+								ng-selected="payOpt.selected">{{ payOpt.display }}
+						</option>
+					</select>
+				</div>
+		</div>
+		<!-- /Bill payment form -->
+
+		<!-- Bill frequency options -->
+		<!-- <div class="form-inline">
+				<div class="form-group">
+					<div class="btn-group">
+						<label class="btn btn-primary btn-sm"
+							   ng-model="eMBillCtrl.fields.hasFrequency"
+							   btn-radio="false"
+							   required>Unica</label>
+		
+						<label class="btn btn-primary btn-sm"
+							   ng-model="eMBillCtrl.fields.hasFrequency"
+							   btn-radio="true"
+							   required>Periódica</label>
+					</div>
+				</div>
+				<div class="form-group" ng-if="eMBillCtrl.fields.hasFrequency">
+					<select class="form-control input-sm"
+							name="frequency"
+							ng-model="eMBillCtrl.fields.frequency">
+						<option ng-repeat="frequency in eMBillCtrl.frequencies"
+								value="{{ frequency.value }}"
+								ng-selected="frequency.selected">{{ frequency.display }}
+						</option>
+					</select>
+				</div>
+		</div> -->
+		<!-- Bill frequency options -->
+
+		<!-- Bill Tags -->
+		<div class="row">
+			<br><br>
+			<div class="col-sm-12">
+				<tags-input ng-model="eMBillCtrl.fields.tags"
+			                display-property="description" 
+							placeholder="Adicionar Tags">
+					
+					<auto-complete 
+							source="eMBillCtrl.loadTags($query)"
+					        min-length="0"
+					        load-on-focus="true"
+					        load-on-empty="true"
+					        max-results-to-show="32"
+					        key-property="_id"
+					        display-property="description"></auto-complete>
+			    </tags-input>
+			</div>
+		</div>
+		<!-- /Bill Tags -->
+
+	</form>
+</div> <!-- /.modal-body -->
+
+<div class="modal-footer clearfix">
+	<button class="btn btn-success btn-sm pull-right"
+			type="submit"
+			ng-class="newBill.$invalid ? 'btn-danger' : 'btn-success'"
+			ng-click="eMBillCtrl.create()"
+			ng-disabled="newBill.$invalid">Salvar</button>
+</div>

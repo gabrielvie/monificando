@@ -11,19 +11,21 @@
 <div class="modal-body">
 
 	<form novalidate
-		  name="newBill"
-		  ng-submit="mBillCtrl.create()"
+		  name="newBillForm"
 		  role="form">
 
 		<!-- Bill type: [credit, debit] -->
 		<div class="form-group">
 			<div class="btn-group">
+
 				<label class="btn btn-success btn-sm"
+					   name="type"
 					   ng-model="mBillCtrl.fields.type"
 					   btn-radio="'credit'"
 					   required>Crédito</label>
 
 				<label class="btn btn-danger btn-sm"
+					   name="type"
 					   ng-model="mBillCtrl.fields.type"
 					   btn-radio="'debit'"
 					   required>Débito</label>
@@ -80,12 +82,12 @@
 		</div>
 
 		<!-- Bill payment form -->
-		<div class="form-inline">
+		<div class="row">
+			<div class="col-sm-5">
 				<div class="form-group">
 					<select required
-							name="paymentForm"
-							class="form-control input-sm"
-							name="payment_mode"
+							name="payment_form"
+							class="form-control"
 							ng-model="mBillCtrl.fields.paymentForm">
 						<option ng-repeat="payOpt in mBillCtrl.paymentOptions"
 								value="{{ payOpt.value }}"
@@ -93,6 +95,20 @@
 						</option>
 					</select>
 				</div>
+			</div>
+			<div class="col-sm-7"
+				 ng-if="mBillCtrl.fields.paymentForm === 'credit'">
+					<select required 
+							name="payment_reference"
+							class="form-control"
+							ng-model="mBillCtrl.fields.paymentReference">
+						<option value="">Selecione o Cartão de Crédito</option>
+						<option ng-repeat="creditCard in mBillCtrl.creditCardsCollection"
+								value="{{ creditCard._id }}">
+							{{ creditCard.description }}
+						</option>
+					</select>
+			</div>
 		</div>
 		<!-- /Bill payment form -->
 
@@ -101,11 +117,13 @@
 				<div class="form-group">
 					<div class="btn-group">
 						<label class="btn btn-primary btn-sm"
+							   name="has_frequency"
 							   ng-model="mBillCtrl.fields.hasFrequency"
 							   btn-radio="false"
 							   required>Unica</label>
 
 						<label class="btn btn-primary btn-sm"
+							   name="has_frequency"
 							   ng-model="mBillCtrl.fields.hasFrequency"
 							   btn-radio="true"
 							   required>Periódica</label>
@@ -123,18 +141,24 @@
 				</div>
 		</div>
 
-		<div class="row" ng-if="mBillCtrl.fields.hasFrequency">
+		<div class="row" 
+			 ng-if="mBillCtrl.fields.hasFrequency">
+
 			<div class="col-sm-4">
 				<div class="radio no-margin">
 					<label ng-repeat="repeatType in mBillCtrl.freqRepeats">
 						<input type="radio"
+							   name="frequency_type"
 							   value="{{ repeatType.value }}"
 							   ng-model="mBillCtrl.fields.freqType">
 						{{ repeatType.display }}
 					</label>
 				</div>
 			</div>
-			<div class="col-sm-5" ng-if="mBillCtrl.fields.freqType !== 'no_prev'">
+
+			<div class="col-sm-5" 
+			     ng-if="mBillCtrl.fields.freqType !== 'no_prev'">
+				
 				<div class="form-group">
 
 					<label ng-if="mBillCtrl.fields.freqType === 'divided'">
@@ -146,17 +170,18 @@
 					</label>
 
 					<input type="number"
+						   name="frequency_qty"
 						   class="form-control"
 						   ng-model="mBillCtrl.fields.freqQty"
 						   min="1"/>
 				</div>
 			</div>
+			<br>
 		</div>
 		<!-- Bill frequency options -->
 
 		<!-- Bill Tags -->
 		<div class="row">
-			<br><br>
 			<div class="col-sm-12">
 				<tags-input ng-model="mBillCtrl.fields.tags"
 			                display-property="description" 
@@ -170,18 +195,38 @@
 					        max-results-to-show="32"
 					        key-property="_id"
 					        display-property="description"></auto-complete>
+
 			    </tags-input>
 			</div>
 		</div>
 		<!-- /Bill Tags -->
 
 	</form>
+	
+	<div ng-if="newBillForm.$invalid && newBillForm.$submitted">
+		<br>
+		<div class="alert alert-danger" 
+			 role="alert">
+
+			<ul>
+				<li ng-if="newBillForm.type.$invalid">Selecione se este lançamento é um Crédito ou Débito.</li>
+				<li ng-if="newBillForm.description.$invalid">Insira uma descrição para esse lançamento.</li>
+				<li ng-if="newBillForm.value.$invalid">Insira um valor para esse lançamento.</li>
+				<li ng-if="newBillForm.date.$invalid">Insira um data para esse lançamento.</li>
+				<li ng-if="newBillForm.payment_form.$invalid">Selecione a forma de pagamento para esse lançamento.</li>
+				<li ng-if="mBillCtrl.fields.paymentForm === 'credit' && newBillForm.payment_reference.$invalid">
+					Selecione o Cartão de Crédito.
+				</li>
+			</ul>
+		</div>
+	</div>
+
 </div> <!-- /.modal-body -->
 
 <div class="modal-footer clearfix">
 	<button class="btn btn-success btn-sm pull-right"
 			type="submit"
-			ng-class="newBill.$invalid ? 'btn-danger' : 'btn-success'"
-			ng-click="mBillCtrl.create()"
-			ng-disabled="newBill.$invalid">Salvar</button>
+			ng-click="mBillCtrl.create(newBillForm)">
+		Salvar
+	</button>
 </div>
