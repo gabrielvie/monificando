@@ -33,6 +33,7 @@
 			'ui.utils.masks',
 			'ngStorage',
 			'ngTagsInput',
+			'angular-momentjs',
 			'monificando.utils',
 			'monificando.filters',
 			'monificando.auth',

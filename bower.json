@@ -2,7 +2,7 @@
   "name": "monificando",
   "url": "http://monificando.com",
   "copyright": "2015",
-  "version": "1.4.2",
+  "version": "1.5.2",
   "description": "Aplicação de controle financeiro pessoal",
   "keywords": [
     "AngularJS",
@@ -28,7 +28,8 @@
     "angular-ui-router": "~0.2.*",
     "Chart.js": "~1.0.2",
     "ng-tags-input": "~3.0.*",
-    "ngstorage": "~0.3.*"
+    "ngstorage": "~0.3.*",
+    "angular-momentjs": "~0.2.2"
   },
   "resolutions": {
     "angular": ">=1.0.8"
@@ -38,6 +39,7 @@
     "angularBootstrap": "bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
     "angularChartJs": "bower_components/angular-chart.js/dist/angular-chart.min.js",
     "angularInputMasks": "bower_components/angular-input-masks/angular-input-masks-standalone.js",
+    "angularMomentJs": "bower_components/angular-momentjs/angular-momentjs.min.js",
     "angularSmartTable": "bower_components/angular-smart-table/dist/smart-table.min.js",
     "angularUiRouter": "bower_components/angular-ui-router/release/angular-ui-router.min.js",
     "angularUiMask": "bower_components/angular-ui-mask/dist/mask.min.js",

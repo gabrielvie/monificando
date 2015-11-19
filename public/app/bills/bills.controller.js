@@ -109,14 +109,14 @@
 					}
 				});
 
-				// BillService
-				// 	.save(vm.fields)
-				// 	.then(function(response) {
+				BillService
+				 	.save(vm.fields)
+				 	.then(function(response) {
 
-				// 		$rootScope.$broadcast('updateBillsList', {});
-				// 		vm.close();
+				 		$rootScope.$broadcast('updateBillsList', {});
+				 		vm.close();
 
-				// 	});
+				 	});
 			}
 		};
 

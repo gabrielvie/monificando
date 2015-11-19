@@ -6,7 +6,7 @@
 			url: 'dashboard',
 			views: {
 				'content@app': {
-					templateUrl: '/app/dashboard/dashboard.view.html',
+					templateUrl: '/app/dashboard/templates/dashboard.view.html',
 					controller: 'DashboardController',
 					controllerAs: 'dashCtrl'
 				}

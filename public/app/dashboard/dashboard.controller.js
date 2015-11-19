@@ -2,7 +2,7 @@
 (function () {
     'use strict';
 
-	function DashboardController($http, APIInfoService) {
+	function DashboardController() {
 		var vm = this;
 		vm.lineChart = {};
 		vm.pieChart = {};
@@ -15,7 +15,7 @@
 		vm.pieChart.data = [1150.59, 2312.40, 1640.34];
 	}
 
-	DashboardController.$inject = ['$http', 'APIInfoService'];
+	DashboardController.$inject = [];
 
     angular
         .module('monificando.dashboard')

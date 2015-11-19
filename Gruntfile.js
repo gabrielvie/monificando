@@ -93,6 +93,7 @@ module.exports = function (grunt) {
 						'<%= bower.components.angularBootstrap %>',
 						'<%= bower.components.angularChartJs %>',
 						'<%= bower.components.angularInputMasks %>',
+						'<%= bower.components.angularMomentJs %>',
 						'<%= bower.components.angularNgStorage %>',
 						'<%= bower.components.angularNgTagsInput %>',
                         '<%= bower.components.angularSmartTable %>',

@@ -14,14 +14,14 @@
 
 			$http.post(apiUrl + '/signin', data)
 				.then(function(response){
-					
+
 					$localStorage.user = response.data.user;
 					$localStorage.token = response.data.user.token;
 
 					deferred.resolve(response);
 
 				}, function(error){
-					
+
 					authServiceFactory.signOut();
 					deferred.reject(error);
 
