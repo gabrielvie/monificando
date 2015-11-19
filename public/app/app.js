@@ -20,6 +20,7 @@
 				return true;
 			}
 		};
+
 	}
 
 	AppController.$inject = ['$scope', '$state'];
@@ -32,6 +33,7 @@
 			'ui.utils.masks',
 			'ngStorage',
 			'ngTagsInput',
+			'monificando.utils',
 			'monificando.filters',
 			'monificando.auth',
 			'monificando.appconfig',

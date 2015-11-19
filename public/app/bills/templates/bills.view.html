@@ -15,45 +15,65 @@
 					<th>Valor</th>
 					<th>Data</th>
 					<th>Tags</th>
-					<th width="150" class="text-center">Status</th>
-					<th width="20"></th>
 					<th width="20"></th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="bill in billCtrl.billsCollection">
-					<td>{{ bill.description }}</td>
-					<td>{{ bill.value | currency : "R$" : 2 }}</td>
-					<td>{{ bill.date | date : "dd/MMM" }}</td>
+				<tr ng-repeat-start="bill in billCtrl.billsCollection">
 					<td>
-						<span ng-repeat="tag in bill.tags" 
+						{{ bill.description }}
+					</td>
+					<td>
+						{{ bill.value | currency : "R$" : 2 }}
+					</td>
+					<td>
+						{{ bill.date | date : "dd/MMM" }}
+					</td>
+					<td>
+						<span ng-repeat="tag in bill.tags"
 							  class="label label-default"
 							  style="margin-right: 5px">
 							{{ tag.description }}
 						</span>
 					</td>
-					<td align="center">
-						<div class="checkbox" style="margin: 0;">
-						    <label>
-						        <input type="checkbox" ng-model="bill.paid" value="true">
-						       	{{ !bill.paid ? 'Pendente' : 'Pago' ; }}
-						    </label>
-						</div>
-					</td>
 					<td>
 						<button type="button"
 								ng-click="billCtrl.edit(bill._id)"
-								class="btn btn-xs btn-primary">
-						<i class="glyphicon glyphicon-pencil"></i>
-					</button>
-					</td>
-					<td><button type="button"
-								ng-click="billCtrl.remove(bill._id)"
-								class="btn btn-xs btn-danger">
-							<i class="glyphicon glyphicon-remove"></i>
+								class="btn btn-xs btn-primary"
+								ng-if="!bill.attacheds.length > 0">
+							<i class="glyphicon glyphicon-pencil"></i>
 						</button>
 					</td>
 				</tr>
+				<tr ng-if="bill.attacheds.length > 0" ng-repeat="attach in bill.attacheds">
+					<td>
+						<small class="glyphicon glyphicon-credit-card"></small>
+						{{ attach.description }}
+					</td>
+					<td>
+						<small style="padding-left:15px"></small>
+						{{ attach.value | currency : "R$" : 2 }}
+					</td>
+					<td>
+						<small style="padding-left:15px"></small>
+						{{ attach.date | date : "dd/MMM" }}
+					</td>
+					<td>
+						<span ng-repeat="tag in attach.tags"
+							  class="label label-default"
+							  style="margin-right: 5px">
+							{{ tag.description }}
+						</span>
+					</td>
+					<td>
+						<button type="button"
+								ng-click="billCtrl.edit(attach._id)"
+								class="btn btn-xs btn-primary">
+							<i class="glyphicon glyphicon-pencil"></i>
+						</button>
+					</td>
+				</tr>
+				<tr ng-repeat-end ng-if="bill % 2 === 0"></tr>
 			</tbody>
 		</table>
 	</div>

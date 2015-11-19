@@ -7,24 +7,25 @@
 		var authServiceFactory = {};
 
 		authServiceFactory.signIn = function(credentials) {
-			var data = 'grant_type=password&email=' + credentials.email + '&password=' + credentials.password;
+			//var data = 'grant_type=password&email=' + credentials.email + '&password=' + credentials.password;
+			var data = credentials;
+
 			var deferred = $q.defer();
 
-			$http.post(apiUrl + '/signin', data, {
-				headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-			}).then(function(response){
-				
-				$localStorage.token = response.data.token;
-				$localStorage.user = response.data.user;
+			$http.post(apiUrl + '/signin', data)
+				.then(function(response){
+					
+					$localStorage.user = response.data.user;
+					$localStorage.token = response.data.user.token;
 
-				deferred.resolve(response);
+					deferred.resolve(response);
 
-			}, function(error){
-				
-				authServiceFactory.signOut();
-				deferred.reject(error);
+				}, function(error){
+					
+					authServiceFactory.signOut();
+					deferred.reject(error);
 
-			});
+				});
 
 			return deferred.promise;
 		};

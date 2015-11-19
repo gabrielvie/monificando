@@ -43,6 +43,3 @@ DEPENDENCIES
   neat
   sass
   scss_lint (~> 0.40.1)
-
-BUNDLED WITH
-   1.10.6

@@ -103,6 +103,11 @@
 		vm.tooltips = true;
 
 		vm.create = function() {
+
+			var valid_thru = vm.fields.valid_thru;
+
+			vm.fields.valid_thru = valid_thru.substring(0, 2) + '/' + valid_thru.substring(2);
+
 			var data = vm.fields;
 
 			CreditCardService

@@ -27,6 +27,8 @@ module.exports = function(database) {
 		next();
 	});
 
+	// app.use(morgan('combined'));
+
 	app.set('showStackError', true);
 	app.set('view engine', 'html');
 

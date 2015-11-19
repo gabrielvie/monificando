@@ -23,6 +23,26 @@
 			return deferred.promise;
 		};
 
+		CreditCard.get = function(id) {
+
+			var deferred = $q.defer();
+
+			$http
+				.get(apiUrl + '/creditcards/' + id)
+				.then(function(response) {
+
+					deferred.resolve(response.data);
+
+				}, function(error) {
+
+					deferred.reject(error);
+
+				});
+
+			return deferred.promise;
+
+		};
+
 		CreditCard.list = function() {
 			var deferred = $q.defer();
 
@@ -85,5 +105,5 @@
 	angular
 		.module('monificando.appconfig.ccredit')
 		.factory('CreditCardService', CreditCardService);
-		
+
 }());

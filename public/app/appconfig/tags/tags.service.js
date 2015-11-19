@@ -30,7 +30,7 @@
 			$http
 				.get(apiUrl + '/tags?' + query)
 				.then(function(response) {
-					
+
 					deferred.resolve(response.data);
 
 				}, function(error) {

@@ -11,19 +11,21 @@
 <div class="modal-body">
 
 	<form novalidate
-		  name="newBill"
-		  ng-submit="eMBillCtrl.create()"
+		  name="updateBill"
 		  role="form">
 
 		<!-- Bill type: [credit, debit] -->
 		<div class="form-group">
 			<div class="btn-group">
+
 				<label class="btn btn-success btn-sm"
+					   name="type"
 					   ng-model="eMBillCtrl.fields.type"
 					   btn-radio="'credit'"
 					   required>Crédito</label>
 
 				<label class="btn btn-danger btn-sm"
+					   name="type"
 					   ng-model="eMBillCtrl.fields.type"
 					   btn-radio="'debit'"
 					   required>Débito</label>
@@ -80,59 +82,99 @@
 		</div>
 
 		<!-- Bill payment form -->
-		<div class="form-inline">
+		<div class="row">
+			<div class="col-sm-5">
 				<div class="form-group">
 					<select required
-							name="paymentForm"
-							class="form-control input-sm"
-							name="payment_mode"
-							ng-model="eMBillCtrl.fields.paymentForm">
-						<option ng-repeat="payOpt in eMBillCtrl.paymentOptions"
-								value="{{ payOpt.value }}"
-								ng-selected="payOpt.selected">{{ payOpt.display }}
+							name="payment_form"
+							class="form-control"
+							ng-model="eMBillCtrl.fields.payment_form">
+
+						<option ng-repeat="payForm in eMBillCtrl.paymentForm"
+								value="{{ payForm.value }}"
+								ng-selected="payForm.value === eMBillCtrl.fields.payment_form">
+								{{ payForm.display }}
 						</option>
 					</select>
 				</div>
+			</div>
+			<div class="col-sm-7"
+				 ng-if="eMBillCtrl.fields.payment_form === 'credit'">
+					<select required
+							name="payment_reference"
+							class="form-control"
+							ng-model="eMBillCtrl.fields.payment_ref">
+						<option value="">Selecione o Cartão de Crédito</option>
+						<option ng-repeat="creditCard in eMBillCtrl.creditCardsCollection"
+								value="{{ creditCard._id }}">
+							{{ creditCard.description }}
+						</option>
+					</select>
+			</div>
 		</div>
 		<!-- /Bill payment form -->
 
 		<!-- Bill frequency options -->
-		<!-- <div class="form-inline">
-				<div class="form-group">
+		<div class="row" ng-if="true === false">
+			<div class="col-sm-5">
+				<div class="form-inline">
 					<div class="btn-group">
 						<label class="btn btn-primary btn-sm"
-							   ng-model="eMBillCtrl.fields.hasFrequency"
+							   name="has_frequency"
+							   ng-model="eMBillCtrl.fields.repeat"
 							   btn-radio="false"
 							   required>Unica</label>
-		
+
 						<label class="btn btn-primary btn-sm"
-							   ng-model="eMBillCtrl.fields.hasFrequency"
+							   name="has_frequency"
+							   ng-model="eMBillCtrl.fields.repeat"
 							   btn-radio="true"
 							   required>Periódica</label>
 					</div>
 				</div>
-				<div class="form-group" ng-if="eMBillCtrl.fields.hasFrequency">
+			</div>
+			<div class="col-sm-7"
+				 ng-if="eMBillCtrl.fields.repeat">
+				<div class="form-inline">
 					<select class="form-control input-sm"
 							name="frequency"
-							ng-model="eMBillCtrl.fields.frequency">
+							ng-model="eMBillCtrl.fields.period">
 						<option ng-repeat="frequency in eMBillCtrl.frequencies"
 								value="{{ frequency.value }}"
 								ng-selected="frequency.selected">{{ frequency.display }}
 						</option>
 					</select>
+
+
+					<input type="number" ng-if="true === false"
+						   name="frequency_qty"
+						   class="form-control input-sm"
+						   ng-model="eMBillCtrl.fields.qty"
+						   placeholder="Coloque o número de repetições."
+						   min="2"/>
 				</div>
-		</div> -->
+				<div class="form-group">
+					<div class="checkbox" style="margin: 0;">
+						<label>
+						    <input type="checkbox" ng-model="eMBillCtrl.fields.before" value="false">
+						      	Atualizar valores lançados anteriormente?
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!-- Bill frequency options -->
+
 
 		<!-- Bill Tags -->
 		<div class="row">
-			<br><br>
 			<div class="col-sm-12">
 				<tags-input ng-model="eMBillCtrl.fields.tags"
-			                display-property="description" 
-							placeholder="Adicionar Tags">
-					
-					<auto-complete 
+			                display-property="description"
+							placeholder="Adicionar Tags"
+							key-property="_id">
+
+					<auto-complete
 							source="eMBillCtrl.loadTags($query)"
 					        min-length="0"
 					        load-on-focus="true"
@@ -149,9 +191,13 @@
 </div> <!-- /.modal-body -->
 
 <div class="modal-footer clearfix">
+	<a 	class="text-danger pull-left"
+		ng-click="eMBillCtrl.remove()">
+		<i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Excluir
+	</a>
 	<button class="btn btn-success btn-sm pull-right"
 			type="submit"
 			ng-class="newBill.$invalid ? 'btn-danger' : 'btn-success'"
-			ng-click="eMBillCtrl.create()"
+			ng-click="eMBillCtrl.update()"
 			ng-disabled="newBill.$invalid">Salvar</button>
 </div>

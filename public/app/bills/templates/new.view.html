@@ -88,20 +88,22 @@
 					<select required
 							name="payment_form"
 							class="form-control"
-							ng-model="mBillCtrl.fields.paymentForm">
-						<option ng-repeat="payOpt in mBillCtrl.paymentOptions"
-								value="{{ payOpt.value }}"
-								ng-selected="payOpt.selected">{{ payOpt.display }}
+							ng-model="mBillCtrl.fields.payment_form">
+
+						<option>Selecione a forma de pagamento.</option>
+						<option ng-repeat="payForm in mBillCtrl.paymentForm"
+								value="{{ payForm.value }}">
+								{{ payForm.display }}
 						</option>
 					</select>
 				</div>
 			</div>
 			<div class="col-sm-7"
-				 ng-if="mBillCtrl.fields.paymentForm === 'credit'">
-					<select required 
+				 ng-if="mBillCtrl.fields.payment_form === 'credit'">
+					<select required
 							name="payment_reference"
 							class="form-control"
-							ng-model="mBillCtrl.fields.paymentReference">
+							ng-model="mBillCtrl.fields.payment_ref">
 						<option value="">Selecione o Cartão de Crédito</option>
 						<option ng-repeat="creditCard in mBillCtrl.creditCardsCollection"
 								value="{{ creditCard._id }}">
@@ -113,70 +115,45 @@
 		<!-- /Bill payment form -->
 
 		<!-- Bill frequency options -->
-		<div class="form-inline">
-				<div class="form-group">
+		<div class="row">
+			<div class="col-sm-5">
+				<div class="form-inline">
 					<div class="btn-group">
 						<label class="btn btn-primary btn-sm"
 							   name="has_frequency"
-							   ng-model="mBillCtrl.fields.hasFrequency"
+							   ng-model="mBillCtrl.fields.repeat"
 							   btn-radio="false"
 							   required>Unica</label>
 
 						<label class="btn btn-primary btn-sm"
 							   name="has_frequency"
-							   ng-model="mBillCtrl.fields.hasFrequency"
+							   ng-model="mBillCtrl.fields.repeat"
 							   btn-radio="true"
 							   required>Periódica</label>
 					</div>
 				</div>
-				<div class="form-group" ng-if="mBillCtrl.fields.hasFrequency">
+			</div>
+			<div class="col-sm-7"
+				 ng-if="mBillCtrl.fields.repeat">
+				<div class="form-inline">
 					<select class="form-control input-sm"
 							name="frequency"
-							ng-model="mBillCtrl.fields.frequency">
+							ng-model="mBillCtrl.fields.period">
 						<option ng-repeat="frequency in mBillCtrl.frequencies"
 								value="{{ frequency.value }}"
 								ng-selected="frequency.selected">{{ frequency.display }}
 						</option>
 					</select>
-				</div>
-		</div>
 
-		<div class="row" 
-			 ng-if="mBillCtrl.fields.hasFrequency">
-
-			<div class="col-sm-4">
-				<div class="radio no-margin">
-					<label ng-repeat="repeatType in mBillCtrl.freqRepeats">
-						<input type="radio"
-							   name="frequency_type"
-							   value="{{ repeatType.value }}"
-							   ng-model="mBillCtrl.fields.freqType">
-						{{ repeatType.display }}
-					</label>
-				</div>
-			</div>
-
-			<div class="col-sm-5" 
-			     ng-if="mBillCtrl.fields.freqType !== 'no_prev'">
-				
-				<div class="form-group">
-
-					<label ng-if="mBillCtrl.fields.freqType === 'divided'">
-						Número de Parcelas
-					</label>
-
-					<label ng-if="mBillCtrl.fields.freqType === 'repeat'">
-						Repetirá quantas vezes
-					</label>
 
 					<input type="number"
 						   name="frequency_qty"
-						   class="form-control"
-						   ng-model="mBillCtrl.fields.freqQty"
-						   min="1"/>
+						   class="form-control input-sm"
+						   ng-model="mBillCtrl.fields.qty"
+						   placeholder="Coloque o número de repetições."
+						   min="2"/>
 				</div>
 			</div>
-			<br>
 		</div>
 		<!-- Bill frequency options -->
 
@@ -184,15 +161,15 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<tags-input ng-model="mBillCtrl.fields.tags"
-			                display-property="description" 
+			                display-property="description"
 							placeholder="Adicionar Tags">
-					
-					<auto-complete 
+
+					<auto-complete
 							source="mBillCtrl.loadTags($query)"
 					        min-length="0"
 					        load-on-focus="true"
 					        load-on-empty="true"
-					        max-results-to-show="32"
+					        max-results-to-show="10"
 					        key-property="_id"
 					        display-property="description"></auto-complete>
 
@@ -202,10 +179,10 @@
 		<!-- /Bill Tags -->
 
 	</form>
-	
+
 	<div ng-if="newBillForm.$invalid && newBillForm.$submitted">
 		<br>
-		<div class="alert alert-danger" 
+		<div class="alert alert-danger"
 			 role="alert">
 
 			<ul>
@@ -214,7 +191,7 @@
 				<li ng-if="newBillForm.value.$invalid">Insira um valor para esse lançamento.</li>
 				<li ng-if="newBillForm.date.$invalid">Insira um data para esse lançamento.</li>
 				<li ng-if="newBillForm.payment_form.$invalid">Selecione a forma de pagamento para esse lançamento.</li>
-				<li ng-if="mBillCtrl.fields.paymentForm === 'credit' && newBillForm.payment_reference.$invalid">
+				<li ng-if="mBillCtrl.fields.payment_options === 'credit' && newBillForm.payment_reference.$invalid">
 					Selecione o Cartão de Crédito.
 				</li>
 			</ul>

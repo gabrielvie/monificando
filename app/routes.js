@@ -8,7 +8,7 @@ module.exports = function(app) {
 	app.route('/api/signup').post(user.save);
 	app.route('/api/user/:user_id').delete(user.delete);
 
-	
+
 	/* Authentication Routes */
 	var auth = require('./controllers/auth.controller.js');
 
@@ -34,17 +34,17 @@ module.exports = function(app) {
 	app.route('/api/user/:user_id/bills/:bill_id').get(bill.get);
 	app.route('/api/user/:user_id/bills/:bill_id').put(bill.update);
 	app.route('/api/user/:user_id/bills/:bill_id').delete(bill.delete);
-	
-	
+
+
 	/* Tags Routes */
 	var tag = require('./controllers/tags.controller');
-	
+
 	app.route('/api/user/:user_id/tags').post(tag.save);
 	app.route('/api/user/:user_id/tags').get(tag.get);
 	app.route('/api/user/:user_id/tags/list').get(tag.list);
 	app.route('/api/user/:user_id/tags/:tag_id').put(tag.update);
 	app.route('/api/user/:user_id/tags/:tag_id').delete(tag.delete);
-	
+
 	app.route('/api/me').get(function(req, res){
 		return res.status(200).send({ success: true });
 	});

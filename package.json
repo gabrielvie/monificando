@@ -2,11 +2,11 @@
   "name": "monificando",
   "url": "http://www.monificando.com.br",
   "copyright": "2015",
-  "version": "1.3.0",
+  "version": "1.5.2",
   "description": "Aplicação de controle financeiro pessoal",
   "main": "app.js",
   "scripts": {
-    "start": "forever --minUptime 1000 --spinSleepTime 1000 -e logs/error.log -o logs/output.log start server.js development",
+    "start": "forever --minUptime 1000 --spinSleepTime 1000 -e logs/error.log -o logs/output.log start server.js",
     "restart": "forever restart server.js",
     "test": "mocha test.js"
   },

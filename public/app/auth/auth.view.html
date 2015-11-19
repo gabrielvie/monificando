@@ -9,7 +9,6 @@
 					<accordion-heading>Acessar <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $scope.accordion.signin, 'glyphicon-chevron-right': !$scope.accordion.signin}"></span></accordion-heading>
 					<form novalidate
 						  name="signinForm"
-						  ng-submit="authCtrl.signIn()"
 						  role="form">
 
 						<div class="form-group"
@@ -20,6 +19,7 @@
 
 							<input required
 								   name="email"
+								   id="signinEmail"
 								   type="email"
 								   placeholder="Email"
 								   class="form-control"
@@ -31,6 +31,7 @@
 
 							<input required
 								   name="password"
+								   id="signinPassword" 
 								   type="password"
 								   class="form-control"
 								   placeholder="Senha"
@@ -50,7 +51,6 @@
 					<accordion-heading>Cadastre-se <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': $scope.accordion.signup, 'glyphicon-chevron-right': !$scope.accordion.signup}"></span></accordion-heading>
 					<form novalidate
 						  name="signupForm"
-						  ng-submit="authCtrl.signUp()"
 						  role="form">
 
 						<div class="form-group"
@@ -133,6 +133,7 @@
 
 							<input required
 								   name="email"
+								   id="signupEmail"
 								   type="email"
 								   placeholder="Email"
 								   class="form-control"
@@ -150,6 +151,7 @@
 
 							<input required
 								   name="password"
+								   id="signupPassword"
 								   type="password"
 								   class="form-control"
 								   placeholder="Senha"
@@ -161,6 +163,7 @@
 						<button class="btn"
 								ng-class="signupForm.$invalid ? 'btn-danger' : 'btn-success'"
 								type="submit"
+						  		ng-click="authCtrl.signUp()"
 								ng-disabled="signupForm.$invalid">Acessar
 						</button>
 					</form>

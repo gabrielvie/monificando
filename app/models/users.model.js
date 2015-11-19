@@ -82,7 +82,7 @@ UserSchema.methods.authenticate = function(password) {
 UserSchema.pre('save', function(next, done){
 	this.updated_at = new Date();
 
-	if (this.password && this.password.length > 6) {
+	if (this.password && this.password.length > 6 && this.salt === undefined) {
 		this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
 		this.password = this.hashPassword(this.password);
 	}

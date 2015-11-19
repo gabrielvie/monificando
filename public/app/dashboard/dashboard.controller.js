@@ -13,11 +13,6 @@
 		vm.pieChart.labels = ['Janeiro', 'Fevereiro', 'Março'];
 		vm.pieChart.series = ['Janeiro', 'Fevereiro', 'Março'];
 		vm.pieChart.data = [1150.59, 2312.40, 1640.34];
-
-		$http.get(APIInfoService.getFullAPILink('/me'))
-			.then(function(response) {
-			}, function(response) {
-			});
 	}
 
 	DashboardController.$inject = ['$http', 'APIInfoService'];

@@ -11,30 +11,32 @@ exports.signin = function(req, res) {
 		email: req.body.email
 	}, function(err, user) {
 		if (err) {
-			res.json(401); return;
+			res.status(401).send({ 'message' : 'User not found.' }); return;
 		}
 
-		if (user) {
-			var isMatch = user.authenticate(req.body.password);
+		var isMatch = user.authenticate(req.body.password);
 
-			if (!isMatch) {
-				res.status(401).send({'w':'password'});
-			} else {
-				var token = jwt.sign(user, config.jwt.secret_token, {
-					expiresIn: config.jwt.expires_in
-				});
+		if (isMatch) {
+
+			user.token = jwt.sign(user.updated_at, config.jwt.secret_token, { expiresIn: 60 });
+
+			user.save(function(err, user) {
 
 				res.status(200).send({
 					success: true,
-					token: token,
 					user: {
-						_id: user.id,
-						email: user.email
+						_id: user._id,
+						first_name: user.data.first_name,
+						last_name: user.data.last_name,
+						email: user.data.email,
+						updated_at: user.updated_at,
+						token: user.token
 					}
 				});
-			}
+			})
 		} else {
-			res.status(401).send({'w':'email'});
+			res.status(401).send({ 'message': 'Authentication failed. Email/Password' })
+			return;
 		}
 	});
 };

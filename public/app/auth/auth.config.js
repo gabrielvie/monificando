@@ -26,7 +26,13 @@
 
 			return {
 				'request': function (config) {
+
+					if ($localStorage.user === undefined &&  $localStorage.token === undefined) {
+						$location.path('/auth');
+					}
+
 					config.headers = config.headers || {};
+
 					if ($localStorage.token) {
 						config.headers.token = $localStorage.token;
 					}
@@ -34,7 +40,9 @@
 					return config;
 				},
 				'responseError': function (response) {
-					//$location.path('/auth');
+					if (response.status === 401) {
+						$location.path('/auth');
+					}
 
 					return $q.reject(response);
 				}

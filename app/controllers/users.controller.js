@@ -29,11 +29,13 @@ exports.save = function(req, res) {
 					return;
 				}
 
-				return res.status(201).send({ success: true });
+				res.status(201).send({ success: true });
+				return;
 			});
 
 		} else {
-			return res.status(409).send({ message: 'Email has already in use.' });
+			res.status(409).send({ message: 'Email has already in use.' });
+			return;
 		}
 	});
 

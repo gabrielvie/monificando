@@ -16,17 +16,8 @@
 			];
 		};
 
-		Options.frequenciesRepeat = function() {
-			return [
-				{ value: 'no_prev', 	display: 'Sem Previsões', selected: true },
-				{ value: 'repeat', 		display: 'Repetido' },
-				{ value: 'installment',	display: 'Parcelado' }
-			];
-		};
-
 		Options.payment = function() {
 			return [
-				{ value: null, 			display: 'Forma de Pagamento', selected: true },
 				{ value: 'money', 		display: 'Dinheiro' },
 				//{ value: 'debit', 		display: 'Débito em Conta' },
 				{ value: 'credit', 		display: 'Cartão de Crédito' }
@@ -91,6 +82,29 @@
 				}, function(error) {
 
 					deferred.reject(response.data);
+
+				});
+
+			return deferred.promise;
+		};
+
+		Bill.update = function(data, id) {
+			var deferred = $q.defer();
+
+			for (var i in data.tags) {
+				data.tags[i] = data.tags[i]._id;
+			}
+
+			$http
+				.put(apiUrl + '/bills/' + id, data)
+				.then(function(response) {
+					console.log('ok', response);
+					deferred.resolve(response.data);
+
+				}, function(error) {
+					console.log('nao ok', error);
+
+					deferred.reject(error.data);
 
 				});
 

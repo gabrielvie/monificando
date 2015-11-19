@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 
-	function BillsController($modal, TagsService, BillService, $rootScope) {
+	function BillsController($modal, TagsService, BillService, $rootScope, CreditCardService) {
 		var vm = this;
 
 		vm.billsCollection = [];
@@ -21,41 +21,10 @@
 				.list()
 				.then(function(response) {
 
-					var now = new Date();
-
 					vm.billsCollection = [];
-
-					response.list.forEach(function(item) {
-
-						item.values.forEach(function(value, index) {
-
-							var valueDate = new Date(value.date),
-								pseudoItem = item;
-
-							if (valueDate.getMonth() === now.getMonth()) {
-								
-								if (item.values.length > 1) {
-									var sufixBill = (" " + (index + 1) + ("/" + item.values.length));
-									pseudoItem.description = pseudoItem.description + sufixBill;
-								}
-								
-								pseudoItem.value = value.value;
-								pseudoItem.date = value.date;
-								pseudoItem.paid = value.paid;
-								pseudoItem.valueId = value._id;
-
-								delete pseudoItem.values;
-
-
-								vm.billsCollection.push(pseudoItem);
-							}
-
-						});
-
-					});
+					vm.billsCollection = response.list;
 
 				});
-
 		};
 
 		vm.edit = function(billId) {
@@ -72,43 +41,27 @@
 			});
 		};
 
-		vm.remove = function(billId) {
-
-			BillService
-				.remove(billId)
-				.then(function(response){
-					vm.list();
-				});
-
-		};
-
 		$rootScope.$on('updateBillsList', function(event, args){
-			vm.list();
+			vm.init();
 		});
 
 		vm.init = function() {
+
+			vm.billsCollection = [];
 			vm.list();
+
 		};
 
 		vm.init();
 	}
 
-	BillsController.$inject = ['$modal', 'TagsService', 'BillService', '$rootScope'];
+	BillsController.$inject = ['$modal', 'TagsService', 'BillService', '$rootScope', 'CreditCardService'];
 
 	function ModalBillController(BillsOptionsService, TagsService, CreditCardService, BillService, $scope, $modalInstance, $rootScope) {
 		var vm = this;
 
 		vm.fields = {
-			type: null,
-			description: null,
-			value: null,
-			date: null,
-		  	tags: null,
-			hasFrequency: false,
-			paymentForm: null,
-			frequency: 'monthly',
-			freqType: 'no_prev',
-			freqQty: 1
+			repeat: false
 		};
 
 		vm.calendar = {
@@ -121,8 +74,7 @@
 		};
 
 		vm.frequencies = BillsOptionsService.frequencies();
-	  	vm.freqRepeats = BillsOptionsService.frequenciesRepeat();
-	  	vm.paymentOptions = BillsOptionsService.payment();
+	  	vm.paymentForm = BillsOptionsService.payment();
 
 	  	vm.loadCreditCards = function() {
 	  		CreditCardService
@@ -142,38 +94,29 @@
 
 			if (form.$valid) {
 
-				var nBill = {
-						description: vm.fields.description,
-						payment_options: vm.fields.paymentForm,
-						payment_ref: vm.fields.paymentReference,
-						period: vm.fields.hasFrequency === false ? null : vm.fields.frequency,
-						repeat: vm.fields.hasFrequency === false ? 'no_repeat' : vm.fields.freqType,
-						tags: [],
-						value: vm.fields.type === 'credit' ? vm.fields.value : vm.fields.value * (-1),
-						date: vm.fields.date.toISOString(),
-						qty: vm.fields.freqQty
-					};
+				vm.fields.value = vm.fields.type === 'credit' ? vm.fields.value : vm.fields.value * (-1);
+				vm.fields.date = vm.fields.date.toISOString();
 
 				vm.fields.tags.forEach(function(tag, idx) {
 					if (tag._id === undefined) {
 						TagsService
 							.save(tag)
 							.then(function(response) {
-								nBill.tags.push(response.data._id);
+								vm.fields.tags[idx] = response.data._id;
 							});
 					} else {
-						nBill.tags.push(tag._id);
+						vm.fields.tags[idx] = tag._id;
 					}
 				});
 
-				BillService
-				.save(nBill)
-				.then(function(response) {
+				// BillService
+				// 	.save(vm.fields)
+				// 	.then(function(response) {
 
-					$rootScope.$broadcast('updateBillsList', {});
-					vm.close();
+				// 		$rootScope.$broadcast('updateBillsList', {});
+				// 		vm.close();
 
-				});
+				// 	});
 			}
 		};
 
@@ -190,37 +133,39 @@
 
 	ModalBillController.$inject = ['BillsOptionsService', 'TagsService', 'CreditCardService', 'BillService', '$scope', '$modalInstance', '$rootScope'];
 
-	
-	function EditModalBillController(BillsOptionsService, TagsService, CreditCardService, BillService, $scope, $modalInstance, itemId) {
-		
+
+	function EditModalBillController(BillsOptionsService, TagsService, CreditCardService, BillService, $scope, $modalInstance, itemId, $rootScope, confirm) {
+
 		var vm = this;
 
 		vm.fields = {};
 
 		vm.frequencies = BillsOptionsService.frequencies();
-	  	vm.paymentOptions = BillsOptionsService.payment();
+	  	vm.paymentForm = BillsOptionsService.payment();
+
+	  	vm.loadCreditCards = function() {
+	  		CreditCardService
+	  			.list()
+	  			.then(function(response) {
+	  				vm.creditCardsCollection = response.list;
+	  			});
+	  	};
 
 		vm.get = function() {
 
 			BillService
 				.get(itemId)
 				.then(function(response) {
+
 					var data = response.data;
-					
-					console.log(data);
 
-					vm.fields.description = data.description;
-					vm.fields.value = 0;
-
-					data.values.forEach(function(item) {
-						vm.fields.value += item.value;						
-					});
-
-					vm.fields.type = vm.fields.value > 0 ? 'credit' : 'debit';
-					vm.fields.date = data.values[0].date;
-					
-					vm.fields.paymentForm = data.repeat;
-					vm.fields.tags = data.tags;
+					vm.fields.description 	= data.description;
+					vm.fields.value 	 	= data.values[0].value;
+					vm.fields.date 			= data.values[0].date;
+					vm.fields.payment_form 	= data.payment.form;
+					vm.fields.payment_ref 	= data.payment.reference;
+					vm.fields.tags 			= data.tags;
+					vm.fields.type 			= vm.fields.value > 0 ? 'credit' : 'debit' ;
 				});
 		};
 
@@ -233,11 +178,45 @@
 			}
 		};
 
+		vm.update = function () {
+
+			var data = vm.fields;
+
+			BillService
+				.update(data, itemId)
+				.then(function() {
+
+					$rootScope.$broadcast('updateBillsList', {});
+					vm.close();
+
+				});
+
+		};
+
+		vm.remove = function() {
+
+			confirm("Tem certeza disso?").then(function(response) {
+				BillService
+					.remove(itemId)
+					.then(function(response){
+						$rootScope.$broadcast('updateBillsList', {});
+						vm.close();
+					});
+			});
+
+
+		};
+
 	  	vm.loadTags = function(query) {
 			return TagsService.search(query);
 		};
 
+		vm.close = function() {
+			$modalInstance.dismiss('cancel');
+		};
+
 		vm.init = function() {
+			vm.loadCreditCards();
 			vm.get();
 		};
 
@@ -245,7 +224,7 @@
 
 	}
 
-	EditModalBillController.$inject = ['BillsOptionsService', 'TagsService', 'CreditCardService', 'BillService', '$scope', '$modalInstance', 'itemId'];
+	EditModalBillController.$inject = ['BillsOptionsService', 'TagsService', 'CreditCardService', 'BillService', '$scope', '$modalInstance', 'itemId', '$rootScope', 'confirm'];
 
 	angular
 		.module('monificando.bills')

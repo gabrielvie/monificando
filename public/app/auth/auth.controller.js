@@ -41,8 +41,6 @@
 				if (response.status === 401) {
 
 					vm.error.status = response.data.w;
-					console.log(typeof vm.error.status);
-					console.log(vm.error.status === "password");
 
 					if (vm.error.status === "password") {
 

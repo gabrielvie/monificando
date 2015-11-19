@@ -1,8 +1,8 @@
 'user strict';
 
 var mongoose 	= require('mongoose'),
-	Schema 		= mongoose.Schema,
-	moment		= require('moment');
+Schema 		= mongoose.Schema,
+moment		= require('moment');
 
 var BillsSchema = new Schema({
 	description: {
@@ -21,8 +21,8 @@ var BillsSchema = new Schema({
 		}
 	},
 	repeat: {
-		type: String,
-		enum: ['no_repeat', 'no_prev', 'repeat', 'installment'],
+		type: Boolean,
+		default: false,
 		required: true
 	},
 	period: {
@@ -37,10 +37,6 @@ var BillsSchema = new Schema({
 		date: {
 			type: Date,
 			required: true
-		},
-		paid: {
-			type: Boolean,
-			default: false
 		}
 	}],
 	tags: [{
@@ -57,43 +53,12 @@ var BillsSchema = new Schema({
 
 BillsSchema.methods.onUpdateValue = function(vObj) {
 
-	switch(this.repeat) {
-		case 'no_prev':
+	for (var i = 0; i < this.values.length; i++) {
+		this.values[i].value = vObj.value;
+	}
 
-			if (vObj.before === true) {
+	if (this.period !== undefined && this.repeat === true) {
 
-				for (var i = 0; i < this.values.length; i++) {
-					this.values[i].value = vObj.value;
-				}
-
-			} else {
-
-				var last = this.values.length - 1;
-				this.values[last].value = vObj.value;
-
-			}
-
-			break;
-
-		case 'repeat':
-		case 'no_repeat':
-
-			for (var i = 0; i < this.values.length; i++) {
-				this.values[i].value = vObj.value;
-			}
-
-			break;
-
-		case 'installment':
-
-			for (var i = 0; i < this.values.length; i++) {
-				this.values[i].value = vObj.value / this.values.length;
-			}
-
-			break;
-	};
-
-	if (this.period !== undefined && (this.repeat === 'repeat' || this.repeat === 'installment')) {
 		switch (this.period) {
 			case 'weekly':
 				for (var i = 0; i < this.values.length; i++) {
@@ -131,6 +96,11 @@ BillsSchema.methods.onUpdateValue = function(vObj) {
 				}
 				break;
 		}
+
+	} else {
+
+		this.values[0].date = new Date(vObj.date);
+
 	}
 
 	return this.values;
@@ -138,25 +108,21 @@ BillsSchema.methods.onUpdateValue = function(vObj) {
 
 BillsSchema.methods.onCreateValue = function(vObj) {
 
-	switch(this.repeat) {
-		case 'no_prev':
-		case 'no_repeat':
+	if (this.repeat) {
+
+		for (var i = 1; i <= vObj.qty; i++) {
 			this.values.push({ value: vObj.value });
-			break;
-		case 'repeat':
-			for (var i = 1; i <= vObj.qty; i++) {
-				this.values.push({ value: vObj.value });
-			}
-			break;
-		case 'installment':
-			for (var i = 1; i <= vObj.qty; i++) {
-				this.values.push({ value: vObj.value / vObj.qty });
-			}
-			break;
-	};
+		}
+
+	} else {
+
+		this.values.push({ value: vObj.value });
+
+	}
 
 
-	if (this.period !== undefined && (this.repeat === 'repeat' || this.repeat === 'installment')) {
+	if (this.period !== undefined && this.repeat === true) {
+
 		switch (this.period) {
 			case 'weekly':
 				for (var i = 0; i < this.values.length; i++) {
@@ -194,7 +160,8 @@ BillsSchema.methods.onCreateValue = function(vObj) {
 				}
 				break;
 		}
-	} else if (this.repeat === 'no_repeat') {
+
+	} else if (!this.repeat) {
 
 		this.values[0].date = new Date(vObj.date);
 

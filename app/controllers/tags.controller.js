@@ -1,6 +1,7 @@
 'use strict';
 
 var mongoose    = require('mongoose'),
+	_ 			= require('lodash'),
 	User 	 	= mongoose.model('User'),
 	Tags	    = mongoose.model('Tags');
 
@@ -12,9 +13,21 @@ exports.save = function(req, res) {
 			return;
 		}
 
-		var nTag = new Tags(req.body);
+		var nTag,
+			tagExists = false;
 
-		user.tags.push(nTag);
+		user.tags.forEach(function(tag, idx) {
+
+			if (tag.description == req.body.description) {
+				nTag = tag;
+			}
+
+		});
+
+		if (_.isEmpty(nTag)) {
+			nTag = new Tags(req.body);
+			user.tags.push(nTag);
+		}
 
 		user.save(function(err, savedUser) {
 		    if (err) { res.status(501).send(err); return; }
@@ -23,6 +36,7 @@ exports.save = function(req, res) {
 		        success: true,
 				data: nTag
 		    });
+		    return;
 		});
 	});
 };
@@ -35,7 +49,7 @@ exports.get = function(req, res) {
 			res.status(404).send({ success: false, err: err });
 			return;
 		}
-		
+
 		var to_return = [];
 
 		if (req.query.description !== undefined) {
@@ -57,7 +71,7 @@ exports.get = function(req, res) {
 			});
 
 		}
-		
+
 
 		res.status(200).send({ success: true, list: to_return });
 	});
