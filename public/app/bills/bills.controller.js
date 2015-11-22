@@ -172,8 +172,6 @@
 
 			var data = angular.copy(vm.fields);
 
-			console.log(data);
-
 			BillService
 				.update(data, itemId)
 				.then(function(response) {

@@ -32,48 +32,56 @@
 		};
 
 		vm.signIn = function() {
-			AuthenticationService.signIn(vm.credentials).then(function(response) {
-				
-				$state.go('app.dashboard');
 
-			}, function(response) {
+			var data = angular.copy(vm.credentials)
 
-				if (response.status === 401) {
+			AuthenticationService.signIn(data)
+				.then(function(response) {
 
-					vm.error.status = response.data.w;
+					$state.go('app.dashboard');
 
-					if (vm.error.status === "password") {
+				}, function(response) {
 
-						vm.error.message = "Senha incorreta!";
+					if (response.status === 401) {
 
-					} else if (vm.error.status === "email") {
+						vm.error.status = response.data.w;
 
-						vm.error.message = "Email incorreto!";
+						if (vm.error.status === "password") {
 
+							vm.error.message = "Senha incorreta!";
+
+						} else if (vm.error.status === "email") {
+
+							vm.error.message = "Email incorreto!";
+
+						}
 					}
-				}
 
-			});
+				});
 		};
 
 		vm.signUp = function() {
-			AuthenticationService.signUp(vm.newUser).then(function(response) {
 
-				vm.error.message = "";
-				vm.error.status = "";
+			var data = angular.copy(vm.newUser)
 
-				vm.newUser = {};
+			AuthenticationService.signUp(data)
+				.then(function(response) {
 
-				$state.go('auth', {}, { reload: true });
+					vm.error.message = "";
+					vm.error.status = "";
 
-			}, function(response) {
+					vm.newUser = {};
 
-				if (response.status === 409) {
-					vm.error.status = "email_already_in_use";
-					vm.error.message = "Endereço de email já encontra-se em uso.";
-				}
+					$state.go('auth', {}, { reload: true });
 
-			});
+				}, function(response) {
+
+					if (response.status === 409) {
+						vm.error.status = "email_already_in_use";
+						vm.error.message = "Endereço de email já encontra-se em uso.";
+					}
+
+				});
 		};
 	}
 
