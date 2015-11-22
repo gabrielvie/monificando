@@ -31,7 +31,7 @@
 
 							<input required
 								   name="password"
-								   id="signinPassword" 
+								   id="signinPassword"
 								   type="password"
 								   class="form-control"
 								   placeholder="Senha"
@@ -158,6 +158,15 @@
 								   ng-pattern="/^(?=.*\d)(?=.*[a-z|A-Z])[a-zA-Z0-9]{8,}$/"
 								   ng-model="authCtrl.newUser.password">
 
+						</div>
+
+						<div class="form-group">
+							<div class="checkbox">
+							    <label>
+							      	<input type="checkbox"> Li e aceito os
+							    </label>
+							    <a href="#/auth">Termos de Uso</a>
+							  </div>
 						</div>
 
 						<button class="btn"
