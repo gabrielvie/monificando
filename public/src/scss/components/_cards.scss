@@ -24,12 +24,13 @@
 				@extend %text-shadow;
 				font-size: 2.5em;
 				font-weight: $font-weight-light;
+				margin-top: 30px;
 
 				small {
 					@extend %text-shadow;
 					color: inherit;
 					display: block;
-					font-size: .4em;
+					font-size: .5em;
 					margin-top: 10px;
 				}
 			}
@@ -105,7 +106,7 @@
 		&-credit,
 		&-remainder {
 			&:before {
-				@include position(absolute, 28px null null 4%);
+				@include position(absolute, 40px null null 4%);
 				background-repeat: no-repeat;
 				background-size: 60px;
 				content: '';

@@ -6,6 +6,117 @@ var mongoose 	= require('mongoose')
   , Bill		= mongoose.model('Bill')
   , Tags 		= mongoose.model('Tags');
 
+var searchByDate = function(user, start, end) {
+
+	var finalCollection = []
+	  ,	addToCollection = function(item, index) {
+		  	var finalBill 	= item.toObject()
+		  	, sufixDesc 	= '';
+
+		  	finalBill.attacheds = [];
+
+		  	if (finalBill.values.length > 1) {
+		  		sufixDesc = (" " + (index + 1) + ("/" + finalBill.values.length));
+		  		finalBill.description = finalBill.description + sufixDesc;
+		  	}
+
+		  	finalBill.tags.forEach(function(tagId, index) {
+
+		  		finalBill.tags[index] = user.tags.id(tagId);
+
+		  	});
+
+		  	finalBill.value = finalBill.values[index].value;
+		  	finalBill.date  = finalBill.values[index].date;
+
+		  	delete finalBill.values;
+
+		  	return finalBill;
+	  	};
+
+	user.bills.forEach(function(item) {
+
+	  	item.values.forEach(function(value, index) {
+
+	  		var editedItem = {};
+
+	  		if ( moment(value.date).isBetween(start, end) && item.payment.form !== 'credit' ) {
+
+	  			editedItem = addToCollection(item, index);
+	  			finalCollection.push(editedItem);
+
+	  		}
+
+	  		if (item.payment.form === 'credit') {
+	  			var creditCard 				= user.credit_cards.id(item.payment.reference)
+	  			  ,	creditCardBill 			= {}
+	  			  ,	creditCardBillExists	= false;
+
+	  			var endDate		= moment(end).date(creditCard.buy_day)
+	  			  ,	startDate 	= moment(start).date(creditCard.buy_day).subtract(1, 'months').add(1, 'days');
+
+	  			if ( moment(value.date).isBetween(startDate, endDate) ) {
+
+	  				var valueDate 		= moment(value.date)
+	  				  , dateDescription = moment(value.date).date() > creditCard.buy_day ? moment(value.date).month() + 2 : moment(value.date).month() + 1
+	  				  , description 	= creditCard.description + ' ' + creditCard.payment_day + '/' + (dateDescription);
+
+	  				editedItem = addToCollection(item, index);
+
+	  				finalCollection.forEach(function(item, index) {
+
+	  					if (item._id === creditCard._id && item.description === description) {
+	  						creditCardBillExists = true;
+	  						creditCardBill 		 = item;
+	  					}
+
+	  				});
+
+	  				if (!creditCardBillExists) {
+
+	  					creditCardBill._id 			= creditCard._id;
+	  					creditCardBill.payment 		= { form: 'credit' };
+	  					creditCardBill.description 	= description;
+	  					creditCardBill.date 		= endDate.date(creditCard.payment_day).month(dateDescription - 1).toDate();
+	  					creditCardBill.value 		= editedItem.value;
+	  					creditCardBill.attacheds 	= [];
+
+	  					finalCollection.push(creditCardBill);
+
+	  				} else {
+
+	  					creditCardBill.value += editedItem.value;
+
+	  				}
+
+	  				creditCardBill.attacheds.push(editedItem);
+
+	  				creditCardBill.attacheds.sort(function(a, b) {
+
+	  					var dateA = moment(a.date)
+	  					  ,	dateB = moment(b.date);
+
+	  					return dateA.isBefore(dateB) ? true : false;
+	  				});
+
+	  			}
+	  		}
+
+	  	});
+
+	});
+
+	finalCollection.sort(function(a, b) {
+
+		var dateA = moment(a.date)
+		,	dateB = moment(b.date);
+
+		return dateA.isBefore(dateB) ? true : false;
+	});
+
+	return finalCollection;
+};
+
 exports.save = function(req, res) {
 
 	User.findById(req.params.user_id, function(err, user) {
@@ -84,112 +195,52 @@ exports.list = function(req, res) {
 			return;
 		}
 
-		var bills 					= [],
-			addToBillsCollection	= function(item, index) {
-				var finalBill 	= item.toObject()
-				  , sufixDesc 	= '';
+		var billsCollection = []
+		  ,	startDate		= moment().startOf('month')
+		  , endDate			= moment().endOf('month');
 
-				finalBill.attacheds = [];
+		billsCollection = searchByDate(user, startDate, endDate);
 
-				if (finalBill.values.length > 1) {
-					sufixDesc = (" " + (index + 1) + ("/" + finalBill.values.length));
-					finalBill.description = finalBill.description + sufixDesc;
-				}
-
-				finalBill.tags.forEach(function(tagId, index) {
-					finalBill.tags[index] = user.tags.id(tagId);
-				});
-
-				finalBill.value = finalBill.values[index].value;
-				finalBill.date  = finalBill.values[index].date;
-
-				delete finalBill.values;
-
-				return finalBill;
-			};
-
-		user.bills.forEach(function(bill, idx) {
-
-			bill.values.forEach(function(value, idx) {
-
-				var startDate 	= moment().startOf('month')
-				  , endDate		= moment().endOf('month')
-				  , editedBill	= {};
-
-				if ( moment(value.date).isBetween(startDate, endDate) && bill.payment.form !== 'credit') {
-
-					editedBill = addToBillsCollection(bill, idx);
-
-					bills.push(editedBill);
-				}
-
-				if (bill.payment.form === 'credit') {
-
-					var creditCard 				= user.credit_cards.id(bill.payment.reference)
-					  , creditCardBill 			= {}
-					  , creditCardBillExists 	= false;
-
-					endDate 	= moment().date(creditCard.buy_day);
-					startDate	= moment(startDate).subtract(1, 'months').add(1, 'days');
-
-					if ( moment(value.date).isBetween(startDate, endDate) ) {
-
-						editedBill = addToBillsCollection(bill, idx);
-
-						bills.forEach(function(item, idx) {
-
-							if (item._id === creditCard._id) {
-								creditCardBillExists = true;
-								creditCardBill = item;
-							}
-
-						});
-
-						if (!creditCardBillExists) {
-
-							creditCardBill._id = creditCard._id;
-							creditCardBill.description = creditCard.description + ' ' + creditCard.payment_day + '/' + (moment().month() + 1);
-							creditCardBill.date = endDate.date(creditCard.payment_day).toDate();
-							creditCardBill.value = editedBill.value;
-							creditCardBill.attacheds = [];
-
-							bills.push(creditCardBill);
-
-						} else {
-
-							creditCardBill.value += editedBill.value;
-
-						}
-
-						creditCardBill.attacheds.push(editedBill);
-
-						creditCardBill.attacheds.sort(function(a, b) {
-
-							var dateA = moment(a.date)
-							  ,	dateB = moment(b.date);
-
-							return dateA.isBefore(dateB) ? true : false;
-						});
-					}
-				}
-			});
-
-		});
-
-		bills.sort(function(a, b) {
-
-			var dateA = moment(a.date)
-			,	dateB = moment(b.date);
-
-			return dateA.isBefore(dateB) ? true : false;
-		});
-
-		//console.log(bills);
-
-		res.status(200).send({ success: true, list: bills });
+		res.status(200).send({ success: true, list: billsCollection });
 	});
 };
 
+
+exports.search = function(req, res) {
+
+	var queries = req.query;
+
+	if (queries.startDate === undefined) {
+
+		res.status(404).send({ success: false, err: { message: 'No start date provided.' } });
+		return;
+
+	}
+
+	if (!moment(queries.startDate).isValid()) {
+
+		res.status(422).send({ success: false, err: { message: 'Invalid date.' } });
+		return;
+
+	}
+
+	User.findById(req.params.user_id, function(err, user) {
+		if (err || !user) {
+			res.status(404).send({ success: false, err: err });
+			return;
+		}
+
+		var	billsCollection = []
+		  , startDate		= moment(queries.startDate)
+		  ,	endDate			= queries.endDate !== undefined ? moment(queries.endDate) : moment();
+
+		billsCollection = searchByDate(user, startDate, endDate);
+
+		res.status(200).send({ success: true, list: billsCollection })
+		return;
+	});
+
+};
 
 exports.update = function(req, res) {
 

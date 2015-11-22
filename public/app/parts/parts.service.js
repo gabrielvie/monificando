@@ -12,12 +12,12 @@
 				icon: 'agenda',
 				name: 'Agenda',
 				sref: 'app.bills'
-			},
+			},/*
 			config: {
 				icon: 'graphic',
 				name: 'Configurações',
 				sref: 'app.config'
-			},
+			},*/
 			config_ccards: {
 				icon: '',
 				name: 'Cartões de Crédito',

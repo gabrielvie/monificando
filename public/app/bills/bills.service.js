@@ -30,12 +30,37 @@
 	BillsOptionsService.$inject = [];
 
 
-	function BillService(APIInfoService, $q, $http, $localStorage) {
+	function BillService(APIInfoService, $q, $http, $localStorage, TagsService) {
 		var apiUrl = APIInfoService.getAPILink + '/user/' + $localStorage.user._id,
 			Bill 	= {};
 
 		Bill.save = function(data) {
-			var deferred = $q.defer();
+			var deferred = $q.defer(),
+				tags	 = data.tags === undefined ? [] : data.tags;
+
+			if (tags.length > 0) {
+
+				tags.forEach(function(tag, index){
+
+					if (tag._id === undefined) {
+
+						TagsService
+							.save(tag)
+							.then(function(response) {
+								tags[index] = response.data._id;
+							});
+
+					} else {
+
+						tags[index] = tag._id;
+
+					}
+
+				});
+
+			}
+
+			data.tags = tags;
 
 			$http
 				.post(apiUrl + '/bills', data)
@@ -89,20 +114,40 @@
 		};
 
 		Bill.update = function(data, id) {
-			var deferred = $q.defer();
+			var deferred = $q.defer(),
+				tags	 = data.tags === undefined ? [] : data.tags;
 
-			for (var i in data.tags) {
-				data.tags[i] = data.tags[i]._id;
+			if (tags.length > 0) {
+
+				tags.forEach(function(tag, index){
+
+					if (tag._id === undefined) {
+
+						TagsService
+							.save(tag)
+							.then(function(response) {
+								tags[index] = response.data._id;
+							});
+
+					} else {
+
+						tags[index] = tag._id;
+
+					}
+
+				});
+
 			}
+
+			data.tags = tags;
 
 			$http
 				.put(apiUrl + '/bills/' + id, data)
 				.then(function(response) {
-					console.log('ok', response);
+
 					deferred.resolve(response.data);
 
 				}, function(error) {
-					console.log('nao ok', error);
 
 					deferred.reject(error.data);
 
@@ -132,7 +177,7 @@
 		return Bill;
 	}
 
-	BillService.$inject = ['APIInfoService', '$q', '$http', '$localStorage'];
+	BillService.$inject = ['APIInfoService', '$q', '$http', '$localStorage', 'TagsService'];
 
 	angular
 		.module('monificando.bills')

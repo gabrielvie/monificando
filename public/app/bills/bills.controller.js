@@ -94,23 +94,13 @@
 
 			if (form.$valid) {
 
-				vm.fields.value = vm.fields.type === 'credit' ? vm.fields.value : vm.fields.value * (-1);
-				vm.fields.date = vm.fields.date.toISOString();
+				var data = angular.copy(vm.fields);
 
-				vm.fields.tags.forEach(function(tag, idx) {
-					if (tag._id === undefined) {
-						TagsService
-							.save(tag)
-							.then(function(response) {
-								vm.fields.tags[idx] = response.data._id;
-							});
-					} else {
-						vm.fields.tags[idx] = tag._id;
-					}
-				});
+				data.value = data.type === 'credit' ? data.value : data.value * (-1);
+				data.date = data.date.toISOString();
 
 				BillService
-				 	.save(vm.fields)
+				 	.save(data)
 				 	.then(function(response) {
 
 				 		$rootScope.$broadcast('updateBillsList', {});
@@ -180,11 +170,13 @@
 
 		vm.update = function () {
 
-			var data = vm.fields;
+			var data = angular.copy(vm.fields);
+
+			console.log(data);
 
 			BillService
 				.update(data, itemId)
-				.then(function() {
+				.then(function(response) {
 
 					$rootScope.$broadcast('updateBillsList', {});
 					vm.close();

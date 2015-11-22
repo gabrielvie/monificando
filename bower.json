@@ -29,7 +29,7 @@
     "Chart.js": "~1.0.2",
     "ng-tags-input": "~3.0.*",
     "ngstorage": "~0.3.*",
-    "angular-momentjs": "~0.2.2"
+    "angular-moment-service": "angular-momentjs-service#~0.1.0"
   },
   "resolutions": {
     "angular": ">=1.0.8"
@@ -38,8 +38,8 @@
     "angular": "bower_components/angular/angular.min.js",
     "angularBootstrap": "bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
     "angularChartJs": "bower_components/angular-chart.js/dist/angular-chart.min.js",
+    "angularMomentJs": "bower_components/angular-moment-service/release/angular-momentjs-service.min.js",
     "angularInputMasks": "bower_components/angular-input-masks/angular-input-masks-standalone.js",
-    "angularMomentJs": "bower_components/angular-momentjs/angular-momentjs.min.js",
     "angularSmartTable": "bower_components/angular-smart-table/dist/smart-table.min.js",
     "angularUiRouter": "bower_components/angular-ui-router/release/angular-ui-router.min.js",
     "angularUiMask": "bower_components/angular-ui-mask/dist/mask.min.js",

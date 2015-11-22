@@ -14,7 +14,7 @@
 				controller: 'ModalCreditCardController as mCreditCtrl',
 				size: '100px',
 				resolve: {
-					item: function() {
+					itemId: function() {
 						return undefined;
 					}
 				}
@@ -47,30 +47,18 @@
 		};
 
 		// Open a modal passing an object to edit
-		vm.edit = function(obj) {
+		vm.edit = function(obj_id) {
 			var modal = $modal.open({
 				animation: true,
 				templateUrl: 'app/appconfig/ccredit/templates/edit.view.html',
 				controller: 'ModalCreditCardController as mCreditCtrl',
 				size: '100px',
 				resolve: {
-					item: function() {
-						return obj;
+					itemId: function() {
+						return obj_id;
 					}
 				}
 			});
-		};
-
-		// Open a request to remove item passing an id
-		vm.remove = function(itemId) {
-
-			CreditCardService
-				.remove(itemId)
-				.then(function(response) {
-
-					vm.list();
-
-				});
 		};
 
 		$rootScope.$on('updateCreditCardList', function(event, args) {
@@ -89,18 +77,24 @@
 
 
 	/* Credit Card Modal Controller to Update and Save */
-	function ModalCreditCardController(CreditCardService, $modalInstance, $rootScope, item) {
+	function ModalCreditCardController(CreditCardService, $modalInstance, $rootScope, itemId, confirm) {
 		var vm = this;
 
 		vm.fields = {};
 
 		vm.init = function() {
-			if (item !== undefined) {
-				vm.fields = item;
+			if (itemId !== undefined) {
+
+				CreditCardService
+					.get(itemId)
+					.then(function(response) {
+
+						vm.fields = response.data;
+
+					});
+
 			}
 		};
-
-		vm.tooltips = true;
 
 		vm.create = function() {
 
@@ -133,15 +127,28 @@
 				});
 		};
 
+		vm.remove = function() {
+
+			confirm("Tem certeza disso?").then(function(response) {
+				CreditCardService
+					.remove(itemId)
+					.then(function(response) {
+
+						$rootScope.$broadcast('updateCreditCardList', {});
+						vm.close();
+
+					});
+			});
+		};
+
 		vm.close = function() {
 			$modalInstance.dismiss('cancel');
 		};
 
-
 		vm.init();
 	}
 
-	ModalCreditCardController.$inject = ['CreditCardService', '$modalInstance', '$rootScope', 'item'];
+	ModalCreditCardController.$inject = ['CreditCardService', '$modalInstance', '$rootScope', 'itemId', 'confirm'];
 
 	angular
 		.module('monificando.appconfig.ccredit')

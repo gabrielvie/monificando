@@ -16,8 +16,7 @@
 				<th>Próxima fatura em</th>
 				<th>Melhor data de compra em</th>
 				<th>Validade desse Cartão</th>
-				<th></th>
-				<th></th>
+				<th width="20"></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -27,15 +26,9 @@
 				<td>Todo dia {{ row.buy_day }}</td>
 				<td>{{ row.valid_thru }}</td>
 				<td><button type="button"
-							ng-click="creditCtrl.edit(row)"
+							ng-click="creditCtrl.edit(row._id)"
 							class="btn btn-xs btn-primary">
 						<i class="glyphicon glyphicon-pencil"></i>
-					</button>
-				</td>
-				<td><button type="button"
-							ng-click="creditCtrl.remove(row._id)"
-							class="btn btn-xs btn-danger">
-						<i class="glyphicon glyphicon-remove"></i>
 					</button>
 				</td>
 			</tr>

@@ -3,7 +3,7 @@
 		<span aria-hidden="true">&times;</span>
 	</button>
 	<h4 class="modal-title">
-		Novo Cartão
+		Editar Cartão
 	</h4>
 </div>
 <div class="modal-body">
@@ -78,10 +78,10 @@
 	</form>
 </div>
 <div class="modal-footer">
-	<button class="btn btn-warning btn-sm pull-left"
-			ng-click="mCreditCtrl.close()">
-		Cancelar
-	</button>
+	<a 	class="text-danger pull-left"
+		ng-click="mCreditCtrl.remove()">
+		<i class="glyphicon glyphicon-trash"></i>&nbsp;&nbsp;Excluir
+	</a>
 	<button class="btn btn-sm pull-right"
 			type="submit"
 			ng-class="newCreditCard.$invalid ? 'btn-danger' : 'btn-success'"

@@ -31,6 +31,7 @@ module.exports = function(app) {
 
 	app.route('/api/user/:user_id/bills').post(bill.save);
 	app.route('/api/user/:user_id/bills').get(bill.list);
+	app.route('/api/user/:user_id/bills/search').get(bill.search);
 	app.route('/api/user/:user_id/bills/:bill_id').get(bill.get);
 	app.route('/api/user/:user_id/bills/:bill_id').put(bill.update);
 	app.route('/api/user/:user_id/bills/:bill_id').delete(bill.delete);

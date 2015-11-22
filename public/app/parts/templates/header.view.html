@@ -6,7 +6,7 @@
 	</div>
 	<ul class="nav navbar-nav navbar-right menu">
 
-		<li class="menu-item">
+		<!--<li class="menu-item">
 			<a href="#">
 				<span class="glyphicon glyphicon-calendar"></span>
 				<span class="label label-danger">1</span>
@@ -18,10 +18,11 @@
 				<span class="glyphicon glyphicon-bell"></span>
 				<span class="label label-danger">5</span>
 			</a>
-		</li>
+		</li>-->
 		<li class="menu-item" dropdown>
-			<a href="#" dropdown-toggle>Gabriel <b class="caret"></b></a>
+			<a href="#" dropdown-toggle>{{ headCtrl.user.first_name + " " + headCtrl.user.last_name }}&nbsp;&nbsp;<b class="caret"></b></a>
 			<ul class="dropdown-menu">
+				<!--
 				<li><a href="#">
 					<span class="glyphicon glyphicon-user"></span>
 					Meus Dados</a>
@@ -30,41 +31,12 @@
 					<span class="glyphicon glyphicon-question-sign"></span>
 					Ajuda</a>
 				</li>
+				-->
 				<li><a ng-click="headCtrl.signOut()">
 					<span class="glyphicon glyphicon-log-out"></span>
 					Sair</a>
 				</li>
 			</ul>
 		</li>
-		<!--<li class="menu-item">
-			<a href="#">
-				<span class="user-menu-item&#45;&#45;user">
-					<img src="assets/img/sample/userImage.jpg" class="user-menu-item&#45;&#45;user-photo img-circle" width="40"/>
-					<span class="user-menu-item&#45;&#45;user-name">Gabriel
-						<span class="arrow arrow-left"></span>
-					</span>
-				</span>
-			</a>
-			&lt;!&ndash;<ul class="user-menu-item-submenu">
-				<li class="user-menu-item-submenu-item">
-					<a href="#">
-						<span class="icon icon-account-inverse"></span>
-						Minha Conta
-					</a>
-				</li>
-				<li class="user-menu-item-submenu-item">
-					<a href="#">
-						<span class="icon icon-help-inverse"></span>
-						Ajuda
-					</a>
-				</li>
-				<li class="user-menu-item-submenu-item">
-					<a href="#" ng-click="headCtrl.signOut()">
-						<span class="icon icon-exit-inverse"></span>
-						Sair
-					</a>
-				</li>
-			</ul>&ndash;&gt;
-		</li>-->
 	</ul>
 </div>

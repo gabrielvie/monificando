@@ -2,47 +2,32 @@
 	<div class="col-sm-4">
 		<div class="card card-red card-credit">
 			<div class="card-body">
-				<h3>R$ 1059,70
-					<small>Próximas Faturas de Cartão de Crédito</small>
+				<h3>
+					{{ dashCtrl.cards.creditcard.value | currency : "R$" : 2 }}
+					<small>Cartão de Crédito</small>
 				</h3>
 			</div>
-			<footer class="card-footer">
-				<a href="#">
-					Veja mais
-					<span class="glyphicon glyphicon-wallet"></span>
-				</a>
-			</footer>
 		</div>
 	</div>
 	<div class="col-sm-4">
-		<div class="card card-blue card-amount">
+		<div class="card card-yellow card-amount">
 			<div class="card-body">
-				<h3>R$ 1023,00
+				<h3>
+					{{ dashCtrl.cards.outcome.value | currency : "R$" : 2 }}
 					<small>Gastos efetuados este mês <br> (Não está incluso cartão de crédito)</small>
 				</h3>
 			</div>
-			<footer class="card-footer">
-				<a href="#">
-					Veja mais
-					<span class="icon icon-arrow-rounded"></span>
-				</a>
-			</footer>
 		</div>
 	</div>
 
 	<div class="col-sm-4">
-		<div class="card card-yellow card-remainder">
+		<div class="card card-green card-remainder">
 			<div class="card-body">
-				<h3>R$ 169,20
+				<h3>
+					{{ dashCtrl.cards.income.value | currency : "R$" : 2 }}
 					<small>Seu saldo atual</small>
 				</h3>
 			</div>
-			<footer class="card-footer">
-				<a href="#">
-					Veja mais
-					<span class="icon icon-arrow-rounded"></span>
-				</a>
-			</footer>
 		</div>
 	</div>
 </section>

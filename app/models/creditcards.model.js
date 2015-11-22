@@ -27,6 +27,10 @@ var CreditCardSchema = new Schema({
 	},
 	updated_at: {
 		type: Date
+	},
+	active: {
+		type: Boolean,
+		default: true
 	}
 });
 

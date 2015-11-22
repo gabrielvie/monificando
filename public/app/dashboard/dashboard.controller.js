@@ -2,20 +2,71 @@
 (function () {
     'use strict';
 
-	function DashboardController() {
+	function DashboardController(DashboardService) {
 		var vm = this;
-		vm.lineChart = {};
-		vm.pieChart = {};
+		vm.lineChart = {
+			data: [],
+			labels: []
+		};
 
-		vm.lineChart.labels = ['Dia 1', 'Dia 2', 'Dia 3', 'Dia 4','Dia 5', 'Dia 6', 'Dia 7', 'Dia 8', 'Dia 9'];
-		vm.lineChart.data = [[8, 3.5, 15, 22, 20, 3, 19, 16]];
+		vm.pieChart = {
+			labels: [],
+			series: [],
+			data: []
+		};
 
-		vm.pieChart.labels = ['Janeiro', 'Fevereiro', 'Março'];
-		vm.pieChart.series = ['Janeiro', 'Fevereiro', 'Março'];
-		vm.pieChart.data = [1150.59, 2312.40, 1640.34];
+		vm.cards = {};
+
+		vm.loadPieChartData = function() {
+
+			DashboardService
+				.getBillsByMonths(3)
+				.then(function(response) {
+					vm.pieChart.data 	= response.data;
+					vm.pieChart.labels  = response.labels;
+					vm.pieChart.series	= response.labels;
+				});
+
+		};
+
+		vm.loadLineChartData = function() {
+
+			DashboardService
+				.getBillsFromThisMonth()
+				.then(function(response) {
+
+					vm.lineChart.labels	 = response.labels;
+					vm.lineChart.data[0] = response.data;
+
+				});
+
+		};
+
+		vm.loadCardsData = function() {
+
+			DashboardService
+				.getCreditCardsBill()
+				.then(function(response) {
+
+					for (var prop in response) {
+						vm.cards[prop] = {
+							value: response[prop]
+						};
+					}
+
+				});
+		};
+
+		vm.init = function() {
+			vm.loadCardsData();
+			vm.loadLineChartData();
+			vm.loadPieChartData();
+		};
+
+		vm.init();
 	}
 
-	DashboardController.$inject = [];
+	DashboardController.$inject = ['DashboardService'];
 
     angular
         .module('monificando.dashboard')
