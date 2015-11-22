@@ -33,7 +33,7 @@
 
 		vm.signIn = function() {
 
-			var data = angular.copy(vm.credentials)
+			var data = angular.copy(vm.credentials);
 
 			AuthenticationService.signIn(data)
 				.then(function(response) {
@@ -62,7 +62,7 @@
 
 		vm.signUp = function() {
 
-			var data = angular.copy(vm.newUser)
+			var data = angular.copy(vm.newUser);
 
 			AuthenticationService.signUp(data)
 				.then(function(response) {
