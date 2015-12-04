@@ -196,8 +196,8 @@ exports.list = function(req, res) {
 		}
 
 		var billsCollection = []
-		  ,	startDate		= moment().startOf('month')
-		  , endDate			= moment().endOf('month');
+		  ,	startDate		= moment().startOf('month').subtract(1, 'days')
+		  , endDate			= moment().endOf('month').add(1, 'days');
 
 		billsCollection = searchByDate(user, startDate, endDate);
 
